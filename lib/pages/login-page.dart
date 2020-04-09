@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tms_mobile/models/usuario.dart';
+import 'package:tms_mobile/pages/modules-page.dart';
 import 'package:tms_mobile/pages/teste.dart';
 
 class LoginPage extends StatefulWidget {
@@ -87,8 +89,8 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => TestePage(
-                                    nome: loginCtrl.text,
+                              builder: (context) => ModuleSelectionPage(
+                                    Usuario("Jhon Testes", "Analista de QA", "Placeholder inc", null)
                                   )));
                         }
                       },
