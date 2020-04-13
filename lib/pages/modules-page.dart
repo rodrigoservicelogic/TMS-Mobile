@@ -24,67 +24,77 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: SingleChildScrollView(
+        child: ListView(
           scrollDirection: Axis.vertical,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 100,
-                ),
-                Center(
-                  child: Image.asset(
-                    "images/logoServiceLogic.png",
-                    width: 300,
+          children: <Widget>[
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 100,
                   ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                ProfileCard(widget.usuarioLogado),
-                SizedBox(
-                  height: 25,
-                ),
-                CardButton(
-                  Image.asset(
-                    "images/icon_resultados.png",
-                    fit: BoxFit.fitHeight,
+                  Center(
+                    child: Image.asset(
+                      "images/logoServiceLogic.png",
+                      width: 300,
+                    ),
                   ),
-                  "RESULTADOS",
-                  // OnPressed no futuro
-                ),
-                SizedBox(height: 5,),
-                CardButton(
-                  Image.asset(
-                    "images/icon_despesas_viagem.png",
-                    fit: BoxFit.fitHeight,
+                  SizedBox(
+                    height: 50,
                   ),
-                  "DESPESAS DE VIAGEM",
-                  // OnPressed no futuro
-                ),
-                SizedBox(height: 5,),
-                CardButton(
-                  Image.asset(
-                    "images/icon_comprovante_entrega.png",
-                    fit: BoxFit.fitHeight,
+                  ProfileCard(
+                    widget.usuarioLogado,
                   ),
-                  "COMPROVANTE DE ENTREGA",
-                  // OnPressed no futuro
-                ),
-                SizedBox(height: 5,),
-                CardButton(
-                  Image.asset(
-                    "images/icon_e_papeleta.png",
-                    fit: BoxFit.fitHeight,
+                  SizedBox(
+                    height: 35,
                   ),
-                  "e-PAPELETA",
-                  // OnPressed no futuro
-                ),
-              ],
-            ),
-          ),
+                  CardButton(
+                    Image.asset(
+                      "images/icon_resultados.png",
+                      fit: BoxFit.fitHeight,
+                    ),
+                    "RESULTADOS",
+                    () {},
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  CardButton(
+                    Image.asset(
+                      "images/icon_despesas_viagem.png",
+                      fit: BoxFit.fitHeight,
+                    ),
+                    "DESPESAS\n DE VIAGEM",
+                    () {},
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  CardButton(
+                    Image.asset(
+                      "images/icon_comprovante_entrega.png",
+                      fit: BoxFit.fitHeight,
+                    ),
+                    "COMPROVANTE\n DE ENTREGA",
+                    () {},
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  CardButton(
+                    Image.asset(
+                      "images/icon_e_papeleta.png",
+                      fit: BoxFit.fitHeight,
+                    ),
+                    "e-PAPELETA",
+                    () {},
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
