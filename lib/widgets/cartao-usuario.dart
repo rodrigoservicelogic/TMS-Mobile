@@ -25,12 +25,16 @@ class ProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4.0,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0)
+      ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
+          borderRadius: BorderRadius.circular(15.0),
           color: Colors.white,
         ),
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 7.5),
+        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.5),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
