@@ -3,9 +3,8 @@ import 'package:tms_mobile/models/usuario.dart';
 
 class ProfileCard extends StatelessWidget {
   final Usuario usuario;
-  final double height;
 
-  ProfileCard(this.usuario, {this.height});
+  ProfileCard(this.usuario);
 
   Image _getAvatarUsuario() {
     if (usuario.avatar == null) {
