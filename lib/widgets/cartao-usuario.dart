@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/models/usuario.dart';
 
-class ProfileCard extends StatefulWidget {
+class ProfileCard extends StatelessWidget {
   final Usuario usuario;
+  final double height;
 
-  ProfileCard(this.usuario);
+  ProfileCard(this.usuario, {this.height});
 
-  @override
-  _ProfileCardState createState() => _ProfileCardState();
-}
-
-class _ProfileCardState extends State<ProfileCard> {
   Image _getAvatarUsuario() {
-    if (widget.usuario.avatar == null) {
+    if (usuario.avatar == null) {
       return Image.asset(
         "images/avatar.png",
         fit: BoxFit.fitHeight,
       );
     }
+
     return Image.asset(
       "images/avatar.png",
       fit: BoxFit.fitHeight,
@@ -27,53 +24,63 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30.0),
-      ),
-      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(
-            height: double.infinity,
-            child: _getAvatarUsuario(),
-          ),
-          Container(
-            height: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  widget.usuario.nomeApresentacao,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  widget.usuario.cargo,
-                  style: TextStyle(color: Colors.black54),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  widget.usuario.empresaApresentacao,
-                  style: TextStyle(
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
+    return Card(
+      elevation: 4.0,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.0),
+          color: Colors.white,
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 7.5),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              width: 80,
+              child: _getAvatarUsuario(),
             ),
-          )
-        ],
+            SizedBox(
+              width: 7.5,
+            ),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    usuario.nomeApresentacao,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    usuario.cargo,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    usuario.empresaApresentacao,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
