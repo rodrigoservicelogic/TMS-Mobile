@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/pages/login-page.dart';
-import 'selecao-empresa-page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
