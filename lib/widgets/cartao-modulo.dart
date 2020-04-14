@@ -16,6 +16,7 @@ class CardButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0)
       ),
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           color: Color(0x25000000),
           borderRadius: BorderRadius.circular(15.0),

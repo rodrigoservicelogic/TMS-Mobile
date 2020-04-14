@@ -30,6 +30,7 @@ class ProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0)
       ),
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
           color: Colors.white,
