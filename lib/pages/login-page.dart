@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => FiltroFaturamento()));
                         }
                       },
