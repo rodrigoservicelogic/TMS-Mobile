@@ -33,8 +33,14 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
         title: Text("Resultados"),
         leading: SizedBox(
           height: 10,
-          child: Image.asset(
-            "images/icon_resultados.png",
+          child: Align(
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: 40,
+              child: Image.asset(
+                "images/icon_resultados.png",
+              ),
+            ),
           ),
         ),
         actions: <Widget>[
@@ -61,14 +67,18 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             SizedBox(
               height: 60,
               width: double.infinity,
-              child: RaisedButton(
+              child: Container(
                 color: Color(0xFFF58633),
-                textColor: Colors.white,
-                child: Text(
-                  "FATURAMENTO",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                child: Center(
+                  child: Text(
+                    "FATURAMENTO",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                onPressed: () {},
               ),
             ),
             SizedBox(
@@ -154,33 +164,47 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             SizedBox(
               height: 90,
             ),
-            SizedBox(
+            Container(
               height: 60,
-              width: 40,
-              child: RaisedButton(
-                color: Color(0xFFF58633),
-                textColor: Colors.white,
-                child: Text(
-                  "Aplicar Filtro",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              child: Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 295,
+                  height: 60,
+                  child: RaisedButton(
+                    color: Color(0xFFF58633),
+                    textColor: Colors.white,
+                    child: Text(
+                      "Aplicar Filtro",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    onPressed: () {},
+                  ),
                 ),
-                onPressed: () {},
               ),
             ),
             SizedBox(
               height: 8,
             ),
-            SizedBox(
+            Container(
               height: 60,
-              width: 40,
-              child: RaisedButton(
-                color: Color(0xf0f0f0),
-                textColor: Colors.white,
-                child: Text(
-                  "Voltar",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              child: Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 295,
+                  height: 60,
+                  child: RaisedButton(
+                    color: Colors.grey,
+                    textColor: Colors.white,
+                    child: Text(
+                      "Voltar",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    onPressed: () {},
+                  ),
                 ),
-                onPressed: () {},
               ),
             ),
           ],
