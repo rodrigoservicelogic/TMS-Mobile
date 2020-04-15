@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tms_mobile/pages/teste.dart';
+import 'package:tms_mobile/pages/filtro-faturamento.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -86,10 +86,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => TestePage(
-                                    nome: loginCtrl.text,
-                                  )));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (context) => FiltroFaturamento()));
                         }
                       },
                     ),
