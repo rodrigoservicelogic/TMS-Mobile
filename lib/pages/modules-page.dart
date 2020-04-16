@@ -25,15 +25,12 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
           ),
         ),
         child: ListView(
-          scrollDirection: Axis.vertical,
           children: <Widget>[
             Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: 100,
+                    height: 40,
                   ),
                   Center(
                     child: Image.asset(
