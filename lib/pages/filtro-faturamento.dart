@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
+import 'package:tms_mobile/widgets/drawer.dart';
 
 class FiltroFaturamento extends StatefulWidget {
+  final PageController pageController;
+
+  FiltroFaturamento(this.pageController);
+
   @override
   _FiltroFaturamentoState createState() => _FiltroFaturamentoState();
 }
@@ -28,27 +34,16 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: DrawerPage(widget.pageController),
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Resultados"),
-        leading: SizedBox(
-          height: 10,
-          child: Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 40,
-              child: Image.asset(
-                "images/icon_resultados.png",
-              ),
-            ),
+        title: Text("RESULTADOS"),
+        leading: Center(
+          child: Image.asset(
+            "images/icon_resultados.png",
+            width: 45,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-          )
-        ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -68,7 +63,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
               height: 60,
               width: double.infinity,
               child: Container(
-                color: Color(0xFFF58633),
+                color: Color(COR_PRIMARY),
                 child: Center(
                   child: Text(
                     "FATURAMENTO",
@@ -172,7 +167,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   width: 295,
                   height: 60,
                   child: RaisedButton(
-                    color: Color(0xFFF58633),
+                    color: Color(COR_PRIMARY),
                     textColor: Colors.white,
                     child: Text(
                       "Aplicar Filtro",

@@ -1,2 +1,3 @@
 const COR_PRIMARY = 0xFFF58633;
+const COLOR_SECONDARY = 0xFF294C8C;
 const String API_URL = "";

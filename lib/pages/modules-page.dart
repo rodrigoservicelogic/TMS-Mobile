@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/models/usuario.dart';
+import 'package:tms_mobile/pages/resultado-page.dart';
 import 'package:tms_mobile/widgets/cartao-modulo.dart';
 import 'package:tms_mobile/widgets/cartao-usuario.dart';
 
 class ModuleSelectionPage extends StatefulWidget {
   final Usuario usuarioLogado;
+  final PageController pageCtrl;
 
-  ModuleSelectionPage(this.usuarioLogado);
+  ModuleSelectionPage(this.usuarioLogado, this.pageCtrl);
 
   @override
   _ModuleSelectionPageState createState() => _ModuleSelectionPageState();
@@ -53,7 +55,11 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
                       fit: BoxFit.fitHeight,
                     ),
                     "RESULTADOS",
-                    () {},
+                    () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              ResultadoPage(widget.pageCtrl)));
+                    },
                   ),
                   SizedBox(
                     height: 5,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/models/usuario.dart';
 
-import 'modules-page.dart';
+import 'home-page.dart';
 
 class SelecaoEmpresa extends StatefulWidget {
   final Usuario usuario;
@@ -86,8 +86,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                         onChanged: (value) {
                           empresaSelected = value;
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  ModuleSelectionPage(widget.usuario)));
+                              builder: (context) => HomePage(widget.usuario)));
                         },
                         items: empresas
                             .map<DropdownMenuItem<String>>((var empresa) {

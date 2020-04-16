@@ -54,9 +54,9 @@ flutter:
   assets:
     - images/bg_1.png
     - images/bg_2.png
-    - images/icon_comprovante_entrega.png
-    - images/icon_despesas_viagem.png
-    - images/icon_e_papeleta.png
+    - images/icon_comprovante_entrega.PNG
+    - images/icon_despesas_viagem.PNG
+    - images/icon_e_papeleta.PNG
     - images/icon_resultados.png
     - images/logoServiceLogic.png
     - images/simboloCarregando.png
