@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tms_mobile/pages/filtro-faturamento.dart';
+import 'package:tms_mobile/models/usuario.dart';
+import 'package:tms_mobile/pages/selecao-empresa-page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -87,7 +88,11 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => FiltroFaturamento()));
+                              builder: (context) => SelecaoEmpresa(Usuario(
+                                  "Jhon Testes",
+                                  "Analista de QA",
+                                  "Placeholder inc",
+                                  null))));
                         }
                       },
                     ),
