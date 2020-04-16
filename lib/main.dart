@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 
+import 'controller/login-controller.dart';
 import 'pages/splash-screen.dart';
 
 void main() {
+  GetIt getIt = GetIt.I;
+
+  getIt.registerSingleton<LoginController>(LoginController());
+
   runApp(MyApp());
 }
 

@@ -108,6 +108,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             DropdownButton(
               hint: Text('Por Unidade de Negócio'),
               value: _selectedUnidade,
+              isExpanded: true,
               onChanged: (newValue) {
                 setState(() {
                   _selectedUnidade = newValue;
@@ -126,6 +127,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             DropdownButton(
               hint: Text('Por Tipo de Frete'),
               value: _selectedFrete,
+              isExpanded: true,
               onChanged: (newValue) {
                 setState(() {
                   _selectedFrete = newValue;
@@ -144,6 +146,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             DropdownButton(
               hint: Text('Por Cliente'),
               value: _selectedCliente,
+              isExpanded: true,
               onChanged: (newValue) {
                 setState(() {
                   _selectedCliente = newValue;

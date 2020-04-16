@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tms_mobile/models/usuario.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:tms_mobile/controller/login-controller.dart';
+import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/pages/selecao-empresa-page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,6 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final controller = GetIt.I.get<LoginController>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController loginCtrl = TextEditingController();
   TextEditingController senhaCtrl = TextEditingController();
@@ -38,64 +42,112 @@ class _LoginPageState extends State<LoginPage> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  Container(
-                    color: Colors.white,
-                    child: TextFormField(
-                      controller: loginCtrl,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(hintText: "LOGIN"),
-                      validator: (value) {
-                        if (value == "") {
-                          return "Campo Obrigatório!";
-                        }
+                  Observer(
+                    builder: (_) {
+                      return Container(
+                        color: Colors.white,
+                        child: TextFormField(
+                          controller: loginCtrl,
+                          enabled: !controller.isLoad,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(hintText: "LOGIN"),
+                          onChanged: controller.changedLogin,
+                          validator: (value) {
+                            if (value == "") {
+                              return "Campo Obrigatório!";
+                            }
 
-                        return null;
-                      },
-                    ),
+                            return null;
+                          },
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    color: Colors.white,
-                    child: TextFormField(
-                      controller: senhaCtrl,
-                      obscureText: true,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(hintText: "SENHA"),
-                      validator: (value) {
-                        if (value == "") {
-                          return "Campo Obrigatório!";
-                        }
+                  Observer(
+                    builder: (_) {
+                      return Container(
+                        color: Colors.white,
+                        child: TextFormField(
+                          controller: senhaCtrl,
+                          enabled: !controller.isLoad,
+                          obscureText: true,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(hintText: "SENHA"),
+                          onChanged: controller.changeSenha,
+                          validator: (value) {
+                            if (value == "") {
+                              return "Campo Obrigatório!";
+                            }
 
-                        return null;
-                      },
-                    ),
+                            return null;
+                          },
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
-                    height: 55,
-                    width: double.infinity,
-                    child: RaisedButton(
-                      color: Color(0xFFF58633),
-                      textColor: Colors.white,
-                      child: Text(
-                        "ENTRAR",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SelecaoEmpresa(Usuario(
-                                  "Jhon Testes",
-                                  "Analista de QA",
-                                  "Placeholder inc",
-                                  null))));
-                        }
-                      },
-                    ),
+                  Observer(
+                    builder: (_) {
+                      if (controller.isLoad == true) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return SizedBox(
+                          height: 55,
+                          width: double.infinity,
+                          child: RaisedButton(
+                            color: Color(COR_PRIMARY),
+                            textColor: Colors.white,
+                            child: Text(
+                              "ENTRAR",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: controller.isValid
+                                ? () async {
+                                    if (_formKey.currentState.validate()) {
+                                      await controller.login(
+                                          loginCtrl.text, senhaCtrl.text);
+
+                                      if (controller.usuario.nomeApresentacao !=
+                                          null) {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SelecaoEmpresa(
+                                                        controller.usuario)));
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Text("Atenção"),
+                                                content: Text(
+                                                    "Usuário ou senha inválidos"),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    child: Text("OK"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  )
+                                                ],
+                                              );
+                                            });
+                                      }
+                                    }
+                                  }
+                                : null,
+                          ),
+                        );
+                      }
+                    },
                   )
                 ],
               ),

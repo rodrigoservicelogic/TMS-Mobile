@@ -15,10 +15,13 @@ class SelecaoEmpresa extends StatefulWidget {
 class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
   List empresas = List();
   String empresaSelected;
+  Usuario user = Usuario();
 
   @override
   void initState() {
     super.initState();
+
+    user = widget.usuario;
 
     empresas = [
       {'id': 1, 'nome': 'Empresa 1'},
@@ -64,7 +67,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
               ),
               Center(
                 child: Text(
-                  widget.usuario.nomeApresentacao.toUpperCase(),
+                  user.nomeApresentacao.toUpperCase(),
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -86,7 +89,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                         onChanged: (value) {
                           empresaSelected = value;
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage(widget.usuario)));
+                              builder: (context) => HomePage(user)));
                         },
                         items: empresas
                             .map<DropdownMenuItem<String>>((var empresa) {
