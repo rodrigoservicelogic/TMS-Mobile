@@ -79,28 +79,40 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             SizedBox(
               height: 13,
             ),
-            DateTimePicker(
-              labelText: "De:",
-              selectedDate: _dataInicial,
-              selectDate: (DateTime date) {
-                print(date);
-                setState(() {
-                  _dataInicial = date;
-                });
-              },
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            DateTimePicker(
-              labelText: "Até:",
-              selectedDate: _dataFinal,
-              selectDate: (DateTime date) {
-                print(date);
-                setState(() {
-                  _dataFinal = date;
-                });
-              },
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Expanded(
+                  flex: 4,
+                  child: DateTimePicker(
+                    labelText: "De:",
+                    valueStyle: TextStyle(color: Colors.red),
+                    selectedDate: _dataInicial,
+                    selectDate: (DateTime date) {
+                      print(date);
+                      setState(() {
+                        _dataInicial = date;
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  width: 15,
+                ),
+                Expanded(
+                  flex: 4,
+                  child: DateTimePicker(
+                    labelText: "Até:",
+                    selectedDate: _dataFinal,
+                    selectDate: (DateTime date) {
+                      print(date);
+                      setState(() {
+                        _dataFinal = date;
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 13,
@@ -160,7 +172,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
               }).toList(),
             ),
             SizedBox(
-              height: 90,
+              height: 200,
             ),
             Container(
               height: 60,
