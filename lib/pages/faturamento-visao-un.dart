@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class FaturamentoVisaoUn extends StatefulWidget {
   final PageController pageController;
@@ -15,12 +16,19 @@ class FaturamentoVisaoUn extends StatefulWidget {
 class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
   DateTime _dataInicial, _dataFinal;
 
+  _generateData() {
+    var pieData = [
+      new Task('Matriz', '2.000.000,00', colorVal)
+    ]
+  }
+
   @override
   void initState() {
     super.initState();
 
     _dataInicial = DateTime.now();
     _dataFinal = DateTime.now();
+    _generateData();
   }
 
   BoxDecoration myBoxDecoration() {
@@ -76,26 +84,40 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
             SizedBox(
               height: 13,
             ),
-            DateTimePicker(
-              labelText: "De:",
-              selectedDate: _dataInicial,
-              selectDate: (DateTime date) {
-                setState(() {
-                  _dataInicial = date;
-                });
-              },
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            DateTimePicker(
-              labelText: "Até:",
-              selectedDate: _dataFinal,
-              selectDate: (DateTime date) {
-                setState(() {
-                  _dataFinal = date;
-                });
-              },
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Expanded(
+                  flex: 4,
+                  child: DateTimePicker(
+                    labelText: "De:",
+                    valueStyle: TextStyle(color: Colors.red),
+                    selectedDate: _dataInicial,
+                    selectDate: (DateTime date) {
+                      print(date);
+                      setState(() {
+                        _dataInicial = date;
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  width: 15,
+                ),
+                Expanded(
+                  flex: 4,
+                  child: DateTimePicker(
+                    labelText: "Até:",
+                    selectedDate: _dataFinal,
+                    selectDate: (DateTime date) {
+                      print(date);
+                      setState(() {
+                        _dataInicial = date;
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 13,
@@ -126,7 +148,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   SizedBox(
-                    height: 9,
+                    width: 8,
                   ),
                   Text(
                     "Mesmo Período (Ano Anterior):",
@@ -136,7 +158,8 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                         color: Color(0xFF606062)),
                   ),
                   SizedBox(
-                    height: 5,
+                    width: 1,
+                    height: 1,
                   ),
                   Text(
                     "%",
@@ -146,7 +169,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                         color: Color(0xFF606062)),
                   ),
                   SizedBox(
-                    height: 5,
+                    width: 15,
                   ),
                 ],
               ),
@@ -215,19 +238,83 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(
-                      height: 10,
+                      width: 40,
                     ),
-                    Icon(Icons.grid_on, color: Color(COR_PRIMARY)),
-                    Icon(Icons.donut_large, color: Color(0xFFbdbfc1)),
-                    SizedBox(
-                      height: 10,
+                    IconButton(
+                      icon: Icon(Icons.grid_on, color: Color(COR_PRIMARY)),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.donut_large, color: Color(0xFFbdbfc1)),
+                      onPressed: () {},
                     ),
                   ],
                 ),
               ),
             ),
             SizedBox(
+              height: 13,
+            ),
+            SizedBox(
               height: 150,
+              child: DataTable(
+                columns: [
+                  DataColumn(
+                      label: Text('Und. de Negócio',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 7,
+                            color: Colors.black),
+                        textAlign: TextAlign.center,)),
+                  DataColumn(
+                      label: Text('2020 (R\$)',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Colors.black),
+                        textAlign: TextAlign.center,)),
+                  DataColumn(
+                      label: Text('%',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.black),
+                        textAlign: TextAlign.center,))
+                ],
+                rows: [
+                  DataRow(cells: [
+                    DataCell(Text('Matriz')),
+                    DataCell(Text('2.000.000,00')),
+                    DataCell(Text('33,33')),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Filial A')),
+                    DataCell(Text('1.000.000,00')),
+                    DataCell(Text('16,66')),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Filial B')),
+                    DataCell(Text('1.500.000,00')),
+                    DataCell(Text('25,00')),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Filial C')),
+                    DataCell(Text('1.500.000,00')),
+                    DataCell(Text('25,00')),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Total',
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                    DataCell(Text('6.000.000,00',
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                    DataCell(Text('100,00',
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                  ]),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 200,
             ),
             Container(
               height: 60,
@@ -254,4 +341,14 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
       ),
     );
   }
+}
+
+class Task{
+  String task;
+  String taskValue;
+  double taskPercent;
+  Color colorVal;
+
+  Task(this.task, this.taskValue, this.taskPercent, this.colorVal);
+
 }
