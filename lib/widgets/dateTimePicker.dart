@@ -8,7 +8,7 @@ class DateTimePicker extends StatelessWidget {
       this.selectedDate,
       this.selectedTime,
       this.selectDate,
-      this.selectTime})
+      this.selectTime, TextStyle valueStyle})
       : super(key: key);
 
   final String labelText;
