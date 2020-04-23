@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/pages/login-page.dart';
 
+import 'filtro-agregado.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final PageController pageCtrl = PageController();
   @override
   void initState() {
     super.initState();
 
     Future.delayed(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginPage()));
+          MaterialPageRoute(builder: (context) => FiltroAgregado(pageCtrl)));
     });
   }
 

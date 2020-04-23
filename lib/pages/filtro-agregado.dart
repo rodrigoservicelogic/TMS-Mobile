@@ -3,16 +3,16 @@ import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
-class FiltroFaturamento extends StatefulWidget {
+class FiltroAgregado extends StatefulWidget {
   final PageController pageController;
 
-  FiltroFaturamento(this.pageController);
+  FiltroAgregado(this.pageController);
 
   @override
-  _FiltroFaturamentoState createState() => _FiltroFaturamentoState();
+  _FiltroAgregadoState createState() => _FiltroAgregadoState();
 }
 
-class _FiltroFaturamentoState extends State<FiltroFaturamento> {
+class _FiltroAgregadoState extends State<FiltroAgregado> {
   DateTime _dataInicial, _dataFinal;
   List<String> _unidades = ['Unidade 1', 'Unidade 2', 'Unidade 3', 'Unidade 4'];
   String _selectedUnidade;
