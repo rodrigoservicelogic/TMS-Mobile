@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/util/size-config.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
+
+import 'faturamento-page.dart';
+import 'faturamento-visao-un.dart';
 
 class FiltroFaturamento extends StatefulWidget {
   final PageController pageController;
@@ -33,6 +37,8 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Scaffold(
       endDrawer: DrawerPage(widget.pageController),
       appBar: AppBar(
@@ -83,7 +89,6 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Expanded(
-                  flex: 4,
                   child: DateTimePicker(
                     labelText: "De:",
                     valueStyle: TextStyle(color: Colors.red),
@@ -100,7 +105,6 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   width: 15,
                 ),
                 Expanded(
-                  flex: 4,
                   child: DateTimePicker(
                     labelText: "Até:",
                     selectedDate: _dataFinal,
@@ -172,7 +176,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
               }).toList(),
             ),
             SizedBox(
-              height: 200,
+              height: 100,
             ),
             Container(
               height: 60,
@@ -189,7 +193,11 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              FaturamentoPage(widget.pageController)));
+                    },
                   ),
                 ),
               ),

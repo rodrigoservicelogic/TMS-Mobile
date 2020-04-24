@@ -44,13 +44,16 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
           ),
           Column(
             children: <Widget>[
-              SizedBox(
-                height: 100,
-              ),
-              Center(
-                child: Image.asset(
-                  "images/logoServiceLogic.png",
-                  width: 300,
+              // SizedBox(
+              //   height: 100,
+              // ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                child: Center(
+                  child: Image.asset(
+                    "images/logoServiceLogic.png",
+                    width: 300,
+                  ),
                 ),
               ),
               SizedBox(
@@ -81,26 +84,28 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                     width: double.infinity,
                     padding: EdgeInsets.only(left: 10.0),
                     color: Colors.white,
-                    child: DropdownButton(
-                        hint: Text(
-                            'Selecione a Empresa'), // Not necessary for Option 1
-                        value: empresaSelected,
-                        isExpanded: true,
-                        onChanged: (value) {
-                          empresaSelected = value;
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage(user)));
-                        },
-                        items: empresas
-                            .map<DropdownMenuItem<String>>((var empresa) {
-                          return DropdownMenuItem<String>(
-                            value: empresa["nome"],
-                            child: Text(
-                              empresa["nome"],
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          );
-                        }).toList()),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                          hint: Text(
+                              'Selecione a Empresa'), // Not necessary for Option 1
+                          value: empresaSelected,
+                          isExpanded: true,
+                          onChanged: (value) {
+                            empresaSelected = value;
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => HomePage(user)));
+                          },
+                          items: empresas
+                              .map<DropdownMenuItem<String>>((var empresa) {
+                            return DropdownMenuItem<String>(
+                              value: empresa["nome"],
+                              child: Text(
+                                empresa["nome"],
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            );
+                          }).toList()),
+                    ),
                   ),
                 ),
               )

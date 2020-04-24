@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/pages/login-page.dart';
 
-import 'faturamento-visao-un.dart';
-
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -16,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => FaturamentoVisaoUn(pageCtrl)));
+          MaterialPageRoute(builder: (context) => LoginPage()));
     });
   }
 

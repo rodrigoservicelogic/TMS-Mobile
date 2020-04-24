@@ -53,12 +53,12 @@ class _DrawerPageState extends State<DrawerPage> {
             DrawerTile("home", "Início", widget.pageCtrl, 0),
             DrawerTile(
                 "images/icon_resultados.png", "Resultados", widget.pageCtrl, 1),
-            DrawerTile("images/icon_despesas_viagem.PNG", "Despesas de Viagem",
+            DrawerTile("images/icon_despesas_viagem.png", "Despesas de Viagem",
                 widget.pageCtrl, 2),
-            DrawerTile("images/icon_comprovante_entrega.PNG",
+            DrawerTile("images/icon_comprovante_entrega.png",
                 "Comprovante de Entrega", widget.pageCtrl, 3),
             DrawerTile(
-                "images/icon_e_papeleta.PNG", "e-Papeleta", widget.pageCtrl, 4),
+                "images/icon_e_papeleta.png", "e-Papeleta", widget.pageCtrl, 4),
           ],
         ),
       ),

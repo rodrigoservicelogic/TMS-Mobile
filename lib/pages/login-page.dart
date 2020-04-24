@@ -26,17 +26,20 @@ class _LoginPageState extends State<LoginPage> {
                 image: AssetImage("images/bg_1.png"), fit: BoxFit.cover)),
         child: ListView(
           children: <Widget>[
-            SizedBox(
-              height: 100,
-            ),
-            Center(
-              child: Image.asset(
-                "images/logoServiceLogic.png",
-                width: 300,
+            // SizedBox(
+            //   height: 100,
+            // ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+              child: Center(
+                child: Image.asset(
+                  "images/logoServiceLogic.png",
+                  width: 300,
+                ),
               ),
             ),
             SizedBox(
-              height: 200,
+              height: 20,
             ),
             Form(
               key: _formKey,

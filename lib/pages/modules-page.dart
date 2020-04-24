@@ -15,6 +15,15 @@ class ModuleSelectionPage extends StatefulWidget {
 }
 
 class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
+  Usuario usuario = Usuario();
+
+  @override
+  void initState() {
+    super.initState();
+
+    usuario = widget.usuarioLogado;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,19 +53,16 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
                     height: 50,
                   ),
                   ProfileCard(
-                    widget.usuarioLogado,
+                    usuario,
                   ),
                   SizedBox(
                     height: 35,
                   ),
                   CardButton(
-                    Image.asset(
-                      "images/icon_resultados.png",
-                      fit: BoxFit.fitHeight,
-                    ),
-                    "RESULTADOS",
-                    () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                    icon: "images/icon_resultados.png",
+                    text: "RESULTADOS",
+                    onPressed: () async {
+                      await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
                               ResultadoPage(widget.pageCtrl)));
                     },
@@ -65,34 +71,25 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
                     height: 5,
                   ),
                   CardButton(
-                    Image.asset(
-                      "images/icon_despesas_viagem.png",
-                      fit: BoxFit.fitHeight,
-                    ),
-                    "DESPESAS\n DE VIAGEM",
-                    () {},
+                    icon: "images/icon_despesas_viagem.png",
+                    text: "DESPESAS\n DE VIAGEM",
+                    onPressed: () {},
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   CardButton(
-                    Image.asset(
-                      "images/icon_comprovante_entrega.png",
-                      fit: BoxFit.fitHeight,
-                    ),
-                    "COMPROVANTE\n DE ENTREGA",
-                    () {},
+                    icon: "images/icon_comprovante_entrega.png",
+                    text: "COMPROVANTE\n DE ENTREGA",
+                    onPressed: () {},
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   CardButton(
-                    Image.asset(
-                      "images/icon_e_papeleta.png",
-                      fit: BoxFit.fitHeight,
-                    ),
-                    "e-PAPELETA",
-                    () {},
+                    icon: "images/icon_e_papeleta.png",
+                    text: "e-PAPELETA",
+                    onPressed: () {},
                   ),
                 ],
               ),
