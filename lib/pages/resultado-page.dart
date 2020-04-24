@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
+import 'agregado/filtro-agregado.dart';
 import 'filtro-faturamento.dart';
 
 class ResultadoPage extends StatefulWidget {
@@ -100,7 +101,11 @@ class _ResultadoPage extends State<ResultadoPage> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                FiltroAgregado(widget.pageCtrl)));
+                      },
                     ),
                   ),
                   SizedBox(

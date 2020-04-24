@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/pages/login-page.dart';
 
-import 'filtro-agregado.dart';
+import 'agregado/filtro-agregado.dart';
+
 
 class SplashScreen extends StatefulWidget {
   @override

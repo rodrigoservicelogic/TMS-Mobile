@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:tms_mobile/controller/agregado-controller.dart';
 import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/pages/agregado/resultado-agregado.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
+
+import '../resultado-page.dart';
 
 class FiltroAgregado extends StatefulWidget {
   final PageController pageController;
@@ -173,7 +176,11 @@ class _FiltroAgregadoState extends State<FiltroAgregado> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ResultadoAgregado(widget.pageController)));
+                    },
                   ),
                 ),
               ),
@@ -196,7 +203,11 @@ class _FiltroAgregadoState extends State<FiltroAgregado> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ResultadoPage(widget.pageController)));
+                    },
                   ),
                 ),
               ),
