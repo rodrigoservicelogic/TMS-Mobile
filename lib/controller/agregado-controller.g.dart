@@ -9,31 +9,58 @@ part of 'agregado-controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AgregadoController on AgregadoControllerBase, Store {
-  final _$unidadesAtom = Atom(name: 'AgregadoControllerBase.unidades');
+  final _$agregadosAtom = Atom(name: 'AgregadoControllerBase.agregados');
 
   @override
-  List<String> get unidades {
-    _$unidadesAtom.context.enforceReadPolicy(_$unidadesAtom);
-    _$unidadesAtom.reportObserved();
-    return super.unidades;
+  List<String> get agregados {
+    _$agregadosAtom.context.enforceReadPolicy(_$agregadosAtom);
+    _$agregadosAtom.reportObserved();
+    return super.agregados;
   }
 
   @override
-  set unidades(List<String> value) {
-    _$unidadesAtom.context.conditionallyRunInAction(() {
-      super.unidades = value;
-      _$unidadesAtom.reportChanged();
-    }, _$unidadesAtom, name: '${_$unidadesAtom.name}_set');
+  set agregados(List<String> value) {
+    _$agregadosAtom.context.conditionallyRunInAction(() {
+      super.agregados = value;
+      _$agregadosAtom.reportChanged();
+    }, _$agregadosAtom, name: '${_$agregadosAtom.name}_set');
+  }
+
+  final _$placasAtom = Atom(name: 'AgregadoControllerBase.placas');
+
+  @override
+  List<String> get placas {
+    _$placasAtom.context.enforceReadPolicy(_$placasAtom);
+    _$placasAtom.reportObserved();
+    return super.placas;
+  }
+
+  @override
+  set placas(List<String> value) {
+    _$placasAtom.context.conditionallyRunInAction(() {
+      super.placas = value;
+      _$placasAtom.reportChanged();
+    }, _$placasAtom, name: '${_$placasAtom.name}_set');
   }
 
   final _$AgregadoControllerBaseActionController =
       ActionController(name: 'AgregadoControllerBase');
 
   @override
-  dynamic popularListaUnidade() {
+  dynamic popularListaAgregados() {
     final _$actionInfo = _$AgregadoControllerBaseActionController.startAction();
     try {
-      return super.popularListaUnidade();
+      return super.popularListaAgregados();
+    } finally {
+      _$AgregadoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic popularListaPlacas() {
+    final _$actionInfo = _$AgregadoControllerBaseActionController.startAction();
+    try {
+      return super.popularListaPlacas();
     } finally {
       _$AgregadoControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +68,8 @@ mixin _$AgregadoController on AgregadoControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'unidades: ${unidades.toString()}';
+    final string =
+        'agregados: ${agregados.toString()},placas: ${placas.toString()}';
     return '{$string}';
   }
 }
