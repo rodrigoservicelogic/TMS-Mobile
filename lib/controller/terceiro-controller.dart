@@ -1,9 +1,9 @@
 import 'package:mobx/mobx.dart';
 part 'terceiro-controller.g.dart';
 
-class TerceiroController = AgregadoControllerBase with _$TerceiroController;
+class TerceiroController = TerceiroControllerBase with _$TerceiroController;
 
-abstract class AgregadoControllerBase with Store {
+abstract class TerceiroControllerBase with Store {
   @observable
   List<String> terceiros = List();
   @observable
@@ -17,9 +17,9 @@ abstract class AgregadoControllerBase with Store {
   @observable
   String impostoPerc = "33%";
   @observable
-  String ferePagoTerVal = "20.000,00";
+  String fretePagoTerVal = "20.000,00";
   @observable
-  String ferePagoTerPerc = "66%";
+  String fretePagoTerPerc = "66%";
   @observable
   String resultadoVal = "20.000,00";
   @observable

@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:tms_mobile/controller/empresa-controller.dart';
 import 'package:tms_mobile/global.dart';
-import 'package:tms_mobile/util/size-config.dart';
+import 'package:tms_mobile/pages/empresa/resultado-empresa.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
-import 'faturamento-page.dart';
+import '../resultado-page.dart';
 
-class FiltroFaturamento extends StatefulWidget {
+class FiltroEmpresa extends StatefulWidget {
   final PageController pageController;
 
-  FiltroFaturamento(this.pageController);
+  FiltroEmpresa(this.pageController);
 
   @override
-  _FiltroFaturamentoState createState() => _FiltroFaturamentoState();
+  _FiltroEmpresaState createState() => _FiltroEmpresaState();
 }
 
-class _FiltroFaturamentoState extends State<FiltroFaturamento> {
+class _FiltroEmpresaState extends State<FiltroEmpresa> {
   DateTime _dataInicial, _dataFinal;
-  List<String> _unidades = ['Unidade 1', 'Unidade 2', 'Unidade 3', 'Unidade 4'];
-  String _selectedUnidade;
-  List<String> _fretes = ['Frete 1', 'Frete 2', 'Frete 3', 'Frete 4'];
-  String _selectedFrete;
-  List<String> _clientes = ['Cliente 1', 'Cliente 2', 'Cliente 3', 'Cliente 4'];
-  String _selectedCliente;
+  final controller = EmpresaController();
+  String _selectedRegime;
 
   String dropdownValue = '';
 
@@ -32,12 +30,11 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
 
     _dataInicial = DateTime.now();
     _dataFinal = DateTime.now();
+    controller.popularListaRegimes();
   }
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-
     return Scaffold(
       endDrawer: DrawerPage(widget.pageController),
       appBar: AppBar(
@@ -71,10 +68,10 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                 color: Color(COR_PRIMARY),
                 child: Center(
                   child: Text(
-                    "FATURAMENTO",
+                    "RESULTADO - EMPRESA",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 25,
+                        fontSize: 22,
                         color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
@@ -88,6 +85,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Expanded(
+                  flex: 4,
                   child: DateTimePicker(
                     labelText: "De:",
                     valueStyle: TextStyle(color: Colors.red),
@@ -104,6 +102,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   width: 15,
                 ),
                 Expanded(
+                  flex: 4,
                   child: DateTimePicker(
                     labelText: "Até:",
                     selectedDate: _dataFinal,
@@ -120,62 +119,26 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             SizedBox(
               height: 13,
             ),
-            DropdownButton(
-              hint: Text('Por Unidade de Negócio'),
-              value: _selectedUnidade,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedUnidade = newValue;
-                });
-              },
-              items: _unidades.map((unidade) {
-                return DropdownMenuItem(
-                  child: new Text(unidade),
-                  value: unidade,
-                );
-              }).toList(),
-            ),
+            Observer(builder: (_) {
+              return DropdownButton(
+                hint: Text('Por Regime'),
+                value: _selectedRegime,
+                isExpanded: true,
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedRegime = newValue;
+                  });
+                },
+                items: controller.regimes.map((regime) {
+                  return DropdownMenuItem(
+                    child: new Text(regime),
+                    value: regime,
+                  );
+                }).toList(),
+              );
+            }),
             SizedBox(
-              height: 13,
-            ),
-            DropdownButton(
-              hint: Text('Por Tipo de Frete'),
-              value: _selectedFrete,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedFrete = newValue;
-                });
-              },
-              items: _fretes.map((frete) {
-                return DropdownMenuItem(
-                  child: new Text(frete),
-                  value: frete,
-                );
-              }).toList(),
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            DropdownButton(
-              hint: Text('Por Cliente'),
-              value: _selectedCliente,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedCliente = newValue;
-                });
-              },
-              items: _clientes.map((cliente) {
-                return DropdownMenuItem(
-                  child: new Text(cliente),
-                  value: cliente,
-                );
-              }).toList(),
-            ),
-            SizedBox(
-              height: 100,
+              height: 300,
             ),
             Container(
               height: 60,
@@ -194,8 +157,8 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              FaturamentoPage(widget.pageController)));
+                            builder: (context) =>
+                                ResultadoEmpresa(widget.pageController)));
                     },
                   ),
                 ),
@@ -219,7 +182,11 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ResultadoPage(widget.pageController)));
+                    },
                   ),
                 ),
               ),

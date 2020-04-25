@@ -8,8 +8,8 @@ part of 'terceiro-controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$TerceiroController on AgregadoControllerBase, Store {
-  final _$terceirosAtom = Atom(name: 'AgregadoControllerBase.terceiros');
+mixin _$TerceiroController on TerceiroControllerBase, Store {
+  final _$terceirosAtom = Atom(name: 'TerceiroControllerBase.terceiros');
 
   @override
   List<String> get terceiros {
@@ -26,7 +26,7 @@ mixin _$TerceiroController on AgregadoControllerBase, Store {
     }, _$terceirosAtom, name: '${_$terceirosAtom.name}_set');
   }
 
-  final _$placasAtom = Atom(name: 'AgregadoControllerBase.placas');
+  final _$placasAtom = Atom(name: 'TerceiroControllerBase.placas');
 
   @override
   List<String> get placas {
@@ -43,7 +43,7 @@ mixin _$TerceiroController on AgregadoControllerBase, Store {
     }, _$placasAtom, name: '${_$placasAtom.name}_set');
   }
 
-  final _$receitaAtom = Atom(name: 'AgregadoControllerBase.receita');
+  final _$receitaAtom = Atom(name: 'TerceiroControllerBase.receita');
 
   @override
   String get receita {
@@ -60,7 +60,7 @@ mixin _$TerceiroController on AgregadoControllerBase, Store {
     }, _$receitaAtom, name: '${_$receitaAtom.name}_set');
   }
 
-  final _$despesaAtom = Atom(name: 'AgregadoControllerBase.despesa');
+  final _$despesaAtom = Atom(name: 'TerceiroControllerBase.despesa');
 
   @override
   String get despesa {
@@ -77,7 +77,7 @@ mixin _$TerceiroController on AgregadoControllerBase, Store {
     }, _$despesaAtom, name: '${_$despesaAtom.name}_set');
   }
 
-  final _$impostoValAtom = Atom(name: 'AgregadoControllerBase.impostoVal');
+  final _$impostoValAtom = Atom(name: 'TerceiroControllerBase.impostoVal');
 
   @override
   String get impostoVal {
@@ -94,7 +94,7 @@ mixin _$TerceiroController on AgregadoControllerBase, Store {
     }, _$impostoValAtom, name: '${_$impostoValAtom.name}_set');
   }
 
-  final _$impostoPercAtom = Atom(name: 'AgregadoControllerBase.impostoPerc');
+  final _$impostoPercAtom = Atom(name: 'TerceiroControllerBase.impostoPerc');
 
   @override
   String get impostoPerc {
@@ -111,43 +111,43 @@ mixin _$TerceiroController on AgregadoControllerBase, Store {
     }, _$impostoPercAtom, name: '${_$impostoPercAtom.name}_set');
   }
 
-  final _$ferePagoTerValAtom =
-      Atom(name: 'AgregadoControllerBase.ferePagoTerVal');
+  final _$fretePagoTerValAtom =
+      Atom(name: 'TerceiroControllerBase.fretePagoTerVal');
 
   @override
-  String get ferePagoTerVal {
-    _$ferePagoTerValAtom.context.enforceReadPolicy(_$ferePagoTerValAtom);
-    _$ferePagoTerValAtom.reportObserved();
-    return super.ferePagoTerVal;
+  String get fretePagoTerVal {
+    _$fretePagoTerValAtom.context.enforceReadPolicy(_$fretePagoTerValAtom);
+    _$fretePagoTerValAtom.reportObserved();
+    return super.fretePagoTerVal;
   }
 
   @override
-  set ferePagoTerVal(String value) {
-    _$ferePagoTerValAtom.context.conditionallyRunInAction(() {
-      super.ferePagoTerVal = value;
-      _$ferePagoTerValAtom.reportChanged();
-    }, _$ferePagoTerValAtom, name: '${_$ferePagoTerValAtom.name}_set');
+  set fretePagoTerVal(String value) {
+    _$fretePagoTerValAtom.context.conditionallyRunInAction(() {
+      super.fretePagoTerVal = value;
+      _$fretePagoTerValAtom.reportChanged();
+    }, _$fretePagoTerValAtom, name: '${_$fretePagoTerValAtom.name}_set');
   }
 
-  final _$ferePagoTerPercAtom =
-      Atom(name: 'AgregadoControllerBase.ferePagoTerPerc');
+  final _$fretePagoTerPercAtom =
+      Atom(name: 'TerceiroControllerBase.fretePagoTerPerc');
 
   @override
-  String get ferePagoTerPerc {
-    _$ferePagoTerPercAtom.context.enforceReadPolicy(_$ferePagoTerPercAtom);
-    _$ferePagoTerPercAtom.reportObserved();
-    return super.ferePagoTerPerc;
+  String get fretePagoTerPerc {
+    _$fretePagoTerPercAtom.context.enforceReadPolicy(_$fretePagoTerPercAtom);
+    _$fretePagoTerPercAtom.reportObserved();
+    return super.fretePagoTerPerc;
   }
 
   @override
-  set ferePagoTerPerc(String value) {
-    _$ferePagoTerPercAtom.context.conditionallyRunInAction(() {
-      super.ferePagoTerPerc = value;
-      _$ferePagoTerPercAtom.reportChanged();
-    }, _$ferePagoTerPercAtom, name: '${_$ferePagoTerPercAtom.name}_set');
+  set fretePagoTerPerc(String value) {
+    _$fretePagoTerPercAtom.context.conditionallyRunInAction(() {
+      super.fretePagoTerPerc = value;
+      _$fretePagoTerPercAtom.reportChanged();
+    }, _$fretePagoTerPercAtom, name: '${_$fretePagoTerPercAtom.name}_set');
   }
 
-  final _$resultadoValAtom = Atom(name: 'AgregadoControllerBase.resultadoVal');
+  final _$resultadoValAtom = Atom(name: 'TerceiroControllerBase.resultadoVal');
 
   @override
   String get resultadoVal {
@@ -165,7 +165,7 @@ mixin _$TerceiroController on AgregadoControllerBase, Store {
   }
 
   final _$resultadoPercAtom =
-      Atom(name: 'AgregadoControllerBase.resultadoPerc');
+      Atom(name: 'TerceiroControllerBase.resultadoPerc');
 
   @override
   String get resultadoPerc {
@@ -182,33 +182,33 @@ mixin _$TerceiroController on AgregadoControllerBase, Store {
     }, _$resultadoPercAtom, name: '${_$resultadoPercAtom.name}_set');
   }
 
-  final _$AgregadoControllerBaseActionController =
-      ActionController(name: 'AgregadoControllerBase');
+  final _$TerceiroControllerBaseActionController =
+      ActionController(name: 'TerceiroControllerBase');
 
   @override
   dynamic popularListaTerceiros() {
-    final _$actionInfo = _$AgregadoControllerBaseActionController.startAction();
+    final _$actionInfo = _$TerceiroControllerBaseActionController.startAction();
     try {
       return super.popularListaTerceiros();
     } finally {
-      _$AgregadoControllerBaseActionController.endAction(_$actionInfo);
+      _$TerceiroControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic popularListaPlacas() {
-    final _$actionInfo = _$AgregadoControllerBaseActionController.startAction();
+    final _$actionInfo = _$TerceiroControllerBaseActionController.startAction();
     try {
       return super.popularListaPlacas();
     } finally {
-      _$AgregadoControllerBaseActionController.endAction(_$actionInfo);
+      _$TerceiroControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   String toString() {
     final string =
-        'terceiros: ${terceiros.toString()},placas: ${placas.toString()},receita: ${receita.toString()},despesa: ${despesa.toString()},impostoVal: ${impostoVal.toString()},impostoPerc: ${impostoPerc.toString()},ferePagoTerVal: ${ferePagoTerVal.toString()},ferePagoTerPerc: ${ferePagoTerPerc.toString()},resultadoVal: ${resultadoVal.toString()},resultadoPerc: ${resultadoPerc.toString()}';
+        'terceiros: ${terceiros.toString()},placas: ${placas.toString()},receita: ${receita.toString()},despesa: ${despesa.toString()},impostoVal: ${impostoVal.toString()},impostoPerc: ${impostoPerc.toString()},fretePagoTerVal: ${fretePagoTerVal.toString()},fretePagoTerPerc: ${fretePagoTerPerc.toString()},resultadoVal: ${resultadoVal.toString()},resultadoPerc: ${resultadoPerc.toString()}';
     return '{$string}';
   }
 }
