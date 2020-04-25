@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tms_mobile/controller/faturamento-cliente-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
@@ -17,6 +18,10 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
   DateTime _dataInicial;
   List empresas;
   String empresaSelected;
+
+  final controller = FaturamentoClienteController();
+
+  MediaQueryData queryData;
 
   String dropdownValue = '';
   bool visaoTabela = true;
@@ -151,7 +156,7 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                 decoration: myBoxDecoration(),
                 child: Center(
                   child: Text(
-                    "R\$ 6.000,00",
+                    '${controller.valor}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -203,7 +208,7 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                     decoration: myBoxDecoration(),
                     child: Center(
                       child: Text(
-                        "R\$ 6.000,00",
+                        '${controller.valor}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -298,68 +303,80 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                 ),
               ),
             ),
-            Visibility(
-              visible: visaoTabela,
-              child: SingleChildScrollView(
-                child: DataTable(
-                  columns: [
-                    DataColumn(
-                        label: Text(
-                      'Tipo de Cliente',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.black),
-                      textAlign: TextAlign.center,
-                    )),
-                    DataColumn(
-                      label: Text(
-                        '2020(R\$)',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.black),
-                        textAlign: TextAlign.center,
-                      ),
+            Center(
+              child: Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width - 50,
+                child: Visibility(
+                  visible: visaoTabela,
+                  child: SingleChildScrollView(
+                    child: DataTable(
+                      columns: [
+                        DataColumn(
+                            label: Text(
+                          'Tipo de Cliente',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.black),
+                          textAlign: TextAlign.center,
+                        )),
+                        DataColumn(
+                          label: Text(
+                            '${controller.anoAtual}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                color: Colors.black),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        DataColumn(
+                            label: Text(
+                          '%',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.black),
+                          textAlign: TextAlign.center,
+                        )),
+                      ],
+                      rows: [
+                        DataRow(cells: [
+                           DataCell(Text('Tipo 1')),
+                          DataCell(Text('9,50')),
+                          DataCell(Text('4')),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Tipo 2')),
+                          DataCell(Text('9,50')),
+                          DataCell(Text('4')),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Tipo 3')),
+                          DataCell(Text('50')),
+                          DataCell(Text('45')),
+                        ]),
+                      ],
                     ),
-                    DataColumn(
-                        label: Text(
-                      '%',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.black),
-                      textAlign: TextAlign.center,
-                    )),
-                  ],
-                  rows: [
-                    DataRow(cells: [
-                      DataCell(Text('Tipo 1')),
-                      DataCell(Text('6,50')),
-                      DataCell(Text('5')),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text('Tipo 2')),
-                      DataCell(Text('9,50')),
-                      DataCell(Text('4')),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text('Tipo 3')),
-                      DataCell(Text('50')),
-                      DataCell(Text('45')),
-                    ]),
-                  ],
+                  ),
                 ),
               ),
             ),
-            Visibility(
-              visible: visaoGrafico,
-              child: SizedBox(
-                height: 200.0,
-                child: charts.BarChart(
-                  series,
-                  animate: true,
-                  vertical: false,
+            Center(
+              child: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width - 50,
+                child: Visibility(
+                  visible: visaoGrafico,
+                  child: SizedBox(
+                    height: 200.0,
+                    child: charts.BarChart(
+                      series,
+                      animate: true,
+                      vertical: false,
+                    ),
+                  ),
                 ),
               ),
             ),
