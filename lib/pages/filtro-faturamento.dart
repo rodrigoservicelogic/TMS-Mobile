@@ -212,7 +212,9 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.pop(context);
+                    },
                   ),
                 ),
               ),
