@@ -20,7 +20,7 @@ class ResultadoTerceiro extends StatefulWidget {
 class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
   DateTime _dataInicial, _dataFinal;
   final controller = TerceiroController();
-  String _selectedAgregado;
+  String _selectedTerceiro;
   String _selectedPlaca;
   MediaQueryData queryData;
 
@@ -77,7 +77,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                 color: Color(COR_PRIMARY),
                 child: Center(
                   child: Text(
-                    "RESULTADO - AGREGADO",
+                    "RESULTADO - TERCEIRO",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
@@ -131,14 +131,14 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Observer(builder: (_) {
               return DropdownButton(
                 hint: Text(
-                  'Todos os Agregados',
+                  'Todos os Terceiros',
                   style: TextStyle(color: Color(COR_PRIMARY)),
                 ),
-                value: _selectedAgregado,
+                value: _selectedTerceiro,
                 isExpanded: true,
                 onChanged: (newValue) {
                   setState(() {
-                    _selectedAgregado = newValue;
+                    _selectedTerceiro = newValue;
                   });
                 },
                 items: controller.terceiros.map((agregado) {
