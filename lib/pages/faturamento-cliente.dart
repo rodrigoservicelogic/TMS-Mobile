@@ -398,7 +398,9 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.pop(context);
+                    },
                   ),
                 ),
               ),

@@ -202,7 +202,9 @@ class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.pop(context);
+                    },
                   ),
                 ),
               ),

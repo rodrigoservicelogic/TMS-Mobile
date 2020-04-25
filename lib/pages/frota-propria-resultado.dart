@@ -416,7 +416,9 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.pop(context);
+                    },
                   ),
                 ),
               ),
