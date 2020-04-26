@@ -1,11 +1,12 @@
 import 'package:mobx/mobx.dart';
-part 'terceiro-controller.g.dart';
+part 'frota-propria-controller.g.dart';
 
-class TerceiroController = TerceiroControllerBase with _$TerceiroController;
+class FrotaPropriaController = _FrotaPropriaControllerBase
+    with _$FrotaPropriaController;
 
-abstract class TerceiroControllerBase with Store {
+abstract class _FrotaPropriaControllerBase with Store {
   @observable
-  List<String> terceiros = List();
+  List<String> motorista = List();
   @observable
   List<String> placas = List();
   @observable
@@ -17,21 +18,24 @@ abstract class TerceiroControllerBase with Store {
   @observable
   String impostoPerc = "33%";
   @observable
-  String fretePagoTerVal = "20.000,00";
+  String custoFixoVal = "15.000,00";
   @observable
-  String fretePagoTerPerc = "66%";
+  String custoFixoPerc = "50%";
+  @observable
+  String custoVariavelVal = "15.000,00";
+  @observable
+  String custoVariavelPerc = "16%";
   @observable
   String resultadoVal = "20.000,00";
   @observable
   String resultadoPerc = "40,00";
 
-
   @action
-  popularListaTerceiros() {
-    terceiros.add('Terceiro 1');
-    terceiros.add('Terceiro 2');
-    terceiros.add('Terceiro 3');
-    terceiros.add('Terceiro 4');
+  popularListaMotorista() {
+    motorista.add('Motorista 1');
+    motorista.add('Motorista 2');
+    motorista.add('Motorista 3');
+    motorista.add('Motorista 4');
   }
 
   @action
@@ -41,5 +45,4 @@ abstract class TerceiroControllerBase with Store {
     placas.add('Placa 3');
     placas.add('Placa 4');
   }
-
 }

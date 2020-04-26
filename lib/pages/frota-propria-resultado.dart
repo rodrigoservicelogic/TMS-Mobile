@@ -1,38 +1,34 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:tms_mobile/controller/terceiro-controller.dart';
-import 'package:tms_mobile/global.dart';
-import 'package:tms_mobile/widgets/dateTimePicker.dart';
-import 'package:tms_mobile/widgets/drawer.dart';
+import 'package:tms_mobile/controller/frota-propria-controller.dart';
 
-import 'filtro-terceiro.dart';
+import '../global.dart';
+import '../widgets/dateTimePicker.dart';
+import '../widgets/drawer.dart';
 
-class ResultadoTerceiro extends StatefulWidget {
+class FrotaPropriaResultado extends StatefulWidget {
   final PageController pageController;
 
-  ResultadoTerceiro(this.pageController);
-
+  FrotaPropriaResultado(this.pageController);
   @override
-  _ResultadoTerceiroState createState() => _ResultadoTerceiroState();
+  _FrotaPropriaResultadoState createState() => _FrotaPropriaResultadoState();
 }
 
-class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
+class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
   DateTime _dataInicial, _dataFinal;
-  final controller = TerceiroController();
-  String _selectedTerceiro;
+  final controller = FrotaPropriaController();
+
+  String _selectedMotorista;
   String _selectedPlaca;
   MediaQueryData queryData;
 
   String dropdownValue = '';
-
   @override
   void initState() {
     super.initState();
-
     _dataInicial = DateTime.now();
     _dataFinal = DateTime.now();
-    controller.popularListaTerceiros();
-    controller.popularListaPlacas();
   }
 
   BoxDecoration myBoxDecoration(double size) {
@@ -76,10 +72,10 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                 color: Color(COR_PRIMARY),
                 child: Center(
                   child: Text(
-                    "RESULTADO - TERCEIRO",
+                    "RESULTADO - FROTA PRÓPRIA",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 22,
+                        fontSize: 20,
                         color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
@@ -130,20 +126,22 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Observer(builder: (_) {
               return DropdownButton(
                 hint: Text(
-                  'Todos os Terceiros',
-                  style: TextStyle(color: Color(COR_PRIMARY)),
+                  'Por Motorista',
+                  style: TextStyle(
+                    color: Color(COR_PRIMARY),
+                  ),
                 ),
-                value: _selectedTerceiro,
+                value: _selectedMotorista,
                 isExpanded: true,
                 onChanged: (newValue) {
                   setState(() {
-                    _selectedTerceiro = newValue;
+                    _selectedMotorista = newValue;
                   });
                 },
-                items: controller.terceiros.map((agregado) {
+                items: controller.motorista.map((motorista) {
                   return DropdownMenuItem(
-                    child: new Text(agregado),
-                    value: agregado,
+                    child: new Text(motorista),
+                    value: motorista,
                   );
                 }).toList(),
               );
@@ -151,29 +149,33 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             SizedBox(
               height: 13,
             ),
-            DropdownButton(
-              hint: Text(
-                'Todas as Placas',
-                style: TextStyle(color: Color(COR_PRIMARY)),
-              ),
-              value: _selectedPlaca,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedPlaca = newValue;
-                });
-              },
-              items: controller.placas.map((placa) {
-                return DropdownMenuItem(
-                  child: new Text(placa),
-                  value: placa,
-                );
-              }).toList(),
-            ),
+            Observer(builder: (_) {
+              return DropdownButton(
+                hint: Text(
+                  'Por Placa',
+                  style: TextStyle(
+                    color: Color(COR_PRIMARY),
+                  ),
+                ),
+                value: _selectedPlaca,
+                isExpanded: true,
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedPlaca = newValue;
+                  });
+                },
+                items: controller.placas.map((placas) {
+                  return DropdownMenuItem(
+                    child: new Text(placas),
+                    value: placas,
+                  );
+                }).toList(),
+              );
+            }),
             Center(
               child: Container(
                 height: 50,
-                width: MediaQuery.of(context).size.width - 90,
+                width: MediaQuery.of(context).size.width - 50,
                 decoration: myBoxDecoration(1.4),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -202,7 +204,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Center(
               child: Container(
                 height: 50,
-                width: MediaQuery.of(context).size.width - 90,
+                width: MediaQuery.of(context).size.width - 50,
                 decoration: myBoxDecoration(1.4),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -231,7 +233,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Center(
               child: Container(
                 height: 25,
-                width: MediaQuery.of(context).size.width - 90,
+                width: MediaQuery.of(context).size.width - 50,
                 decoration: myBoxDecoration(.3),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -267,7 +269,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Center(
               child: Container(
                 height: 25,
-                width: MediaQuery.of(context).size.width - 90,
+                width: MediaQuery.of(context).size.width - 50,
                 decoration: myBoxDecoration(.3),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -275,13 +277,13 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                     Expanded(
                       flex: 3,
                       child: Text(
-                        "Frete Pago ao Terceiro",
+                        "Custos Fixos",
                         style: TextStyle(fontWeight: FontWeight.normal),
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        '${controller.fretePagoTerVal}',
+                        '${controller.custoFixoVal}',
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                         ),
@@ -290,7 +292,43 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        '${controller.fretePagoTerPerc}',
+                        '${controller.custoFixoPerc}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+               Center(
+              child: Container(
+                height: 25,
+                width: MediaQuery.of(context).size.width - 50,
+                decoration: myBoxDecoration(.3),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        "Custos Variáveis",
+                        style: TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${controller.custoVariavelVal}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        '${controller.custoVariavelPerc}',
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                         ),
@@ -303,7 +341,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Center(
               child: Container(
                 height: 50,
-                width: MediaQuery.of(context).size.width - 90,
+                width: MediaQuery.of(context).size.width - 50,
                 decoration: myBoxDecoration(1.4),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -333,7 +371,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Center(
               child: Container(
                 height: 25,
-                width: MediaQuery.of(context).size.width - 90,
+                width: MediaQuery.of(context).size.width - 50,
                 decoration: myBoxDecoration(1.4),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -361,7 +399,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
               ),
             ),
             SizedBox(
-              height: 80,
+              height: 100,
             ),
             Container(
               height: 60,
@@ -379,9 +417,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              FiltroTerceiro(widget.pageController)));
+                       Navigator.pop(context);
                     },
                   ),
                 ),
