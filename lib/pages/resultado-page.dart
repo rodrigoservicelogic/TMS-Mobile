@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/pages/filtro-frota-propria.dart';
 import 'package:tms_mobile/pages/terceiro/filtro-terceiro.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 import 'empresa/filtro-empresa.dart';
@@ -84,7 +86,11 @@ class _ResultadoPage extends State<ResultadoPage> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                FiltroFrotaPropria(widget.pageCtrl)));
+                      },
                     ),
                   ),
                   SizedBox(
