@@ -26,9 +26,7 @@ class ProfileCard extends StatelessWidget {
     return Card(
       elevation: 4.0,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -53,7 +51,9 @@ class ProfileCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    usuario.nomeApresentacao,
+                    usuario.nomeApresentacao != null
+                        ? usuario.nomeApresentacao
+                        : "",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -64,7 +64,7 @@ class ProfileCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    usuario.cargo,
+                    usuario.cargo != null ? usuario.cargo : "",
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.black54,
@@ -74,7 +74,9 @@ class ProfileCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    usuario.empresaApresentacao,
+                    usuario.empresaApresentacao != null
+                        ? usuario.empresaApresentacao
+                        : "",
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.black54,

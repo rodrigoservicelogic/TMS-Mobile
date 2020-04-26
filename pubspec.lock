@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.9"
+  carousel_slider:
+    dependency: "direct main"
+    description:
+      name: carousel_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   charcode:
     dependency: transitive
     description:
@@ -224,6 +231,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  getflutter:
+    dependency: "direct main"
+    description:
+      name: getflutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.11"
   glob:
     dependency: transitive
     description:

@@ -8,7 +8,8 @@ class DateTimePicker extends StatelessWidget {
       this.selectedDate,
       this.selectedTime,
       this.selectDate,
-      this.selectTime, valueStyle})
+      this.selectTime,
+      valueStyle})
       : super(key: key);
 
   final String labelText;
@@ -70,10 +71,10 @@ class _InputDropdown extends StatelessWidget {
       onTap: onPressed,
       child: InputDecorator(
         decoration: InputDecoration(
-          labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
-          labelText: labelText,
-          filled: true
-        ),
+            labelStyle:
+                TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+            labelText: labelText,
+            filled: true),
         baseStyle: valueStyle,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,6 +82,7 @@ class _InputDropdown extends StatelessWidget {
           children: <Widget>[
             Text(valueText, style: valueStyle),
             Icon(Icons.arrow_drop_down,
+                size: 20,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.grey.shade700
                     : Colors.white70),

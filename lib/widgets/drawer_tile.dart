@@ -34,11 +34,18 @@ class DrawerTile extends StatelessWidget {
                     icon,
                     width: 35,
                   )
-                : Container(
-                    width: 35,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
-                    child: Icon(Icons.home, color: Color(COR_PRIMARY)),
+                : ClipOval(
+                    child: Material(
+                      color: Colors.white,
+                      child: SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: Icon(
+                          Icons.home,
+                          color: Color(COR_PRIMARY),
+                        ),
+                      ),
+                    ),
                   ),
             title: Text(
               text,

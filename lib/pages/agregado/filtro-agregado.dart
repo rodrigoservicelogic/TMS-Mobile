@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:tms_mobile/controller/agregado-controller.dart';
 import 'package:tms_mobile/global.dart';
-import 'package:tms_mobile/util/size-config.dart';
+import 'package:tms_mobile/pages/agregado/resultado-agregado.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
-import 'faturamento-page.dart';
+import '../resultado-page.dart';
 
-class FiltroFaturamento extends StatefulWidget {
+class FiltroAgregado extends StatefulWidget {
   final PageController pageController;
 
-  FiltroFaturamento(this.pageController);
+  FiltroAgregado(this.pageController);
 
   @override
-  _FiltroFaturamentoState createState() => _FiltroFaturamentoState();
+  _FiltroAgregadoState createState() => _FiltroAgregadoState();
 }
 
-class _FiltroFaturamentoState extends State<FiltroFaturamento> {
+class _FiltroAgregadoState extends State<FiltroAgregado> {
   DateTime _dataInicial, _dataFinal;
-  List<String> _unidades = ['Unidade 1', 'Unidade 2', 'Unidade 3', 'Unidade 4'];
-  String _selectedUnidade;
-  List<String> _fretes = ['Frete 1', 'Frete 2', 'Frete 3', 'Frete 4'];
-  String _selectedFrete;
-  List<String> _clientes = ['Cliente 1', 'Cliente 2', 'Cliente 3', 'Cliente 4'];
-  String _selectedCliente;
+  final controller = AgregadoController();
+  String _selectedAgregado;
+  String _selectedPlaca;
 
   String dropdownValue = '';
 
@@ -32,12 +31,12 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
 
     _dataInicial = DateTime.now();
     _dataFinal = DateTime.now();
+    controller.popularListaAgregados();
+    controller.popularListaPlacas();
   }
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-
     return Scaffold(
       endDrawer: DrawerPage(widget.pageController),
       appBar: AppBar(
@@ -71,10 +70,10 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                 color: Color(COR_PRIMARY),
                 child: Center(
                   child: Text(
-                    "FATURAMENTO",
+                    "RESULTADO - AGREGADO",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 25,
+                        fontSize: 22,
                         color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
@@ -88,6 +87,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Expanded(
+                  flex: 4,
                   child: DateTimePicker(
                     labelText: "De:",
                     valueStyle: TextStyle(color: Colors.red),
@@ -104,6 +104,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   width: 15,
                 ),
                 Expanded(
+                  flex: 4,
                   child: DateTimePicker(
                     labelText: "Até:",
                     selectedDate: _dataFinal,
@@ -120,62 +121,45 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             SizedBox(
               height: 13,
             ),
-            DropdownButton(
-              hint: Text('Por Unidade de Negócio'),
-              value: _selectedUnidade,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedUnidade = newValue;
-                });
-              },
-              items: _unidades.map((unidade) {
-                return DropdownMenuItem(
-                  child: new Text(unidade),
-                  value: unidade,
-                );
-              }).toList(),
-            ),
+            Observer(builder: (_) {
+              return DropdownButton(
+                hint: Text('Por Agregado'),
+                value: _selectedAgregado,
+                isExpanded: true,
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedAgregado = newValue;
+                  });
+                },
+                items: controller.agregados.map((agregado) {
+                  return DropdownMenuItem(
+                    child: new Text(agregado),
+                    value: agregado,
+                  );
+                }).toList(),
+              );
+            }),
             SizedBox(
               height: 13,
             ),
             DropdownButton(
-              hint: Text('Por Tipo de Frete'),
-              value: _selectedFrete,
+              hint: Text('Por Placa'),
+              value: _selectedPlaca,
               isExpanded: true,
               onChanged: (newValue) {
                 setState(() {
-                  _selectedFrete = newValue;
+                  _selectedPlaca = newValue;
                 });
               },
-              items: _fretes.map((frete) {
+              items: controller.placas.map((placa) {
                 return DropdownMenuItem(
-                  child: new Text(frete),
-                  value: frete,
+                  child: new Text(placa),
+                  value: placa,
                 );
               }).toList(),
             ),
             SizedBox(
-              height: 13,
-            ),
-            DropdownButton(
-              hint: Text('Por Cliente'),
-              value: _selectedCliente,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedCliente = newValue;
-                });
-              },
-              items: _clientes.map((cliente) {
-                return DropdownMenuItem(
-                  child: new Text(cliente),
-                  value: cliente,
-                );
-              }).toList(),
-            ),
-            SizedBox(
-              height: 100,
+              height: 230,
             ),
             Container(
               height: 60,
@@ -194,8 +178,8 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              FaturamentoPage(widget.pageController)));
+                            builder: (context) =>
+                                ResultadoAgregado(widget.pageController)));
                     },
                   ),
                 ),
@@ -220,7 +204,9 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     onPressed: () {
-                       Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ResultadoPage(widget.pageController)));
                     },
                   ),
                 ),
