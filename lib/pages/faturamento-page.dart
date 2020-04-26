@@ -87,7 +87,6 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                   flex: 4,
                   child: DateTimePicker(
                     labelText: "De:",
-                    valueStyle: TextStyle(color: Colors.red),
                     selectedDate: _dataInicial,
                     selectDate: (DateTime date) {
                       print(date);

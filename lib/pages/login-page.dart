@@ -26,9 +26,6 @@ class _LoginPageState extends State<LoginPage> {
                 image: AssetImage("images/bg_1.png"), fit: BoxFit.cover)),
         child: ListView(
           children: <Widget>[
-            // SizedBox(
-            //   height: 100,
-            // ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
               child: Center(
@@ -39,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: MediaQuery.of(context).size.width - 220,
             ),
             Form(
               key: _formKey,

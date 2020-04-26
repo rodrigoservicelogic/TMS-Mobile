@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
 
+import '../global.dart';
+
 class DateTimePicker extends StatelessWidget {
   const DateTimePicker(
       {Key key,
@@ -29,7 +31,8 @@ class DateTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle valueStyle = TextStyle(fontSize: 16.0);
+    final TextStyle valueStyle =
+        TextStyle(fontSize: 16.0, color: Color(COR_PRIMARY));
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -56,12 +59,14 @@ class _InputDropdown extends StatelessWidget {
       this.labelText,
       this.valueText,
       this.valueStyle,
+      this.labelColor,
       this.onPressed})
       : super(key: key);
 
   final String labelText;
   final String valueText;
   final TextStyle valueStyle;
+  final Color labelColor;
   final VoidCallback onPressed;
   final Widget child;
 
@@ -71,8 +76,10 @@ class _InputDropdown extends StatelessWidget {
       onTap: onPressed,
       child: InputDecorator(
         decoration: InputDecoration(
-            labelStyle:
-                TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+            labelStyle: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.normal,
+                color: labelColor),
             labelText: labelText,
             filled: true),
         baseStyle: valueStyle,

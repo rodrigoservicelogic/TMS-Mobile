@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:tms_mobile/controller/agregado-controller.dart';
 import 'package:tms_mobile/controller/terceiro-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
@@ -241,9 +240,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                       flex: 3,
                       child: Text(
                         "Impostos",
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.normal),
                       ),
                     ),
                     Expanded(
@@ -279,9 +276,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                       flex: 3,
                       child: Text(
                         "Frete Pago ao Terceiro",
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.normal),
                       ),
                     ),
                     Expanded(
