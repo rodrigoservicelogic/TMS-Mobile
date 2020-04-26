@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:tms_mobile/controller/terceiro-controller.dart';
+import 'package:tms_mobile/controller/empresa-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
-import 'filtro-terceiro.dart';
+import 'filtro-empresa.dart';
 
-class ResultadoTerceiro extends StatefulWidget {
+class ResultadoEmpresa extends StatefulWidget {
   final PageController pageController;
 
-  ResultadoTerceiro(this.pageController);
+  ResultadoEmpresa(this.pageController);
 
   @override
-  _ResultadoTerceiroState createState() => _ResultadoTerceiroState();
+  _ResultadoEmpresaState createState() => _ResultadoEmpresaState();
 }
 
-class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
+class _ResultadoEmpresaState extends State<ResultadoEmpresa> {
   DateTime _dataInicial, _dataFinal;
-  final controller = TerceiroController();
-  String _selectedTerceiro;
-  String _selectedPlaca;
+  final controller = EmpresaController();
+  String _selectedCompetencia;
   MediaQueryData queryData;
 
   String dropdownValue = '';
@@ -31,8 +30,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
 
     _dataInicial = DateTime.now();
     _dataFinal = DateTime.now();
-    controller.popularListaTerceiros();
-    controller.popularListaPlacas();
+    controller.popularListaCompetencias();
   }
 
   BoxDecoration myBoxDecoration(double size) {
@@ -76,7 +74,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                 color: Color(COR_PRIMARY),
                 child: Center(
                   child: Text(
-                    "RESULTADO - TERCEIRO",
+                    "RESULTADO - EMPRESA",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
@@ -130,45 +128,26 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Observer(builder: (_) {
               return DropdownButton(
                 hint: Text(
-                  'Todos os Terceiros',
+                  'Por Competência',
                   style: TextStyle(color: Color(COR_PRIMARY)),
                 ),
-                value: _selectedTerceiro,
+                value: _selectedCompetencia,
                 isExpanded: true,
                 onChanged: (newValue) {
                   setState(() {
-                    _selectedTerceiro = newValue;
+                    _selectedCompetencia = newValue;
                   });
                 },
-                items: controller.terceiros.map((agregado) {
+                items: controller.competencias.map((competencia) {
                   return DropdownMenuItem(
-                    child: new Text(agregado),
-                    value: agregado,
+                    child: new Text(competencia),
+                    value: competencia,
                   );
                 }).toList(),
               );
             }),
             SizedBox(
               height: 13,
-            ),
-            DropdownButton(
-              hint: Text(
-                'Todas as Placas',
-                style: TextStyle(color: Color(COR_PRIMARY)),
-              ),
-              value: _selectedPlaca,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedPlaca = newValue;
-                });
-              },
-              items: controller.placas.map((placa) {
-                return DropdownMenuItem(
-                  child: new Text(placa),
-                  value: placa,
-                );
-              }).toList(),
             ),
             Center(
               child: Container(
@@ -192,6 +171,114 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                         '${controller.receita}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                height: 25,
+                width: MediaQuery.of(context).size.width - 90,
+                decoration: myBoxDecoration(.3),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        "Frete Frota",
+                        style: TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${controller.freteFrotaVal}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        '${controller.freteFrotaPerc}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                height: 25,
+                width: MediaQuery.of(context).size.width - 90,
+                decoration: myBoxDecoration(.3),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        "Frete Agregados",
+                        style: TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${controller.freteAgregadosVal}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        '${controller.freteAgregadosPerc}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                height: 25,
+                width: MediaQuery.of(context).size.width - 90,
+                decoration: myBoxDecoration(.3),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        "Frete Terceiros",
+                        style: TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${controller.freteTerVal}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        '${controller.freteTerPerc}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
@@ -231,34 +318,55 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Center(
               child: Container(
                 height: 25,
-                width: MediaQuery.of(context).size.width - 90,
-                decoration: myBoxDecoration(.3),
+                width: MediaQuery.of(context).size.width - 50,
+                // decoration: myBoxDecoration(3),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "Impostos",
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal
-                        ),
-                      ),
+                    Container(
+                      width: 20,
                     ),
-                    Expanded(
-                      child: Text(
-                        '${controller.impostoVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
+                    Container(
+                      decoration: myBoxDecoration(.3),
+                      height: 25,
+                      width: MediaQuery.of(context).size.width - 90,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              "Despesas Adm",
+                              style: TextStyle(fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${controller.despesasAdmVal}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              '${controller.despesasAdmPerc}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        '${controller.impostoPerc}',
+                        " [+]",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
+                          color: Color(COR_PRIMARY)
                         ),
                       ),
                     ),
@@ -269,34 +377,114 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
             Center(
               child: Container(
                 height: 25,
-                width: MediaQuery.of(context).size.width - 90,
-                decoration: myBoxDecoration(.3),
+                width: MediaQuery.of(context).size.width - 50,
+                // decoration: myBoxDecoration(3),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "Frete Pago ao Terceiro",
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal
-                        ),
-                      ),
+                    Container(
+                      width: 20,
                     ),
-                    Expanded(
-                      child: Text(
-                        '${controller.fretePagoTerVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
+                    Container(
+                      decoration: myBoxDecoration(.3),
+                      height: 25,
+                      width: MediaQuery.of(context).size.width - 90,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              "Despesas Operacionais",
+                              style: TextStyle(fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${controller.despesasOperVal}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              '${controller.despesasOperPerc}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        '${controller.fretePagoTerPerc}',
+                        " [+]",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
+                          color: Color(COR_PRIMARY)
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                height: 25,
+                width: MediaQuery.of(context).size.width - 50,
+                // decoration: myBoxDecoration(3),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      width: 20,
+                    ),
+                    Container(
+                      decoration: myBoxDecoration(.3),
+                      height: 25,
+                      width: MediaQuery.of(context).size.width - 90,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              "Investimentos",
+                              style: TextStyle(fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${controller.investimentosVal}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              '${controller.investimentosPerc}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        " [+]",
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Color(COR_PRIMARY)
                         ),
                       ),
                     ),
@@ -365,7 +553,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
               ),
             ),
             SizedBox(
-              height: 80,
+              height: 40,
             ),
             Container(
               height: 60,
@@ -385,7 +573,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
-                              FiltroTerceiro(widget.pageController)));
+                              FiltroEmpresa(widget.pageController)));
                     },
                   ),
                 ),

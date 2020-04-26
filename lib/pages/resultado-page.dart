@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/pages/terceiro/filtro-terceiro.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
-
+import 'empresa/filtro-empresa.dart';
 import 'agregado/filtro-agregado.dart';
 import 'filtro-faturamento.dart';
 
@@ -145,7 +144,11 @@ class _ResultadoPage extends State<ResultadoPage> {
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       onPressed: () {
-                        if (true == true) {}
+                        if (true == true) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              FiltroEmpresa(widget.pageCtrl)));
+                        }
                       },
                     ),
                   ),
