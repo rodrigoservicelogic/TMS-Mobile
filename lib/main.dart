@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import 'controller/agregado-controller.dart';
 import 'controller/empresa-controller.dart';
+import 'controller/faturamento-cliente-controller.dart';
 import 'controller/login-controller.dart';
 import 'controller/terceiro-controller.dart';
 import 'pages/splash-screen.dart';
@@ -15,6 +16,8 @@ void main() {
   getIt.registerSingleton<TerceiroController>(TerceiroController());
   getIt.registerSingleton<AgregadoController>(AgregadoController());
   getIt.registerSingleton<EmpresaController>(EmpresaController());
+  getIt.registerSingleton<FaturamentoClienteController>(
+      FaturamentoClienteController());
 
   runApp(MyApp());
 }

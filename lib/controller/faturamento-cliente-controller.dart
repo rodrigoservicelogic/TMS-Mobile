@@ -1,11 +1,11 @@
 import 'package:mobx/mobx.dart';
+import 'package:tms_mobile/pages/faturamento-cliente.dart';
 part 'faturamento-cliente-controller.g.dart';
 
 class FaturamentoClienteController = _FaturamentoClienteControllerBase
     with _$FaturamentoClienteController;
 
 abstract class _FaturamentoClienteControllerBase with Store {
-  
   @observable
   List<String> tipoCliente = List();
 
@@ -14,7 +14,7 @@ abstract class _FaturamentoClienteControllerBase with Store {
 
   @observable
   List<String> valorPercent = List();
-  
+
   @observable
   String valor = "50.000,00";
 
@@ -23,6 +23,16 @@ abstract class _FaturamentoClienteControllerBase with Store {
 
   @observable
   String anoAtual = "2020(R\$)";
+
+  @observable
+  List<Dados> listaAnos = List();
+
+  @action
+  popularListaAnos() {
+    listaAnos.add(Dados('2016', 12));
+    listaAnos.add(Dados('2017', 15));
+    listaAnos.add(Dados('2020', 10));
+  }
 
   @action
   popularListaTipoCliente() {
