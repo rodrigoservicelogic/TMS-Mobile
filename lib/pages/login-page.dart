@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tms_mobile/controller/login-controller.dart';
+import 'package:tms_mobile/controller/login/login-controller.dart';
 import 'package:tms_mobile/global.dart';
-import 'package:tms_mobile/pages/selecao-empresa-page.dart';
+
+import 'empresa/selecao-empresa-page.dart';
 
 class LoginPage extends StatefulWidget {
   @override

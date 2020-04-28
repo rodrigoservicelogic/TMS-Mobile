@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/models/usuario.dart';
 
-import 'home-page.dart';
+import '../home-page.dart';
 
 class SelecaoEmpresa extends StatefulWidget {
   final Usuario usuario;

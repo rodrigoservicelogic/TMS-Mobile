@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:tms_mobile/controller/terceiro-controller.dart';
+import 'package:tms_mobile/controller/terceiro/terceiro-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
