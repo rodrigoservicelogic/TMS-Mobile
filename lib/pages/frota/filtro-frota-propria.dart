@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tms_mobile/controller/frota/frota-propria-controller.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
@@ -15,14 +16,8 @@ class FiltroFrotaPropria extends StatefulWidget {
 
 class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
   DateTime _dataInicial, _dataFinal;
-  List<String> _motoristas = [
-    'Unidade 1',
-    'Unidade 2',
-    'Unidade 3',
-    'Unidade 4'
-  ];
   String _selectedMotorista;
-  List<String> _placas = ['Frete 1', 'Frete 2', 'Frete 3', 'Frete 4'];
+  final controller = FrotaPropriaController();
   String _selectedPlaca;
 
   String dropdownValue = '';
@@ -33,6 +28,8 @@ class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
 
     _dataInicial = DateTime.now();
     _dataFinal = DateTime.now();
+    controller.popularListaMotorista();
+    controller.popularListaPlacas();
   }
 
   @override
@@ -108,11 +105,11 @@ class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
                   child: DateTimePicker(
                     labelText: "Até:",
                     valueStyle: TextStyle(color: Colors.red),
-                    selectedDate: _dataInicial,
+                    selectedDate: _dataFinal,
                     selectDate: (DateTime date) {
                       print(date);
                       setState(() {
-                        _dataInicial = date;
+                        _dataFinal = date;
                       });
                     },
                   ),
@@ -131,7 +128,7 @@ class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
                   _selectedMotorista = newValue;
                 });
               },
-              items: _motoristas.map((motorista) {
+              items: controller.motorista.map((motorista) {
                 return DropdownMenuItem(
                   child: new Text(motorista),
                   value: motorista,
@@ -150,7 +147,7 @@ class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
                   _selectedPlaca = newValue;
                 });
               },
-              items: _placas.map((placa) {
+              items: controller.placas.map((placa) {
                 return DropdownMenuItem(
                   child: new Text(placa),
                   value: placa,
