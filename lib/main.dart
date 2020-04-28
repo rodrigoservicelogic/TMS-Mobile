@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 
 import 'controller/agregado/agregado-controller.dart';
 import 'controller/empresa/empresa-controller.dart';
-import 'controller/faturamento-cliente-controller.dart';
+import 'controller/faturamento/faturamento-cliente-controller.dart';
 import 'controller/login/login-controller.dart';
 import 'controller/terceiro/terceiro-controller.dart';
 import 'pages/splash-screen.dart';

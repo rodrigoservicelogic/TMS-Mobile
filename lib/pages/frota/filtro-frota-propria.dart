@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tms_mobile/pages/frota-propria-resultado.dart';
+import 'package:tms_mobile/widgets/dateTimePicker.dart';
+import 'package:tms_mobile/widgets/drawer.dart';
 
-import '../global.dart';
-import '../widgets/dateTimePicker.dart';
-import '../widgets/drawer.dart';
+import '../../global.dart';
+import 'frota-propria-resultado.dart';
 
 class FiltroFrotaPropria extends StatefulWidget {
   final PageController pageController;

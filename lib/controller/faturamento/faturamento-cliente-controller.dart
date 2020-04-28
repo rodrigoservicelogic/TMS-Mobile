@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:tms_mobile/pages/faturamento-cliente.dart';
+import 'package:tms_mobile/pages/faturamento/faturamento-cliente.dart';
 part 'faturamento-cliente-controller.g.dart';
 
 class FaturamentoClienteController = _FaturamentoClienteControllerBase
