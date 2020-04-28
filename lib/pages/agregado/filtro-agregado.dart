@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:tms_mobile/controller/agregado-controller.dart';
+import 'package:tms_mobile/controller/agregado/agregado-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/pages/agregado/resultado-agregado.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';

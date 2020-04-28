@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 
-import 'controller/agregado-controller.dart';
-import 'controller/empresa-controller.dart';
+
+import 'controller/agregado/agregado-controller.dart';
+import 'controller/empresa/empresa-controller.dart';
 import 'controller/faturamento-cliente-controller.dart';
-import 'controller/login-controller.dart';
-import 'controller/terceiro-controller.dart';
+import 'controller/login/login-controller.dart';
+import 'controller/terceiro/terceiro-controller.dart';
 import 'pages/splash-screen.dart';
 
 void main() {

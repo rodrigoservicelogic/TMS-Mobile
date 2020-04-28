@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
-import 'package:tms_mobile/pages/filtro-frota-propria.dart';
 import 'package:tms_mobile/pages/terceiro/filtro-terceiro.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 import 'empresa/filtro-empresa.dart';
 import 'agregado/filtro-agregado.dart';
 import 'filtro-faturamento.dart';
+import 'frota/filtro-frota-propria.dart';
 
 class ResultadoPage extends StatefulWidget {
   final PageController pageCtrl;

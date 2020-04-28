@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:tms_mobile/controller/frota-propria-controller.dart';
+import 'package:tms_mobile/controller/frota/frota-propria-controller.dart';
+import 'package:tms_mobile/widgets/dateTimePicker.dart';
+import 'package:tms_mobile/widgets/drawer.dart';
 
-import '../global.dart';
-import '../widgets/dateTimePicker.dart';
-import '../widgets/drawer.dart';
+import '../../global.dart';
 
 class FrotaPropriaResultado extends StatefulWidget {
   final PageController pageController;

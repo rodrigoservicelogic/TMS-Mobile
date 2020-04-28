@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/login-controller.dart';
 import 'package:tms_mobile/models/usuario.dart';
 
-import 'home-page.dart';
+import '../home-page.dart';
 
 class SelecaoEmpresa extends StatefulWidget {
   final Usuario usuario;
