@@ -3,7 +3,7 @@ import 'package:getflutter/getflutter.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
-import '../global.dart';
+import '../../global.dart';
 import 'faturamento-cliente.dart';
 import 'faturamento-visao-un.dart';
 
