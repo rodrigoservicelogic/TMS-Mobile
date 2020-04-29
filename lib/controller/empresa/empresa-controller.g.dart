@@ -26,6 +26,23 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
     }, _$regimesAtom, name: '${_$regimesAtom.name}_set');
   }
 
+  final _$empresasAtom = Atom(name: 'EmpresaControllerBase.empresas');
+
+  @override
+  List<dynamic> get empresas {
+    _$empresasAtom.context.enforceReadPolicy(_$empresasAtom);
+    _$empresasAtom.reportObserved();
+    return super.empresas;
+  }
+
+  @override
+  set empresas(List<dynamic> value) {
+    _$empresasAtom.context.conditionallyRunInAction(() {
+      super.empresas = value;
+      _$empresasAtom.reportChanged();
+    }, _$empresasAtom, name: '${_$empresasAtom.name}_set');
+  }
+
   final _$competenciasAtom = Atom(name: 'EmpresaControllerBase.competencias');
 
   @override
@@ -383,9 +400,19 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
   }
 
   @override
+  dynamic popularListaEmpresas() {
+    final _$actionInfo = _$EmpresaControllerBaseActionController.startAction();
+    try {
+      return super.popularListaEmpresas();
+    } finally {
+      _$EmpresaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
-        'regimes: ${regimes.toString()},competencias: ${competencias.toString()},receita: ${receita.toString()},despesa: ${despesa.toString()},impostoVal: ${impostoVal.toString()},impostoPerc: ${impostoPerc.toString()},freteTerVal: ${freteTerVal.toString()},freteTerPerc: ${freteTerPerc.toString()},freteFrotaVal: ${freteFrotaVal.toString()},freteFrotaPerc: ${freteFrotaPerc.toString()},freteAgregadosVal: ${freteAgregadosVal.toString()},freteAgregadosPerc: ${freteAgregadosPerc.toString()},despesasAdmVal: ${despesasAdmVal.toString()},despesasAdmPerc: ${despesasAdmPerc.toString()},despesasOperVal: ${despesasOperVal.toString()},despesasOperPerc: ${despesasOperPerc.toString()},investimentosVal: ${investimentosVal.toString()},investimentosPerc: ${investimentosPerc.toString()},resultadoVal: ${resultadoVal.toString()},resultadoPerc: ${resultadoPerc.toString()}';
+        'regimes: ${regimes.toString()},empresas: ${empresas.toString()},competencias: ${competencias.toString()},receita: ${receita.toString()},despesa: ${despesa.toString()},impostoVal: ${impostoVal.toString()},impostoPerc: ${impostoPerc.toString()},freteTerVal: ${freteTerVal.toString()},freteTerPerc: ${freteTerPerc.toString()},freteFrotaVal: ${freteFrotaVal.toString()},freteFrotaPerc: ${freteFrotaPerc.toString()},freteAgregadosVal: ${freteAgregadosVal.toString()},freteAgregadosPerc: ${freteAgregadosPerc.toString()},despesasAdmVal: ${despesasAdmVal.toString()},despesasAdmPerc: ${despesasAdmPerc.toString()},despesasOperVal: ${despesasOperVal.toString()},despesasOperPerc: ${despesasOperPerc.toString()},investimentosVal: ${investimentosVal.toString()},investimentosPerc: ${investimentosPerc.toString()},resultadoVal: ${resultadoVal.toString()},resultadoPerc: ${resultadoPerc.toString()}';
     return '{$string}';
   }
 }
