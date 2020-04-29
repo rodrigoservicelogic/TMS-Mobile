@@ -117,8 +117,38 @@ mixin _$FaturamentoClienteController
     }, _$anoAtualAtom, name: '${_$anoAtualAtom.name}_set');
   }
 
+  final _$listaAnosAtom =
+      Atom(name: '_FaturamentoClienteControllerBase.listaAnos');
+
+  @override
+  List<Dados> get listaAnos {
+    _$listaAnosAtom.context.enforceReadPolicy(_$listaAnosAtom);
+    _$listaAnosAtom.reportObserved();
+    return super.listaAnos;
+  }
+
+  @override
+  set listaAnos(List<Dados> value) {
+    _$listaAnosAtom.context.conditionallyRunInAction(() {
+      super.listaAnos = value;
+      _$listaAnosAtom.reportChanged();
+    }, _$listaAnosAtom, name: '${_$listaAnosAtom.name}_set');
+  }
+
   final _$_FaturamentoClienteControllerBaseActionController =
       ActionController(name: '_FaturamentoClienteControllerBase');
+
+  @override
+  dynamic popularListaAnos() {
+    final _$actionInfo =
+        _$_FaturamentoClienteControllerBaseActionController.startAction();
+    try {
+      return super.popularListaAnos();
+    } finally {
+      _$_FaturamentoClienteControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic popularListaTipoCliente() {
@@ -159,7 +189,7 @@ mixin _$FaturamentoClienteController
   @override
   String toString() {
     final string =
-        'tipoCliente: ${tipoCliente.toString()},valorReal: ${valorReal.toString()},valorPercent: ${valorPercent.toString()},valor: ${valor.toString()},valorPerc: ${valorPerc.toString()},anoAtual: ${anoAtual.toString()}';
+        'tipoCliente: ${tipoCliente.toString()},valorReal: ${valorReal.toString()},valorPercent: ${valorPercent.toString()},valor: ${valor.toString()},valorPerc: ${valorPerc.toString()},anoAtual: ${anoAtual.toString()},listaAnos: ${listaAnos.toString()}';
     return '{$string}';
   }
 }

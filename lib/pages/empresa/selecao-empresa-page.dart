@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tms_mobile/controller/login-controller.dart';
+import 'package:tms_mobile/controller/empresa/empresa-controller.dart';
+import 'package:tms_mobile/controller/login/login-controller.dart';
 import 'package:tms_mobile/models/usuario.dart';
 
 import '../home-page.dart';
@@ -18,6 +19,7 @@ class SelecaoEmpresa extends StatefulWidget {
 class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
   final controller = GetIt.I.get<LoginController>();
   String empresaSelected;
+  final controllerEmpresa = EmpresaController();
   Usuario user = Usuario();
 
   @override
@@ -27,6 +29,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
     user = widget.usuario;
 
     controller.getEmpresas(user.id);
+    controllerEmpresa.popularListaEmpresas();
   }
 
   @override
@@ -99,7 +102,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => HomePage(user)));
                             },
-                            items: controller.empresas
+                            items: controllerEmpresa.empresas
                                 .map<DropdownMenuItem<String>>((var empresa) {
                               return DropdownMenuItem<String>(
                                 value: empresa.nome,

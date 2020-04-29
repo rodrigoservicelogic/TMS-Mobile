@@ -7,6 +7,8 @@ abstract class EmpresaControllerBase with Store {
   @observable
   List<String> regimes = List();
   @observable
+  List empresas = List();
+  @observable
   List<String> competencias = List();
   @observable
   String receita = "5.000.000,00";
@@ -60,6 +62,17 @@ abstract class EmpresaControllerBase with Store {
     competencias.add('2020/01');
     competencias.add('2020/02');
     competencias.add('2020/03');
+  }
+
+  @action
+  popularListaEmpresas() {
+    empresas = [
+      {'id': 1, 'nome': 'Empresa 1'},
+      {'id': 2, 'nome': 'Empresa 2'},
+      {'id': 3, 'nome': 'Empresa 3'},
+      {'id': 4, 'nome': 'Empresa 4'},
+      {'id': 5, 'nome': 'Empresa 5'},
+    ];
   }
 
 }
