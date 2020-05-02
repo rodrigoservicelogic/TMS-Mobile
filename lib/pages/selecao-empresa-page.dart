@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:tms_mobile/controller/login-controller.dart';
 import 'package:tms_mobile/models/usuario.dart';
 
 import 'home-page.dart';
@@ -13,7 +16,7 @@ class SelecaoEmpresa extends StatefulWidget {
 }
 
 class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
-  List empresas = List();
+  final controller = GetIt.I.get<LoginController>();
   String empresaSelected;
   Usuario user = Usuario();
 
@@ -23,13 +26,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
 
     user = widget.usuario;
 
-    empresas = [
-      {'id': 1, 'nome': 'Empresa 1'},
-      {'id': 2, 'nome': 'Empresa 2'},
-      {'id': 3, 'nome': 'Empresa 3'},
-      {'id': 4, 'nome': 'Empresa 4'},
-      {'id': 5, 'nome': 'Empresa 5'},
-    ];
+    controller.getEmpresas(user.id);
   }
 
   @override
@@ -77,38 +74,46 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                       fontSize: 25),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: Center(
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.only(left: 10.0),
-                    color: Colors.white,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                          hint: Text(
-                              'Selecione a Empresa'), // Not necessary for Option 1
-                          value: empresaSelected,
-                          isExpanded: true,
-                          onChanged: (value) {
-                            empresaSelected = value;
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HomePage(user)));
-                          },
-                          items: empresas
-                              .map<DropdownMenuItem<String>>((var empresa) {
-                            return DropdownMenuItem<String>(
-                              value: empresa["nome"],
-                              child: Text(
-                                empresa["nome"],
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            );
-                          }).toList()),
+              Observer(builder: (_) {
+                if (controller.isLoad) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Center(
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.only(left: 10.0),
+                      color: Colors.white,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                            hint: Text(
+                                'Selecione a Empresa'), // Not necessary for Option 1
+                            value: empresaSelected,
+                            isExpanded: true,
+                            onChanged: (value) {
+                              empresaSelected = value;
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => HomePage(user)));
+                            },
+                            items: controller.empresas
+                                .map<DropdownMenuItem<String>>((var empresa) {
+                              return DropdownMenuItem<String>(
+                                value: empresa.nome,
+                                child: Text(
+                                  empresa.nome,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              );
+                            }).toList()),
+                      ),
                     ),
                   ),
-                ),
-              )
+                );
+              })
             ],
           )
         ],

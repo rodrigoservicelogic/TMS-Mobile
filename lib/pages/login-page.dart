@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/login-controller.dart';
 import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/models/login-model.dart';
 import 'package:tms_mobile/pages/selecao-empresa-page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController loginCtrl = TextEditingController();
   TextEditingController senhaCtrl = TextEditingController();
+  LoginModel login = LoginModel();
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +51,17 @@ class _LoginPageState extends State<LoginPage> {
                         child: TextFormField(
                           controller: loginCtrl,
                           enabled: !controller.isLoad,
+                          keyboardType: TextInputType.emailAddress,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(hintText: "LOGIN"),
                           onChanged: controller.changedLogin,
                           validator: (value) {
                             if (value == "") {
                               return "Campo Obrigatório!";
+                            }
+
+                            if (!value.contains('@')) {
+                              return 'Não é um e-mail válido!';
                             }
 
                             return null;
@@ -111,36 +118,35 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: controller.isValid
                                 ? () async {
                                     if (_formKey.currentState.validate()) {
-                                      await controller.login(
-                                          loginCtrl.text, senhaCtrl.text);
-
-                                      if (controller.usuario.nomeApresentacao !=
-                                          null) {
-                                        Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SelecaoEmpresa(
-                                                        controller.usuario)));
-                                      } else {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                title: Text("Atenção"),
-                                                content: Text(
-                                                    "Usuário ou senha inválidos"),
-                                                actions: <Widget>[
-                                                  FlatButton(
-                                                    child: Text("OK"),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                  )
-                                                ],
-                                              );
-                                            });
-                                      }
+                                      controller.login().then((value) {
+                                        if (controller.usuario.id != null) {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SelecaoEmpresa(
+                                                          controller.usuario)));
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  title: Text("Atenção"),
+                                                  content: Text(
+                                                      "Usuário ou senha inválidos"),
+                                                  actions: <Widget>[
+                                                    FlatButton(
+                                                      child: Text("OK"),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    )
+                                                  ],
+                                                );
+                                              });
+                                        }
+                                      });
                                     }
                                   }
                                 : null,
