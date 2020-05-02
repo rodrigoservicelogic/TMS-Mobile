@@ -66,12 +66,7 @@ class Http {
   }
 
   Future<Response> get(String url, {Map dados}) async {
-    Response response = await dio
-        .get(
-      url,
-      options: Options(headers: {'Accept': 'application/json'}),
-    )
-        .catchError((error) {
+    Response response = await dio.get(url).catchError((error) {
       throw error;
     });
 

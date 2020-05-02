@@ -118,35 +118,35 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: controller.isValid
                                 ? () async {
                                     if (_formKey.currentState.validate()) {
-                                      controller.login().then((value) {
-                                        if (controller.usuario.id != null) {
-                                          Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SelecaoEmpresa(
-                                                          controller.usuario)));
-                                        } else {
-                                          showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  title: Text("Atenção"),
-                                                  content: Text(
-                                                      "Usuário ou senha inválidos"),
-                                                  actions: <Widget>[
-                                                    FlatButton(
-                                                      child: Text("OK"),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    )
-                                                  ],
-                                                );
-                                              });
-                                        }
-                                      });
+                                      await controller.login();
+
+                                      if (controller.usuario.id != null) {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SelecaoEmpresa(
+                                                        controller.usuario)));
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Text("Atenção"),
+                                                content: Text(
+                                                    "Usuário ou senha inválidos"),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    child: Text("OK"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  )
+                                                ],
+                                              );
+                                            });
+                                      }
                                     }
                                   }
                                 : null,
