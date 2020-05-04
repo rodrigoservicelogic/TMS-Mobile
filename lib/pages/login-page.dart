@@ -5,6 +5,8 @@ import 'package:tms_mobile/controller/login/login-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/login-model.dart';
 
+import 'empresa/selecao-empresa-page.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
