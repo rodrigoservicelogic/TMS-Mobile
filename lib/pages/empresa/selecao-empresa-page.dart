@@ -17,11 +17,9 @@ class SelecaoEmpresa extends StatefulWidget {
 }
 
 class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
-  String empresaSelected;
-  final controller = EmpresaController();
   final controller = GetIt.I.get<LoginController>();
   String empresaSelected;
-  final controllerEmpresa = EmpresaController();
+  final controllerEmpresa = GetIt.I.get<EmpresaController>();
   Usuario user = Usuario();
 
   @override
@@ -30,7 +28,6 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
 
     user = widget.usuario;
 
-    controller.popularListaEmpresas();
     controller.getEmpresas(user.id);
     controllerEmpresa.popularListaEmpresas();
   }
@@ -102,9 +99,9 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                           items: controller.empresas
                               .map<DropdownMenuItem<String>>((var empresa) {
                             return DropdownMenuItem<String>(
-                              value: empresa["nome"],
+                              value: empresa.nome,
                               child: Text(
-                                empresa["nome"],
+                                empresa.nome,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             );
@@ -112,7 +109,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                     ),
                   ),
                 ),
-              )
+              ),
 
               Observer(builder: (_) {
                 if (controller.isLoad) {
