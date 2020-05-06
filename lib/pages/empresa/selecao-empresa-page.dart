@@ -17,6 +17,8 @@ class SelecaoEmpresa extends StatefulWidget {
 }
 
 class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
+  String empresaSelected;
+  final controller = EmpresaController();
   final controller = GetIt.I.get<LoginController>();
   String empresaSelected;
   final controllerEmpresa = EmpresaController();
@@ -28,6 +30,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
 
     user = widget.usuario;
 
+    controller.popularListaEmpresas();
     controller.getEmpresas(user.id);
     controllerEmpresa.popularListaEmpresas();
   }
@@ -77,6 +80,40 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                       fontSize: 25),
                 ),
               ),
+
+              Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Center(
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(left: 10.0),
+                    color: Colors.white,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                          hint: Text(
+                              'Selecione a Empresa'), // Not necessary for Option 1
+                          value: empresaSelected,
+                          isExpanded: true,
+                          onChanged: (value) {
+                            empresaSelected = value;
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => HomePage(user)));
+                          },
+                          items: controller.empresas
+                              .map<DropdownMenuItem<String>>((var empresa) {
+                            return DropdownMenuItem<String>(
+                              value: empresa["nome"],
+                              child: Text(
+                                empresa["nome"],
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            );
+                          }).toList()),
+                    ),
+                  ),
+                ),
+              )
+
               Observer(builder: (_) {
                 if (controller.isLoad) {
                   return Center(
