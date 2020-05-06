@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/login/login-controller.dart';
 import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/models/login-model.dart';
 
 import 'empresa/selecao-empresa-page.dart';
 
@@ -16,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController loginCtrl = TextEditingController();
   TextEditingController senhaCtrl = TextEditingController();
+  LoginModel login = LoginModel();
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +52,17 @@ class _LoginPageState extends State<LoginPage> {
                         child: TextFormField(
                           controller: loginCtrl,
                           enabled: !controller.isLoad,
+                          keyboardType: TextInputType.emailAddress,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(hintText: "LOGIN"),
                           onChanged: controller.changedLogin,
                           validator: (value) {
                             if (value == "") {
                               return "Campo Obrigatório!";
+                            }
+
+                            if (!value.contains('@')) {
+                              return 'Não é um e-mail válido!';
                             }
 
                             return null;
@@ -112,11 +119,9 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: controller.isValid
                                 ? () async {
                                     if (_formKey.currentState.validate()) {
-                                      await controller.login(
-                                          loginCtrl.text, senhaCtrl.text);
+                                      await controller.login();
 
-                                      if (controller.usuario.nomeApresentacao !=
-                                          null) {
+                                      if (controller.usuario.id != null) {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
@@ -125,6 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                                       } else {
                                         showDialog(
                                             context: context,
+                                            barrierDismissible: false,
                                             builder: (context) {
                                               return AlertDialog(
                                                 title: Text("Atenção"),

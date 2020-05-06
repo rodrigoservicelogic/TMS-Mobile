@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
+import 'package:tms_mobile/pages/faturamento-mensal.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
@@ -214,6 +215,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                   pagination: true,
                   autoPlay: false,
                   items: <Widget>[
+                    FaturamentoVisaoMensal(),
                     FaturamentoVisaoUn(),
                     FaturamentoCliente(),
                     Text("Slide 3"),

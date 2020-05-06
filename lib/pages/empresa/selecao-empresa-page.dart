@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/empresa/empresa-controller.dart';
+import 'package:tms_mobile/controller/login/login-controller.dart';
 import 'package:tms_mobile/models/usuario.dart';
 
 import '../home-page.dart';
@@ -16,6 +19,9 @@ class SelecaoEmpresa extends StatefulWidget {
 class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
   String empresaSelected;
   final controller = EmpresaController();
+  final controller = GetIt.I.get<LoginController>();
+  String empresaSelected;
+  final controllerEmpresa = EmpresaController();
   Usuario user = Usuario();
 
   @override
@@ -25,6 +31,8 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
     user = widget.usuario;
 
     controller.popularListaEmpresas();
+    controller.getEmpresas(user.id);
+    controllerEmpresa.popularListaEmpresas();
   }
 
   @override
@@ -72,6 +80,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                       fontSize: 25),
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.all(40.0),
                 child: Center(
@@ -104,6 +113,47 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                   ),
                 ),
               )
+
+              Observer(builder: (_) {
+                if (controller.isLoad) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Center(
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.only(left: 10.0),
+                      color: Colors.white,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                            hint: Text(
+                                'Selecione a Empresa'), // Not necessary for Option 1
+                            value: empresaSelected,
+                            isExpanded: true,
+                            onChanged: (value) {
+                              empresaSelected = value;
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => HomePage(user)));
+                            },
+                            items: controllerEmpresa.empresas
+                                .map<DropdownMenuItem<String>>((var empresa) {
+                              return DropdownMenuItem<String>(
+                                value: empresa.nome,
+                                child: Text(
+                                  empresa.nome,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              );
+                            }).toList()),
+                      ),
+                    ),
+                  ),
+                );
+              })
             ],
           )
         ],
