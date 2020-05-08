@@ -400,16 +400,6 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
   }
 
   @override
-  dynamic popularListaEmpresas() {
-    final _$actionInfo = _$EmpresaControllerBaseActionController.startAction();
-    try {
-      return super.popularListaEmpresas();
-    } finally {
-      _$EmpresaControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     final string =
         'regimes: ${regimes.toString()},empresas: ${empresas.toString()},competencias: ${competencias.toString()},receita: ${receita.toString()},despesa: ${despesa.toString()},impostoVal: ${impostoVal.toString()},impostoPerc: ${impostoPerc.toString()},freteTerVal: ${freteTerVal.toString()},freteTerPerc: ${freteTerPerc.toString()},freteFrotaVal: ${freteFrotaVal.toString()},freteFrotaPerc: ${freteFrotaPerc.toString()},freteAgregadosVal: ${freteAgregadosVal.toString()},freteAgregadosPerc: ${freteAgregadosPerc.toString()},despesasAdmVal: ${despesasAdmVal.toString()},despesasAdmPerc: ${despesasAdmPerc.toString()},despesasOperVal: ${despesasOperVal.toString()},despesasOperPerc: ${despesasOperPerc.toString()},investimentosVal: ${investimentosVal.toString()},investimentosPerc: ${investimentosPerc.toString()},resultadoVal: ${resultadoVal.toString()},resultadoPerc: ${resultadoPerc.toString()}';

@@ -29,7 +29,6 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
     user = widget.usuario;
 
     controller.getEmpresas(user.id);
-    controllerEmpresa.popularListaEmpresas();
   }
 
   @override
@@ -78,39 +77,6 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: Center(
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.only(left: 10.0),
-                    color: Colors.white,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                          hint: Text(
-                              'Selecione a Empresa'), // Not necessary for Option 1
-                          value: empresaSelected,
-                          isExpanded: true,
-                          onChanged: (value) {
-                            empresaSelected = value;
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HomePage(user)));
-                          },
-                          items: controller.empresas
-                              .map<DropdownMenuItem<String>>((var empresa) {
-                            return DropdownMenuItem<String>(
-                              value: empresa.nome,
-                              child: Text(
-                                empresa.nome,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            );
-                          }).toList()),
-                    ),
-                  ),
-                ),
-              ),
-
               Observer(builder: (_) {
                 if (controller.isLoad) {
                   return Center(
@@ -136,7 +102,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => HomePage(user)));
                             },
-                            items: controllerEmpresa.empresas
+                            items: controller.empresas
                                 .map<DropdownMenuItem<String>>((var empresa) {
                               return DropdownMenuItem<String>(
                                 value: empresa.nome,

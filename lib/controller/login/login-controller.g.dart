@@ -49,10 +49,27 @@ mixin _$LoginController on _LoginControllerBase, Store {
     }, _$usuarioAtom, name: '${_$usuarioAtom.name}_set');
   }
 
+  final _$empresasAtom = Atom(name: '_LoginControllerBase.empresas');
+
+  @override
+  List<Empresa> get empresas {
+    _$empresasAtom.context.enforceReadPolicy(_$empresasAtom);
+    _$empresasAtom.reportObserved();
+    return super.empresas;
+  }
+
+  @override
+  set empresas(List<Empresa> value) {
+    _$empresasAtom.context.conditionallyRunInAction(() {
+      super.empresas = value;
+      _$empresasAtom.reportChanged();
+    }, _$empresasAtom, name: '${_$empresasAtom.name}_set');
+  }
+
   @override
   String toString() {
     final string =
-        'isLoad: ${isLoad.toString()},usuario: ${usuario.toString()},isValid: ${isValid.toString()}';
+        'isLoad: ${isLoad.toString()},usuario: ${usuario.toString()},empresas: ${empresas.toString()},isValid: ${isValid.toString()}';
     return '{$string}';
   }
 }
