@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -8,6 +10,7 @@ class FaturamentoVisaoUn extends StatefulWidget {
 }
 
 class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
+  final controllerFaturamento = GetIt.I.get<FaturamentoUnController>();
   bool visaoGrafico = false;
   bool visaoTabela = true;
   Color corGrafico = Colors.black26;
@@ -36,6 +39,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
   @override
   void initState() {
     super.initState();
+    controllerFaturamento.getFaturamento();
 
     _seriesPieData = List<charts.Series<Task, String>>();
     _generateData();
