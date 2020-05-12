@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tms_mobile/controller/faturamento-mensal-controller.dart';
+import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 
 class FaturamentoVisaoMensal extends StatefulWidget {
+  final ModelFiltroFaturamento filtro;
+
+  FaturamentoVisaoMensal(this.filtro);
+  
   @override
   _FaturamentoVisaoMensalState createState() => _FaturamentoVisaoMensalState();
 }
@@ -31,7 +36,7 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
       color: Colors.black,
     );
 
-    var series = controller.getSeries();
+    var series = controller.getSeries(widget.filtro);
 
     return Container(
       height: 400,
