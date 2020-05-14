@@ -38,6 +38,8 @@ __user=everyone__, caso a linguagem do sistema seja inglês
 
 Talvez esta etapa seja desnecessária, tente apenas as duas primeiras e se não funcionar, execute esta, apague também esta observação.
 
+_Referência: https://stackoverflow.com/questions/3313616/how-to-enable-external-request-in-iis-express segunda resposta_
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
