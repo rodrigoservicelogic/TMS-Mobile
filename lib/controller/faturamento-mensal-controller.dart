@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/faturametno-visao-mensal-datapoint.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
@@ -16,20 +17,47 @@ class FaturamentoVisaoMensalController = _FaturamentoVisaoMensalControllerBase
     with _$FaturamentoVisaoMensalController;
 
 abstract class _FaturamentoVisaoMensalControllerBase with Store {
+  @observable
   List<charts.Series<FaturamentoVisaoMensalDataPoint, String>> series = List();
+
+  @observable
+  List<DataColumn> columns = List();
+
+  @observable
+  List<DataRow> rows = List();
+
   Http _http = Http();
 
   Future getVisaoMensal(
       int idEmpresa, ModelFiltroFaturamento filtroFaturamento) async {
     try {
-      Response response = await _http.get('http://localhost:44347/api/' +
+      Response response = await _http.get(API_URL +
           'faturamentomensal/$idEmpresa?${filtroFaturamento.asQueryParams()}');
 
       if (response != null) {
         Iterable list = json.decode(response.data);
-        Iterable data =
+        List<FaturamentoVisaoMensalDataPoint> data =
             list.map((model) => FaturamentoVisaoMensalDataPoint.fromMap(model));
+        data.sort((a,b) => b.ano.compareTo(a.ano));
 
+        var tableHeaderStyle = TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+          color: Colors.black,
+        );
+
+        columns.clear();
+        columns.add(
+          DataColumn(
+            label: Text(
+              "MÊS",
+              style: tableHeaderStyle,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+
+        HashMap<int, DataRow> dataRows = HashMap();
         HashMap<int, List<FaturamentoVisaoMensalDataPoint>> dataGroups =
             HashMap();
         for (FaturamentoVisaoMensalDataPoint point in data) {
@@ -37,19 +65,49 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
             dataGroups[point.ano] = List();
           }
 
+          if (!dataRows.containsKey(point.mes)) {
+            dataRows[point.mes] = new DataRow(cells: []);
+            dataRows[point.mes].cells.add(
+                  new DataCell(
+                    Text(
+                      point.mes.toString(),
+                    ),
+                  ),
+                );
+          }
+
           dataGroups[point.ano].add(point);
+          dataRows[point.mes].cells.add(
+                new DataCell(
+                  Text("${point.faturamento != null ? point.faturamento.toString(): '-'}"),
+                ),
+              );
         }
 
+        List<int> sortedAnos = dataGroups.keys;
+        sortedAnos.sort((a, b) => b.compareTo(a));
         series.clear();
-        for (int key in dataGroups.keys) {
-          series.add(new charts.Series(
-              id: key.toString(),
-              data: dataGroups[key],
-              domainFn: (FaturamentoVisaoMensalDataPoint p, _) => p.mes.toString(),
-              measureFn: (FaturamentoVisaoMensalDataPoint p, _) => p.faturamento
-            )
+        for (int ano in sortedAnos) {
+          columns.add(
+            DataColumn(
+              label: Text(
+                "$ano(R\$)",
+                style: tableHeaderStyle,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+          series.add(
+            new charts.Series(
+                id: ano.toString(),
+                data: dataGroups[ano],
+                domainFn: (FaturamentoVisaoMensalDataPoint p, _) =>
+                    p.mes.toString(),
+                measureFn: (FaturamentoVisaoMensalDataPoint p, _) =>
+                    p.faturamento),
           );
         }
+        rows = dataRows.values;
       }
     } on DioError catch (e) {
       print(e.message);

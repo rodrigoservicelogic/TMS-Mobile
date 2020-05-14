@@ -10,24 +10,64 @@ part of 'faturamento-mensal-controller.dart';
 
 mixin _$FaturamentoVisaoMensalController
     on _FaturamentoVisaoMensalControllerBase, Store {
-  final _$_FaturamentoVisaoMensalControllerBaseActionController =
-      ActionController(name: '_FaturamentoVisaoMensalControllerBase');
+  final _$seriesAtom =
+      Atom(name: '_FaturamentoVisaoMensalControllerBase.series');
 
   @override
-  dynamic getSeries() {
-    final _$actionInfo =
-        _$_FaturamentoVisaoMensalControllerBaseActionController.startAction();
-    try {
-      return super.getSeries();
-    } finally {
-      _$_FaturamentoVisaoMensalControllerBaseActionController
-          .endAction(_$actionInfo);
-    }
+  List<charts.Series<FaturamentoVisaoMensalDataPoint, String>> get series {
+    _$seriesAtom.context.enforceReadPolicy(_$seriesAtom);
+    _$seriesAtom.reportObserved();
+    return super.series;
+  }
+
+  @override
+  set series(
+      List<charts.Series<FaturamentoVisaoMensalDataPoint, String>> value) {
+    _$seriesAtom.context.conditionallyRunInAction(() {
+      super.series = value;
+      _$seriesAtom.reportChanged();
+    }, _$seriesAtom, name: '${_$seriesAtom.name}_set');
+  }
+
+  final _$columnsAtom =
+      Atom(name: '_FaturamentoVisaoMensalControllerBase.columns');
+
+  @override
+  List<DataColumn> get columns {
+    _$columnsAtom.context.enforceReadPolicy(_$columnsAtom);
+    _$columnsAtom.reportObserved();
+    return super.columns;
+  }
+
+  @override
+  set columns(List<DataColumn> value) {
+    _$columnsAtom.context.conditionallyRunInAction(() {
+      super.columns = value;
+      _$columnsAtom.reportChanged();
+    }, _$columnsAtom, name: '${_$columnsAtom.name}_set');
+  }
+
+  final _$rowsAtom = Atom(name: '_FaturamentoVisaoMensalControllerBase.rows');
+
+  @override
+  List<DataRow> get rows {
+    _$rowsAtom.context.enforceReadPolicy(_$rowsAtom);
+    _$rowsAtom.reportObserved();
+    return super.rows;
+  }
+
+  @override
+  set rows(List<DataRow> value) {
+    _$rowsAtom.context.conditionallyRunInAction(() {
+      super.rows = value;
+      _$rowsAtom.reportChanged();
+    }, _$rowsAtom, name: '${_$rowsAtom.name}_set');
   }
 
   @override
   String toString() {
-    final string = '';
+    final string =
+        'series: ${series.toString()},columns: ${columns.toString()},rows: ${rows.toString()}';
     return '{$string}';
   }
 }
