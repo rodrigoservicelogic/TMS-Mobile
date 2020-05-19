@@ -8,7 +8,7 @@ class FaturamentoVisaoMensal extends StatefulWidget {
   final ModelFiltroFaturamento filtro;
 
   FaturamentoVisaoMensal(this.filtro);
-  
+
   @override
   _FaturamentoVisaoMensalState createState() => _FaturamentoVisaoMensalState();
 }
@@ -19,14 +19,6 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
   Color corSelecionado = Color(COR_PRIMARY);
 
   final controller = FaturamentoVisaoMensalController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    //Outras inicializações
-    controller.getVisaoMensal(1, widget.filtro);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,31 +82,45 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
               ),
             ),
           ),
-          Visibility(
-            visible: visaoTabela,
-            child: SingleChildScrollView(
-              child: DataTable(
-                columns: controller.columns,
-                rows: controller.rows,
-              ),
-            ),
-          ),
-          Visibility(
-            visible: !visaoTabela,
-            child: SizedBox(
-              height: 200.0,
-              child: charts.BarChart(
-                controller.series,
-                animate: true,
-                vertical: true,
-                barGroupingType: charts.BarGroupingType.grouped,
-                behaviors: [
-                  charts.SeriesLegend(
-                    position: charts.BehaviorPosition.bottom,
-                  ),
-                ],
-              ),
-            ),
+          FutureBuilder(
+            future: controller.getVisaoMensal(1, widget.filtro),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return SizedBox(
+                  height: 200.0,
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              } else {
+                if (snapshot.hasError) {
+                  return Center(
+                      child: Text("Falha em obter dados - ${snapshot.error}"));
+                } else {
+                  if (visaoTabela) {
+                    return SingleChildScrollView(
+                      child: DataTable(
+                        columns: controller.columns,
+                        rows: controller.rows,
+                      ),
+                    );
+                  } else {
+                    return SizedBox(
+                      height: 200.0,
+                      child: charts.BarChart(
+                        controller.series,
+                        animate: true,
+                        vertical: true,
+                        barGroupingType: charts.BarGroupingType.grouped,
+                        behaviors: [
+                          charts.SeriesLegend(
+                            position: charts.BehaviorPosition.bottom,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                }
+              }
+            },
           ),
         ],
       ),
