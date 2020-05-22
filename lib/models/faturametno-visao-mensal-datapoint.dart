@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:tms_mobile/controller/faturamento-mensal-controller.dart';
 
 class FaturamentoVisaoMensalDataPoint{
@@ -17,4 +18,13 @@ class FaturamentoVisaoMensalDataPoint{
   factory FaturamentoVisaoMensalDataPoint.fromJson(dynamic json){
     return FaturamentoVisaoMensalDataPoint(json['Faturamento'] as double, json['Mes'] as int, json['Ano'] as int);
   }
+
+  int compareTo(FaturamentoVisaoMensalDataPoint other){
+    var compAno = this.ano.compareTo(other.ano); 
+    if (compAno == 0){
+      return this.mes.compareTo(other.mes);
+    }
+    return compAno;
+  }
+
 }

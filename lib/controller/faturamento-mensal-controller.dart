@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -9,6 +10,7 @@ import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/faturametno-visao-mensal-datapoint.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:tms_mobile/pages/faturamento-mensal.dart';
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:tms_mobile/util/http_helper.dart';
 part 'faturamento-mensal-controller.g.dart';
@@ -27,91 +29,188 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
   List<DataRow> rows = List();
 
   Http _http = Http();
+  List<FaturamentoVisaoMensalDataPoint> data = List();
 
-  Future getVisaoMensal(
+  Future<bool> getVisaoMensal(
       int idEmpresa, ModelFiltroFaturamento filtroFaturamento) async {
     try {
-      Response response = await _http.get(API_URL +
-          'faturamentomensal/$idEmpresa?${filtroFaturamento.asQueryParams()}');
+      if (this.data == null || this.data.isEmpty) {
+        Response response = await _http.get(API_URL +
+            'faturamentomensal/$idEmpresa?${filtroFaturamento.asQueryParams()}');
 
-      if (response != null) {
-        Iterable list = json.decode(response.data);
-        List<FaturamentoVisaoMensalDataPoint> data =
-            list.map((model) => FaturamentoVisaoMensalDataPoint.fromMap(model));
-        data.sort((a,b) => b.ano.compareTo(a.ano));
+        if (response != null) {
+          // Iterable list = json.decode(response.data) as List;
+          List<FaturamentoVisaoMensalDataPoint> data = response.data
+              .map<FaturamentoVisaoMensalDataPoint>(
+                  (json) => FaturamentoVisaoMensalDataPoint.fromJson(json))
+              .toList();
+          data.sort((a, b) => b.compareTo(a));
 
-        var tableHeaderStyle = TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 12,
-          color: Colors.black,
-        );
-
-        columns.clear();
-        columns.add(
-          DataColumn(
-            label: Text(
-              "MÊS",
-              style: tableHeaderStyle,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
-
-        HashMap<int, DataRow> dataRows = HashMap();
-        HashMap<int, List<FaturamentoVisaoMensalDataPoint>> dataGroups =
-            HashMap();
-        for (FaturamentoVisaoMensalDataPoint point in data) {
-          if (!dataGroups.containsKey(point.ano)) {
-            dataGroups[point.ano] = List();
-          }
-
-          if (!dataRows.containsKey(point.mes)) {
-            dataRows[point.mes] = new DataRow(cells: []);
-            dataRows[point.mes].cells.add(
-                  new DataCell(
-                    Text(
-                      point.mes.toString(),
-                    ),
-                  ),
-                );
-          }
-
-          dataGroups[point.ano].add(point);
-          dataRows[point.mes].cells.add(
-                new DataCell(
-                  Text("${point.faturamento != null ? point.faturamento.toString(): '-'}"),
-                ),
-              );
+          buildSeries(data);
+          buildTable(data, filtroFaturamento.dataDe, filtroFaturamento.dataAte);
+          this.data = data;
         }
-
-        List<int> sortedAnos = dataGroups.keys;
-        sortedAnos.sort((a, b) => b.compareTo(a));
-        series.clear();
-        for (int ano in sortedAnos) {
-          columns.add(
-            DataColumn(
-              label: Text(
-                "$ano(R\$)",
-                style: tableHeaderStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-          series.add(
-            new charts.Series(
-                id: ano.toString(),
-                data: dataGroups[ano],
-                domainFn: (FaturamentoVisaoMensalDataPoint p, _) =>
-                    p.mes.toString(),
-                measureFn: (FaturamentoVisaoMensalDataPoint p, _) =>
-                    p.faturamento),
-          );
-        }
-        rows = dataRows.values;
+        return Future.value(true);
       }
     } on DioError catch (e) {
       print(e.message);
+      return Future.value(false);
     }
+  }
+
+  void buildSeries(List<FaturamentoVisaoMensalDataPoint> data) {
+    series.clear();
+    HashMap<int, List<FaturamentoVisaoMensalDataPoint>> dataGroups = HashMap();
+
+    for (var point in data) {
+      if (point.ano > 0) {
+        if (!dataGroups.containsKey(point.ano)) {
+          dataGroups[point.ano] = List();
+        }
+        if (point.faturamento >= 0) {
+          dataGroups[point.ano].add(point);
+        }
+      }
+    }
+
+    for (int ano in dataGroups.keys) {
+      series.add(
+        new charts.Series(
+            id: ano.toString(),
+            data: dataGroups[ano],
+            domainFn: (FaturamentoVisaoMensalDataPoint p, _) =>
+                p.mes.toString(),
+            measureFn: (FaturamentoVisaoMensalDataPoint p, _) => p.faturamento),
+      );
+    }
+  }
+
+  void buildTable(List<FaturamentoVisaoMensalDataPoint> data, DateTime dateFrom,
+      DateTime dateTo) {
+    var formatoMoeda = new NumberFormat.currency(locale: "pt_BR", symbol: "");
+
+    List<int> years = buildTable_Columns(dateTo, dateFrom);
+    HashMap<int, DataRow> months = buildTable_Rows(dateFrom, dateTo);
+
+    for (int y in years) {
+      for (int m in months.keys) {
+        var point = data.firstWhere((p) => p.ano == y && p.mes == m,
+            orElse: () => null);
+        if (point != null) {
+          months[m].cells.add(
+                new DataCell(
+                  Text(
+                    "${point.faturamento < 0 ? '-' : formatoMoeda.format(point.faturamento)}",
+                  ),
+                ),
+              );
+        }
+      }
+    }
+
+    for (int m in months.keys) {
+      var point =
+          data.firstWhere((p) => p.ano == 0 && p.mes == m, orElse: () => null);
+      if (point != null) {
+        months[m].cells.add(
+              new DataCell(
+                Text(
+                  "${point.faturamento < 0 ? '-' : formatoMoeda.format(point.faturamento)}",
+                ),
+              ),
+            );
+      }
+    }
+
+    rows = months.values.toList();
+  }
+
+  HashMap<int, DataRow> buildTable_Rows(DateTime dateFrom, DateTime dateTo) {
+    HashMap<int, DataRow> months = HashMap();
+
+    rows.clear();
+    DateTime current = dateFrom;
+    while (current.isBefore(dateTo)) {
+      if (!months.containsKey(current.month)) {
+        months[current.month] = DataRow(cells: []);
+        months[current.month].cells.add(
+              new DataCell(
+                Text(
+                  current.month.toString(),
+                ),
+              ),
+            );
+      }
+      current = current.add(Duration(days: 15));
+    }
+    return months;
+  }
+
+  List<int> buildTable_Columns(DateTime dateTo, DateTime dateFrom) {
+    columns.clear();
+    List<int> years = List();
+
+    var tableHeaderStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 12,
+      color: Colors.black,
+    );
+
+    columns.add(
+      DataColumn(
+        label: Text(
+          "MÊS",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
+    columns.add(
+      DataColumn(
+        label: Text(
+          "${dateTo.year}(R\$)",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+    years.add(dateTo.year);
+
+    if (dateFrom.year != dateTo.year) {
+      columns.add(
+        DataColumn(
+          label: Text(
+            "${dateFrom.year}(R\$)",
+            style: tableHeaderStyle,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+      years.add(dateFrom.year);
+    }
+
+    columns.add(
+      DataColumn(
+        label: Text(
+          "${dateFrom.year - 1}(R\$)",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+    years.add(dateFrom.year - 1);
+
+    columns.add(
+      DataColumn(
+        label: Text(
+          "%",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+    return years;
   }
 
   // @action
