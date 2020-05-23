@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tms_mobile/controller/faturamento-mensal-controller.dart';
+import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 
 class FaturamentoVisaoMensal extends StatefulWidget {
+  final ModelFiltroFaturamento filtro;
+
+  FaturamentoVisaoMensal(this.filtro);
+
   @override
   _FaturamentoVisaoMensalState createState() => _FaturamentoVisaoMensalState();
 }
@@ -16,22 +21,8 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
   final controller = FaturamentoVisaoMensalController();
 
   @override
-  void initState() {
-    super.initState();
-
-    //Outras inicializações
-  }
-
-  @override
   Widget build(BuildContext context) {
     //Declaração de variáveis para scafolding
-    var tableHeaderStyle = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 12,
-      color: Colors.black,
-    );
-
-    var series = controller.getSeries();
 
     return Container(
       height: 400,
@@ -91,93 +82,46 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
               ),
             ),
           ),
-          Visibility(
-            visible: visaoTabela,
-            child: SingleChildScrollView(
-              child: DataTable(
-                columns: [
-                  DataColumn(
-                    label: Text(
-                      'Mês',
-                      style: tableHeaderStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      '2019(R\$)',
-                      style: tableHeaderStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      '2020(R\$)',
-                      style: tableHeaderStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      '%',
-                      style: tableHeaderStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-                rows: [
-                  DataRow(
-                    cells: [
-                      DataCell(Text('01')),
-                      DataCell(Text('6.000.000,00')),
-                      DataCell(Text('4.000.000,00')),
-                      DataCell(Text('10,00')),
-                    ],
-                  ),
-                  DataRow(
-                    cells: [
-                      DataCell(Text('02')),
-                      DataCell(Text('6.000.000,00')),
-                      DataCell(Text('4.000.000,00')),
-                      DataCell(Text('12,00')),
-                    ],
-                  ),
-                  DataRow(
-                    cells: [
-                      DataCell(Text('03')),
-                      DataCell(Text('6.000.000,00')),
-                      DataCell(Text('4.000.000,00')),
-                      DataCell(Text('15,00')),
-                    ],
-                  ),
-                  DataRow(
-                    cells: [
-                      DataCell(Text('Total')),
-                      DataCell(Text('15.000.000,00')),
-                      DataCell(Text('12.000.000,00')),
-                      DataCell(Text('20,00')),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Visibility(
-            visible: !visaoTabela,
-            child: SizedBox(
-              height: 200.0,
-              child: charts.BarChart(
-                series,
-                animate: true,
-                vertical: true,
-                barGroupingType: charts.BarGroupingType.grouped,
-                behaviors: [
-                  charts.SeriesLegend(
-                    position: charts.BehaviorPosition.bottom,
-                  ),
-                ],
-              ),
-            ),
+          FutureBuilder(
+            future: controller.getVisaoMensal(1, widget.filtro),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return SizedBox(
+                  height: 200.0,
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              } else {
+                if (snapshot.hasError) {
+                  return Center(
+                      child: Text("Falha em obter dados - ${snapshot.error}"));
+                } else {
+                  if (visaoTabela) {
+                    return SingleChildScrollView(
+                      child: DataTable(
+                        columnSpacing: 28.0,
+                        columns: controller.columns,
+                        rows: controller.rows,
+                      ),
+                    );
+                  } else {
+                    return SizedBox(
+                      height: 200.0,
+                      child: charts.BarChart(
+                        controller.series,
+                        animate: true,
+                        vertical: true,
+                        barGroupingType: charts.BarGroupingType.grouped,
+                        behaviors: [
+                          charts.SeriesLegend(
+                            position: charts.BehaviorPosition.bottom,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                }
+              }
+            },
           ),
         ],
       ),

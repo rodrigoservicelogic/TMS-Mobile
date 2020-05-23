@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:tms_mobile/util/size-config.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
@@ -193,9 +194,17 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              FaturamentoPage(widget.pageController)));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => FaturamentoPage(
+                            widget.pageController,
+                            new ModelFiltroFaturamento(
+                              _dataInicial,
+                              _dataFinal, // Incluir demais filtros após atualização da tela com info da API
+                            ),
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -220,7 +229,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     onPressed: () {
-                       Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                   ),
                 ),

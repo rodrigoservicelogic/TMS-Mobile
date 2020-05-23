@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
+import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:tms_mobile/pages/faturamento-mensal.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
@@ -10,8 +11,9 @@ import 'faturamento-visao-un.dart';
 
 class FaturamentoPage extends StatefulWidget {
   final PageController pageController;
+  final ModelFiltroFaturamento filtroFaturamento;
 
-  FaturamentoPage(this.pageController);
+  FaturamentoPage(this.pageController, this.filtroFaturamento);
 
   @override
   _FaturamentoPageState createState() => _FaturamentoPageState();
@@ -215,7 +217,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                   pagination: true,
                   autoPlay: false,
                   items: <Widget>[
-                    FaturamentoVisaoMensal(),
+                    FaturamentoVisaoMensal(widget.filtroFaturamento),
                     FaturamentoVisaoUn(),
                     FaturamentoCliente(),
                     Text("Slide 3"),
