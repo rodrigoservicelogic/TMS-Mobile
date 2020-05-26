@@ -6,6 +6,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/faturametno-visao-mensal-datapoint.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
@@ -31,11 +32,18 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
   Http _http = Http();
   List<FaturamentoVisaoMensalDataPoint> data = List();
 
-  Future<bool> getVisaoMensal(
-      int idEmpresa, ModelFiltroFaturamento filtroFaturamento) async {
+  Future<bool> getVisaoMensal(ModelFiltroFaturamento filtroFaturamento) async {
     try {
       if (this.data == null || this.data.isEmpty) {
+        int idEmpresa = 0;
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        idEmpresa = int.parse(prefs.getString("Empresa"));
+
         Response response = await _http.get(API_URL +
+            'faturamentomensal/$idEmpresa?${filtroFaturamento.asQueryParams()}');
+
+        print(API_URL +
             'faturamentomensal/$idEmpresa?${filtroFaturamento.asQueryParams()}');
 
         if (response != null) {

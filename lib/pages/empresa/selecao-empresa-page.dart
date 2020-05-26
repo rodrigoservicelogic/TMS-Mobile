@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/controller/empresa/empresa-controller.dart';
 import 'package:tms_mobile/controller/login/login-controller.dart';
 import 'package:tms_mobile/models/usuario.dart';
@@ -97,15 +98,20 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                                 'Selecione a Empresa'), // Not necessary for Option 1
                             value: empresaSelected,
                             isExpanded: true,
-                            onChanged: (value) {
+                            onChanged: (value) async {
                               empresaSelected = value;
+
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setString("Empresa", empresaSelected);
+
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => HomePage(user)));
                             },
                             items: controller.empresas
                                 .map<DropdownMenuItem<String>>((var empresa) {
                               return DropdownMenuItem<String>(
-                                value: empresa.nome,
+                                value: empresa.codigo,
                                 child: Text(
                                   empresa.nome,
                                   overflow: TextOverflow.ellipsis,

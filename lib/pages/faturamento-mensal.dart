@@ -83,7 +83,7 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
             ),
           ),
           FutureBuilder(
-            future: controller.getVisaoMensal(1, widget.filtro),
+            future: controller.getVisaoMensal(widget.filtro),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return SizedBox(
