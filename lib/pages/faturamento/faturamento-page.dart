@@ -26,8 +26,12 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
   void initState() {
     super.initState();
 
-    _dataInicial = DateTime.now();
-    _dataFinal = DateTime.now();
+    _dataInicial = widget.filtroFaturamento.dataDe != null
+        ? widget.filtroFaturamento.dataDe
+        : DateTime.now();
+    _dataFinal = widget.filtroFaturamento.dataAte != null
+        ? widget.filtroFaturamento.dataAte
+        : DateTime.now();
   }
 
   BoxDecoration myBoxDecoration() {

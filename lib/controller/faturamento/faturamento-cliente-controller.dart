@@ -1,5 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tms_mobile/models/cliente-faturamento.dart';
+import 'package:tms_mobile/models/filial-model.dart';
 import 'package:tms_mobile/pages/faturamento/faturamento-cliente.dart';
+import 'package:tms_mobile/util/http_helper.dart';
+
+import '../../global.dart';
 part 'faturamento-cliente-controller.g.dart';
 
 class FaturamentoClienteController = _FaturamentoClienteControllerBase
@@ -27,6 +34,27 @@ abstract class _FaturamentoClienteControllerBase with Store {
   @observable
   List<Dados> listaAnos = List();
 
+  @observable
+  bool isLoad = false;
+
+  @observable
+  List<Filial> filiais = List();
+
+  @observable
+  List<String> tiposFrete = List();
+
+  @observable
+  List<ClienteFaturamento> clientes = List();
+
+  @observable
+  int selectedUnidade;
+
+  @observable
+  String selectedFrete;
+
+  @observable
+  String selectedCliente;
+
   @action
   popularListaAnos() {
     listaAnos.add(Dados('2016', 12));
@@ -53,5 +81,70 @@ abstract class _FaturamentoClienteControllerBase with Store {
     valorPercent.add('10%');
     valorPercent.add('15%');
     valorPercent.add('25%');
+  }
+
+  @action
+  changeUnidadeNegocio(int value) {
+    selectedUnidade = value;
+    selectedUnidade = selectedUnidade;
+  }
+
+  @action
+  changeTipoFrete(String value) {
+    selectedFrete = value;
+    selectedFrete = selectedFrete;
+  }
+
+  @action
+  changeCliente(String value) {
+    selectedCliente = value;
+    selectedCliente = selectedCliente;
+  }
+
+  @action
+  Future getListaFilial() async {
+    try {
+      isLoad = true;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int idEmpresa = int.parse(prefs.getString("Empresa"));
+
+      Http _http = Http();
+
+      Response response =
+          await _http.get(API_URL + "empresa/unidade-negocio/$idEmpresa");
+
+      if (response.data != null) {
+        for (Map map in response.data) {
+          filiais.add(Filial.fromJson(map));
+        }
+      }
+
+      Response responseTipoFrete =
+          await _http.get(API_URL + "faturamento/tipo-frete");
+
+      if (responseTipoFrete.data != null) {
+        for (String map in responseTipoFrete.data) {
+          tiposFrete.add(map);
+        }
+      }
+
+      Response responseClientes =
+          await _http.get(API_URL + "faturamento/clientes");
+
+      if (responseClientes.data != null) {
+        for (Map map in responseClientes.data) {
+          clientes.add(ClienteFaturamento.fromJson(map));
+        }
+      }
+
+      isLoad = false;
+
+      return "OK";
+    } catch (e) {
+      isLoad = false;
+      print(e);
+
+      return "Ocorreu um erro ao obter as listas!";
+    }
   }
 }

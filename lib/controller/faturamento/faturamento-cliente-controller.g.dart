@@ -135,6 +135,137 @@ mixin _$FaturamentoClienteController
     }, _$listaAnosAtom, name: '${_$listaAnosAtom.name}_set');
   }
 
+  final _$isLoadAtom = Atom(name: '_FaturamentoClienteControllerBase.isLoad');
+
+  @override
+  bool get isLoad {
+    _$isLoadAtom.context.enforceReadPolicy(_$isLoadAtom);
+    _$isLoadAtom.reportObserved();
+    return super.isLoad;
+  }
+
+  @override
+  set isLoad(bool value) {
+    _$isLoadAtom.context.conditionallyRunInAction(() {
+      super.isLoad = value;
+      _$isLoadAtom.reportChanged();
+    }, _$isLoadAtom, name: '${_$isLoadAtom.name}_set');
+  }
+
+  final _$filiaisAtom = Atom(name: '_FaturamentoClienteControllerBase.filiais');
+
+  @override
+  List<Filial> get filiais {
+    _$filiaisAtom.context.enforceReadPolicy(_$filiaisAtom);
+    _$filiaisAtom.reportObserved();
+    return super.filiais;
+  }
+
+  @override
+  set filiais(List<Filial> value) {
+    _$filiaisAtom.context.conditionallyRunInAction(() {
+      super.filiais = value;
+      _$filiaisAtom.reportChanged();
+    }, _$filiaisAtom, name: '${_$filiaisAtom.name}_set');
+  }
+
+  final _$tiposFreteAtom =
+      Atom(name: '_FaturamentoClienteControllerBase.tiposFrete');
+
+  @override
+  List<String> get tiposFrete {
+    _$tiposFreteAtom.context.enforceReadPolicy(_$tiposFreteAtom);
+    _$tiposFreteAtom.reportObserved();
+    return super.tiposFrete;
+  }
+
+  @override
+  set tiposFrete(List<String> value) {
+    _$tiposFreteAtom.context.conditionallyRunInAction(() {
+      super.tiposFrete = value;
+      _$tiposFreteAtom.reportChanged();
+    }, _$tiposFreteAtom, name: '${_$tiposFreteAtom.name}_set');
+  }
+
+  final _$clientesAtom =
+      Atom(name: '_FaturamentoClienteControllerBase.clientes');
+
+  @override
+  List<ClienteFaturamento> get clientes {
+    _$clientesAtom.context.enforceReadPolicy(_$clientesAtom);
+    _$clientesAtom.reportObserved();
+    return super.clientes;
+  }
+
+  @override
+  set clientes(List<ClienteFaturamento> value) {
+    _$clientesAtom.context.conditionallyRunInAction(() {
+      super.clientes = value;
+      _$clientesAtom.reportChanged();
+    }, _$clientesAtom, name: '${_$clientesAtom.name}_set');
+  }
+
+  final _$selectedUnidadeAtom =
+      Atom(name: '_FaturamentoClienteControllerBase.selectedUnidade');
+
+  @override
+  int get selectedUnidade {
+    _$selectedUnidadeAtom.context.enforceReadPolicy(_$selectedUnidadeAtom);
+    _$selectedUnidadeAtom.reportObserved();
+    return super.selectedUnidade;
+  }
+
+  @override
+  set selectedUnidade(int value) {
+    _$selectedUnidadeAtom.context.conditionallyRunInAction(() {
+      super.selectedUnidade = value;
+      _$selectedUnidadeAtom.reportChanged();
+    }, _$selectedUnidadeAtom, name: '${_$selectedUnidadeAtom.name}_set');
+  }
+
+  final _$selectedFreteAtom =
+      Atom(name: '_FaturamentoClienteControllerBase.selectedFrete');
+
+  @override
+  String get selectedFrete {
+    _$selectedFreteAtom.context.enforceReadPolicy(_$selectedFreteAtom);
+    _$selectedFreteAtom.reportObserved();
+    return super.selectedFrete;
+  }
+
+  @override
+  set selectedFrete(String value) {
+    _$selectedFreteAtom.context.conditionallyRunInAction(() {
+      super.selectedFrete = value;
+      _$selectedFreteAtom.reportChanged();
+    }, _$selectedFreteAtom, name: '${_$selectedFreteAtom.name}_set');
+  }
+
+  final _$selectedClienteAtom =
+      Atom(name: '_FaturamentoClienteControllerBase.selectedCliente');
+
+  @override
+  String get selectedCliente {
+    _$selectedClienteAtom.context.enforceReadPolicy(_$selectedClienteAtom);
+    _$selectedClienteAtom.reportObserved();
+    return super.selectedCliente;
+  }
+
+  @override
+  set selectedCliente(String value) {
+    _$selectedClienteAtom.context.conditionallyRunInAction(() {
+      super.selectedCliente = value;
+      _$selectedClienteAtom.reportChanged();
+    }, _$selectedClienteAtom, name: '${_$selectedClienteAtom.name}_set');
+  }
+
+  final _$getListaFilialAsyncAction = AsyncAction('getListaFilial');
+
+  @override
+  Future<dynamic> getListaFilial() {
+    return _$getListaFilialAsyncAction.run(() => super.getListaFilial());
+  }
+
   final _$_FaturamentoClienteControllerBaseActionController =
       ActionController(name: '_FaturamentoClienteControllerBase');
 
@@ -187,9 +318,45 @@ mixin _$FaturamentoClienteController
   }
 
   @override
+  dynamic changeUnidadeNegocio(int value) {
+    final _$actionInfo =
+        _$_FaturamentoClienteControllerBaseActionController.startAction();
+    try {
+      return super.changeUnidadeNegocio(value);
+    } finally {
+      _$_FaturamentoClienteControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeTipoFrete(String value) {
+    final _$actionInfo =
+        _$_FaturamentoClienteControllerBaseActionController.startAction();
+    try {
+      return super.changeTipoFrete(value);
+    } finally {
+      _$_FaturamentoClienteControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeCliente(String value) {
+    final _$actionInfo =
+        _$_FaturamentoClienteControllerBaseActionController.startAction();
+    try {
+      return super.changeCliente(value);
+    } finally {
+      _$_FaturamentoClienteControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
-        'tipoCliente: ${tipoCliente.toString()},valorReal: ${valorReal.toString()},valorPercent: ${valorPercent.toString()},valor: ${valor.toString()},valorPerc: ${valorPerc.toString()},anoAtual: ${anoAtual.toString()},listaAnos: ${listaAnos.toString()}';
+        'tipoCliente: ${tipoCliente.toString()},valorReal: ${valorReal.toString()},valorPercent: ${valorPercent.toString()},valor: ${valor.toString()},valorPerc: ${valorPerc.toString()},anoAtual: ${anoAtual.toString()},listaAnos: ${listaAnos.toString()},isLoad: ${isLoad.toString()},filiais: ${filiais.toString()},tiposFrete: ${tiposFrete.toString()},clientes: ${clientes.toString()},selectedUnidade: ${selectedUnidade.toString()},selectedFrete: ${selectedFrete.toString()},selectedCliente: ${selectedCliente.toString()}';
     return '{$string}';
   }
 }
