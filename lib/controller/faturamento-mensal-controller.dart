@@ -95,7 +95,10 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
   void buildTable(List<FaturamentoVisaoMensalDataPoint> data, DateTime dateFrom,
       DateTime dateTo) {
-    var formatoMoeda = new NumberFormat.currency(locale: "pt_BR", symbol: "");
+    var formatoMoeda =
+        new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+
+    var formatoPercentual = new NumberFormat.decimalPattern("pt_BR");
 
     List<int> years = buildTable_Columns(dateTo, dateFrom);
     HashMap<int, DataRow> months = buildTable_Rows(dateFrom, dateTo);
@@ -123,7 +126,9 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         months[m].cells.add(
               new DataCell(
                 Text(
-                  "${point.faturamento < 0 ? '-' : formatoMoeda.format(point.faturamento)}",
+                  "${point.faturamento == 1 || point.faturamento == -1 ? '-' : point.faturamento < 0 ? formatoPercentual.format(-point.faturamento) : formatoPercentual.format(point.faturamento)}",
+                  style: TextStyle(
+                      color: point.faturamento < 0 ? Colors.red : Colors.green),
                 ),
               ),
             );
