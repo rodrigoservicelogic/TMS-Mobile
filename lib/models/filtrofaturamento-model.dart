@@ -21,7 +21,7 @@ class ModelFiltroFaturamento{
 
   String asQueryParams(){
     var queryParams = 'DataDe=${this.dataDe.toString()}&DataAte=${this.dataAte.toString()}';
-    if (this.idUnidadeNegocio > 0){
+    if (this.idUnidadeNegocio != null && this.idUnidadeNegocio > 0){
       queryParams += '&IdUnidadeNegocio=${this.idUnidadeNegocio}';
     }
     if (this.tipoFrete != null && this.tipoFrete.isNotEmpty){
