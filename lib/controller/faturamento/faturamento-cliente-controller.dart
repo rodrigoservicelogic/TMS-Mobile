@@ -90,14 +90,32 @@ abstract class _FaturamentoClienteControllerBase with Store {
   }
 
   @action
+  clearSelectedUnidadeNegocio(){
+    selectedUnidade = null;
+    selectedUnidade = selectedUnidade;
+  }
+
+  @action
   changeTipoFrete(String value) {
     selectedFrete = value;
     selectedFrete = selectedFrete;
   }
 
   @action
+  clearSelectedTipoFrete(){
+    selectedFrete = null;
+    selectedFrete = selectedFrete;
+  }
+
+  @action
   changeCliente(String value) {
     selectedCliente = value;
+    selectedCliente = selectedCliente;
+  }
+
+  @action
+  clearSelectedCliente(){
+    selectedCliente = null;
     selectedCliente = selectedCliente;
   }
 

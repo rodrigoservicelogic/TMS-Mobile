@@ -134,6 +134,11 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     value: controllerEmpresa.selectedUnidade,
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeUnidadeNegocio,
+                    icon: IconButton(
+                      icon: controllerEmpresa.selectedUnidade != null ? Icon(Icons.clear) : Icon(Icons.arrow_drop_down),
+                      onPressed: controllerEmpresa.clearSelectedUnidadeNegocio,
+                      color: controllerEmpresa.selectedUnidade != null ? Colors.red : Colors.black54,
+                    ),
                     items: controllerEmpresa.filiais.map((unidade) {
                       return DropdownMenuItem(
                         child: new Text(unidade.nomeFantasia),
@@ -149,6 +154,11 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     value: controllerEmpresa.selectedFrete,
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeTipoFrete,
+                    icon: IconButton(
+                      icon: controllerEmpresa.selectedFrete != null ? Icon(Icons.clear) : Icon(Icons.arrow_drop_down),
+                      onPressed: controllerEmpresa.clearSelectedTipoFrete,
+                      color: controllerEmpresa.selectedFrete != null ? Colors.red : Colors.black54,
+                    ),
                     items: controllerEmpresa.tiposFrete.map((frete) {
                       return DropdownMenuItem(
                         child: new Text(frete),
@@ -164,6 +174,11 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     value: controllerEmpresa.selectedCliente,
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeCliente,
+                    icon: IconButton(
+                      icon: controllerEmpresa.selectedCliente != null ? Icon(Icons.clear) : Icon(Icons.arrow_drop_down),
+                      onPressed: controllerEmpresa.clearSelectedCliente,
+                      color: controllerEmpresa.selectedCliente != null ? Colors.red : Colors.black54,
+                    ),
                     items: controllerEmpresa.clientes.map((cliente) {
                       return DropdownMenuItem(
                         child: new Text(

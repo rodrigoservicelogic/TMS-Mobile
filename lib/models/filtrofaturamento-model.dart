@@ -20,6 +20,16 @@ class ModelFiltroFaturamento{
   }
 
   String asQueryParams(){
-    return 'DataDe=${this.dataDe.toString()}&DataAte=${this.dataAte.toString()}&IdUnidadeNegocio=${this.idUnidadeNegocio}&TipoFrete=${this.tipoFrete}&CodigoCliente=${this.codigoCliente}';
+    var queryParams = 'DataDe=${this.dataDe.toString()}&DataAte=${this.dataAte.toString()}';
+    if (this.idUnidadeNegocio > 0){
+      queryParams += '&IdUnidadeNegocio=${this.idUnidadeNegocio}';
+    }
+    if (this.tipoFrete != null && this.tipoFrete.isNotEmpty){
+      queryParams += '&TipoFrete=${this.tipoFrete}';
+    }
+    if (this.codigoCliente != null && this.codigoCliente.isNotEmpty){
+      queryParams += '&CodigoCliente=${this.codigoCliente}';
+    }
+    return queryParams;
   }
 }
