@@ -98,7 +98,7 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
                   if (visaoTabela) {
                     return SingleChildScrollView(
                       child: DataTable(
-                        columnSpacing: 28.0,
+                        columnSpacing: 3.5,
                         columns: controller.columns,
                         rows: controller.rows,
                       ),
