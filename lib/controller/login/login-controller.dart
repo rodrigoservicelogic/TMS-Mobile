@@ -44,12 +44,14 @@ abstract class _LoginControllerBase with Store {
   Future login() async {
     try {
       isLoad = true;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
       Response response = await _http
           .get(API_URL + "login?email=${usuario.login}&senha=${usuario.senha}");
 
       if (response.data != null) {
         usuario = Usuario.fromMap(response.data);
+        prefs.setInt("Usuario",this.usuario.id);
       }
 
       isLoad = false;

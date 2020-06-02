@@ -15,17 +15,15 @@ mixin _$FaturamentoClienteController
 
   @override
   List<String> get tipoCliente {
-    _$tipoClienteAtom.context.enforceReadPolicy(_$tipoClienteAtom);
-    _$tipoClienteAtom.reportObserved();
+    _$tipoClienteAtom.reportRead();
     return super.tipoCliente;
   }
 
   @override
   set tipoCliente(List<String> value) {
-    _$tipoClienteAtom.context.conditionallyRunInAction(() {
+    _$tipoClienteAtom.reportWrite(value, super.tipoCliente, () {
       super.tipoCliente = value;
-      _$tipoClienteAtom.reportChanged();
-    }, _$tipoClienteAtom, name: '${_$tipoClienteAtom.name}_set');
+    });
   }
 
   final _$valorRealAtom =
@@ -33,17 +31,15 @@ mixin _$FaturamentoClienteController
 
   @override
   List<String> get valorReal {
-    _$valorRealAtom.context.enforceReadPolicy(_$valorRealAtom);
-    _$valorRealAtom.reportObserved();
+    _$valorRealAtom.reportRead();
     return super.valorReal;
   }
 
   @override
   set valorReal(List<String> value) {
-    _$valorRealAtom.context.conditionallyRunInAction(() {
+    _$valorRealAtom.reportWrite(value, super.valorReal, () {
       super.valorReal = value;
-      _$valorRealAtom.reportChanged();
-    }, _$valorRealAtom, name: '${_$valorRealAtom.name}_set');
+    });
   }
 
   final _$valorPercentAtom =
@@ -51,34 +47,30 @@ mixin _$FaturamentoClienteController
 
   @override
   List<String> get valorPercent {
-    _$valorPercentAtom.context.enforceReadPolicy(_$valorPercentAtom);
-    _$valorPercentAtom.reportObserved();
+    _$valorPercentAtom.reportRead();
     return super.valorPercent;
   }
 
   @override
   set valorPercent(List<String> value) {
-    _$valorPercentAtom.context.conditionallyRunInAction(() {
+    _$valorPercentAtom.reportWrite(value, super.valorPercent, () {
       super.valorPercent = value;
-      _$valorPercentAtom.reportChanged();
-    }, _$valorPercentAtom, name: '${_$valorPercentAtom.name}_set');
+    });
   }
 
   final _$valorAtom = Atom(name: '_FaturamentoClienteControllerBase.valor');
 
   @override
   String get valor {
-    _$valorAtom.context.enforceReadPolicy(_$valorAtom);
-    _$valorAtom.reportObserved();
+    _$valorAtom.reportRead();
     return super.valor;
   }
 
   @override
   set valor(String value) {
-    _$valorAtom.context.conditionallyRunInAction(() {
+    _$valorAtom.reportWrite(value, super.valor, () {
       super.valor = value;
-      _$valorAtom.reportChanged();
-    }, _$valorAtom, name: '${_$valorAtom.name}_set');
+    });
   }
 
   final _$valorPercAtom =
@@ -86,17 +78,15 @@ mixin _$FaturamentoClienteController
 
   @override
   String get valorPerc {
-    _$valorPercAtom.context.enforceReadPolicy(_$valorPercAtom);
-    _$valorPercAtom.reportObserved();
+    _$valorPercAtom.reportRead();
     return super.valorPerc;
   }
 
   @override
   set valorPerc(String value) {
-    _$valorPercAtom.context.conditionallyRunInAction(() {
+    _$valorPercAtom.reportWrite(value, super.valorPerc, () {
       super.valorPerc = value;
-      _$valorPercAtom.reportChanged();
-    }, _$valorPercAtom, name: '${_$valorPercAtom.name}_set');
+    });
   }
 
   final _$anoAtualAtom =
@@ -104,17 +94,15 @@ mixin _$FaturamentoClienteController
 
   @override
   String get anoAtual {
-    _$anoAtualAtom.context.enforceReadPolicy(_$anoAtualAtom);
-    _$anoAtualAtom.reportObserved();
+    _$anoAtualAtom.reportRead();
     return super.anoAtual;
   }
 
   @override
   set anoAtual(String value) {
-    _$anoAtualAtom.context.conditionallyRunInAction(() {
+    _$anoAtualAtom.reportWrite(value, super.anoAtual, () {
       super.anoAtual = value;
-      _$anoAtualAtom.reportChanged();
-    }, _$anoAtualAtom, name: '${_$anoAtualAtom.name}_set');
+    });
   }
 
   final _$listaAnosAtom =
@@ -122,51 +110,45 @@ mixin _$FaturamentoClienteController
 
   @override
   List<Dados> get listaAnos {
-    _$listaAnosAtom.context.enforceReadPolicy(_$listaAnosAtom);
-    _$listaAnosAtom.reportObserved();
+    _$listaAnosAtom.reportRead();
     return super.listaAnos;
   }
 
   @override
   set listaAnos(List<Dados> value) {
-    _$listaAnosAtom.context.conditionallyRunInAction(() {
+    _$listaAnosAtom.reportWrite(value, super.listaAnos, () {
       super.listaAnos = value;
-      _$listaAnosAtom.reportChanged();
-    }, _$listaAnosAtom, name: '${_$listaAnosAtom.name}_set');
+    });
   }
 
   final _$isLoadAtom = Atom(name: '_FaturamentoClienteControllerBase.isLoad');
 
   @override
   bool get isLoad {
-    _$isLoadAtom.context.enforceReadPolicy(_$isLoadAtom);
-    _$isLoadAtom.reportObserved();
+    _$isLoadAtom.reportRead();
     return super.isLoad;
   }
 
   @override
   set isLoad(bool value) {
-    _$isLoadAtom.context.conditionallyRunInAction(() {
+    _$isLoadAtom.reportWrite(value, super.isLoad, () {
       super.isLoad = value;
-      _$isLoadAtom.reportChanged();
-    }, _$isLoadAtom, name: '${_$isLoadAtom.name}_set');
+    });
   }
 
   final _$filiaisAtom = Atom(name: '_FaturamentoClienteControllerBase.filiais');
 
   @override
   List<Filial> get filiais {
-    _$filiaisAtom.context.enforceReadPolicy(_$filiaisAtom);
-    _$filiaisAtom.reportObserved();
+    _$filiaisAtom.reportRead();
     return super.filiais;
   }
 
   @override
   set filiais(List<Filial> value) {
-    _$filiaisAtom.context.conditionallyRunInAction(() {
+    _$filiaisAtom.reportWrite(value, super.filiais, () {
       super.filiais = value;
-      _$filiaisAtom.reportChanged();
-    }, _$filiaisAtom, name: '${_$filiaisAtom.name}_set');
+    });
   }
 
   final _$tiposFreteAtom =
@@ -174,17 +156,15 @@ mixin _$FaturamentoClienteController
 
   @override
   List<String> get tiposFrete {
-    _$tiposFreteAtom.context.enforceReadPolicy(_$tiposFreteAtom);
-    _$tiposFreteAtom.reportObserved();
+    _$tiposFreteAtom.reportRead();
     return super.tiposFrete;
   }
 
   @override
   set tiposFrete(List<String> value) {
-    _$tiposFreteAtom.context.conditionallyRunInAction(() {
+    _$tiposFreteAtom.reportWrite(value, super.tiposFrete, () {
       super.tiposFrete = value;
-      _$tiposFreteAtom.reportChanged();
-    }, _$tiposFreteAtom, name: '${_$tiposFreteAtom.name}_set');
+    });
   }
 
   final _$clientesAtom =
@@ -192,17 +172,15 @@ mixin _$FaturamentoClienteController
 
   @override
   List<ClienteFaturamento> get clientes {
-    _$clientesAtom.context.enforceReadPolicy(_$clientesAtom);
-    _$clientesAtom.reportObserved();
+    _$clientesAtom.reportRead();
     return super.clientes;
   }
 
   @override
   set clientes(List<ClienteFaturamento> value) {
-    _$clientesAtom.context.conditionallyRunInAction(() {
+    _$clientesAtom.reportWrite(value, super.clientes, () {
       super.clientes = value;
-      _$clientesAtom.reportChanged();
-    }, _$clientesAtom, name: '${_$clientesAtom.name}_set');
+    });
   }
 
   final _$selectedUnidadeAtom =
@@ -210,17 +188,15 @@ mixin _$FaturamentoClienteController
 
   @override
   int get selectedUnidade {
-    _$selectedUnidadeAtom.context.enforceReadPolicy(_$selectedUnidadeAtom);
-    _$selectedUnidadeAtom.reportObserved();
+    _$selectedUnidadeAtom.reportRead();
     return super.selectedUnidade;
   }
 
   @override
   set selectedUnidade(int value) {
-    _$selectedUnidadeAtom.context.conditionallyRunInAction(() {
+    _$selectedUnidadeAtom.reportWrite(value, super.selectedUnidade, () {
       super.selectedUnidade = value;
-      _$selectedUnidadeAtom.reportChanged();
-    }, _$selectedUnidadeAtom, name: '${_$selectedUnidadeAtom.name}_set');
+    });
   }
 
   final _$selectedFreteAtom =
@@ -228,17 +204,15 @@ mixin _$FaturamentoClienteController
 
   @override
   String get selectedFrete {
-    _$selectedFreteAtom.context.enforceReadPolicy(_$selectedFreteAtom);
-    _$selectedFreteAtom.reportObserved();
+    _$selectedFreteAtom.reportRead();
     return super.selectedFrete;
   }
 
   @override
   set selectedFrete(String value) {
-    _$selectedFreteAtom.context.conditionallyRunInAction(() {
+    _$selectedFreteAtom.reportWrite(value, super.selectedFrete, () {
       super.selectedFrete = value;
-      _$selectedFreteAtom.reportChanged();
-    }, _$selectedFreteAtom, name: '${_$selectedFreteAtom.name}_set');
+    });
   }
 
   final _$selectedClienteAtom =
@@ -246,20 +220,19 @@ mixin _$FaturamentoClienteController
 
   @override
   String get selectedCliente {
-    _$selectedClienteAtom.context.enforceReadPolicy(_$selectedClienteAtom);
-    _$selectedClienteAtom.reportObserved();
+    _$selectedClienteAtom.reportRead();
     return super.selectedCliente;
   }
 
   @override
   set selectedCliente(String value) {
-    _$selectedClienteAtom.context.conditionallyRunInAction(() {
+    _$selectedClienteAtom.reportWrite(value, super.selectedCliente, () {
       super.selectedCliente = value;
-      _$selectedClienteAtom.reportChanged();
-    }, _$selectedClienteAtom, name: '${_$selectedClienteAtom.name}_set');
+    });
   }
 
-  final _$getListaFilialAsyncAction = AsyncAction('getListaFilial');
+  final _$getListaFilialAsyncAction =
+      AsyncAction('_FaturamentoClienteControllerBase.getListaFilial');
 
   @override
   Future<dynamic> getListaFilial() {
@@ -272,7 +245,8 @@ mixin _$FaturamentoClienteController
   @override
   dynamic popularListaAnos() {
     final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction();
+        _$_FaturamentoClienteControllerBaseActionController.startAction(
+            name: '_FaturamentoClienteControllerBase.popularListaAnos');
     try {
       return super.popularListaAnos();
     } finally {
@@ -284,7 +258,8 @@ mixin _$FaturamentoClienteController
   @override
   dynamic popularListaTipoCliente() {
     final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction();
+        _$_FaturamentoClienteControllerBaseActionController.startAction(
+            name: '_FaturamentoClienteControllerBase.popularListaTipoCliente');
     try {
       return super.popularListaTipoCliente();
     } finally {
@@ -296,7 +271,8 @@ mixin _$FaturamentoClienteController
   @override
   dynamic popularListaValorReal() {
     final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction();
+        _$_FaturamentoClienteControllerBaseActionController.startAction(
+            name: '_FaturamentoClienteControllerBase.popularListaValorReal');
     try {
       return super.popularListaValorReal();
     } finally {
@@ -308,7 +284,8 @@ mixin _$FaturamentoClienteController
   @override
   dynamic popularListaValorPercent() {
     final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction();
+        _$_FaturamentoClienteControllerBaseActionController.startAction(
+            name: '_FaturamentoClienteControllerBase.popularListaValorPercent');
     try {
       return super.popularListaValorPercent();
     } finally {
@@ -320,7 +297,8 @@ mixin _$FaturamentoClienteController
   @override
   dynamic changeUnidadeNegocio(int value) {
     final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction();
+        _$_FaturamentoClienteControllerBaseActionController.startAction(
+            name: '_FaturamentoClienteControllerBase.changeUnidadeNegocio');
     try {
       return super.changeUnidadeNegocio(value);
     } finally {
@@ -330,9 +308,23 @@ mixin _$FaturamentoClienteController
   }
 
   @override
-  dynamic changeTipoFrete(String value) {
+  dynamic clearSelectedUnidadeNegocio() {
     final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction();
+        _$_FaturamentoClienteControllerBaseActionController.startAction(
+            name:
+                '_FaturamentoClienteControllerBase.clearSelectedUnidadeNegocio');
+    try {
+      return super.clearSelectedUnidadeNegocio();
+    } finally {
+      _$_FaturamentoClienteControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeTipoFrete(String value) {
+    final _$actionInfo = _$_FaturamentoClienteControllerBaseActionController
+        .startAction(name: '_FaturamentoClienteControllerBase.changeTipoFrete');
     try {
       return super.changeTipoFrete(value);
     } finally {
@@ -342,9 +334,22 @@ mixin _$FaturamentoClienteController
   }
 
   @override
-  dynamic changeCliente(String value) {
+  dynamic clearSelectedTipoFrete() {
     final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction();
+        _$_FaturamentoClienteControllerBaseActionController.startAction(
+            name: '_FaturamentoClienteControllerBase.clearSelectedTipoFrete');
+    try {
+      return super.clearSelectedTipoFrete();
+    } finally {
+      _$_FaturamentoClienteControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeCliente(String value) {
+    final _$actionInfo = _$_FaturamentoClienteControllerBaseActionController
+        .startAction(name: '_FaturamentoClienteControllerBase.changeCliente');
     try {
       return super.changeCliente(value);
     } finally {
@@ -354,9 +359,35 @@ mixin _$FaturamentoClienteController
   }
 
   @override
+  dynamic clearSelectedCliente() {
+    final _$actionInfo =
+        _$_FaturamentoClienteControllerBaseActionController.startAction(
+            name: '_FaturamentoClienteControllerBase.clearSelectedCliente');
+    try {
+      return super.clearSelectedCliente();
+    } finally {
+      _$_FaturamentoClienteControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
-    final string =
-        'tipoCliente: ${tipoCliente.toString()},valorReal: ${valorReal.toString()},valorPercent: ${valorPercent.toString()},valor: ${valor.toString()},valorPerc: ${valorPerc.toString()},anoAtual: ${anoAtual.toString()},listaAnos: ${listaAnos.toString()},isLoad: ${isLoad.toString()},filiais: ${filiais.toString()},tiposFrete: ${tiposFrete.toString()},clientes: ${clientes.toString()},selectedUnidade: ${selectedUnidade.toString()},selectedFrete: ${selectedFrete.toString()},selectedCliente: ${selectedCliente.toString()}';
-    return '{$string}';
+    return '''
+tipoCliente: ${tipoCliente},
+valorReal: ${valorReal},
+valorPercent: ${valorPercent},
+valor: ${valor},
+valorPerc: ${valorPerc},
+anoAtual: ${anoAtual},
+listaAnos: ${listaAnos},
+isLoad: ${isLoad},
+filiais: ${filiais},
+tiposFrete: ${tiposFrete},
+clientes: ${clientes},
+selectedUnidade: ${selectedUnidade},
+selectedFrete: ${selectedFrete},
+selectedCliente: ${selectedCliente}
+    ''';
   }
 }

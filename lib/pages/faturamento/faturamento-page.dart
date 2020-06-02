@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:getflutter/getflutter.dart';
+import 'package:tms_mobile/controller/empresa/empresa-controller.dart';
+import 'package:tms_mobile/controller/faturamento/faturamento-cliente-controller.dart';
+import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:tms_mobile/pages/faturamento-mensal.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
@@ -21,6 +26,8 @@ class FaturamentoPage extends StatefulWidget {
 
 class _FaturamentoPageState extends State<FaturamentoPage> {
   DateTime _dataInicial, _dataFinal;
+  final controllerFaturamentoUn = GetIt.I.get<FaturamentoUnController>();
+  final controllerEmpresa = GetIt.I.get<FaturamentoClienteController>();
 
   @override
   void initState() {
@@ -32,6 +39,12 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
     _dataFinal = widget.filtroFaturamento.dataAte != null
         ? widget.filtroFaturamento.dataAte
         : DateTime.now();
+
+    _init();
+  }
+
+  void _init() async {
+    await controllerFaturamentoUn.getFaturamento(widget.filtroFaturamento);
   }
 
   BoxDecoration myBoxDecoration() {
@@ -66,193 +79,208 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 60,
-              width: double.infinity,
-              child: Container(
-                color: Color(COR_PRIMARY),
-                child: Center(
-                  child: Text(
-                    "FATURAMENTO",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+        child: Observer(
+          builder: (_) {
+            if (controllerFaturamentoUn.isLoad) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Column(
               children: <Widget>[
-                Expanded(
-                  flex: 4,
-                  child: DateTimePicker(
-                    labelText: "De:",
-                    selectedDate: _dataInicial,
-                    selectDate: (DateTime date) {
-                      print(date);
-                      setState(() {
-                        _dataInicial = date;
-                      });
-                    },
+                SizedBox(
+                  height: 60,
+                  width: double.infinity,
+                  child: Container(
+                    color: Color(COR_PRIMARY),
+                    child: Center(
+                      child: Text(
+                        "FATURAMENTO",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                            color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
-                Container(
-                  width: 15,
+                SizedBox(
+                  height: 13,
                 ),
-                Expanded(
-                  flex: 4,
-                  child: DateTimePicker(
-                    labelText: "Até:",
-                    selectedDate: _dataFinal,
-                    selectDate: (DateTime date) {
-                      print(date);
-                      setState(() {
-                        _dataFinal = date;
-                      });
-                    },
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: DateTimePicker(
+                        labelText: "De:",
+                        selectedDate: _dataInicial,
+                        selectDate: (DateTime date) {
+                          print(date);
+                          setState(() {
+                            _dataInicial = date;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 15,
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: DateTimePicker(
+                        labelText: "Até:",
+                        selectedDate: _dataFinal,
+                        selectDate: (DateTime date) {
+                          print(date);
+                          setState(() {
+                            _dataFinal = date;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: Container(
+                    decoration: myBoxDecoration(),
+                    child: Center(
+                      child: Text(
+                        "R\$" +
+                            controllerFaturamentoUn.faturamento.valorTotal
+                                .toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                            color: Color(COR_PRIMARY)),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: Container(
-                decoration: myBoxDecoration(),
-                child: Center(
-                  child: Text(
-                    "R\$6.000.000,00",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: Color(COR_PRIMARY)),
-                    textAlign: TextAlign.center,
-                  ),
+                SizedBox(
+                  height: 13,
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Expanded(
-                    flex: 4,
-                    child: Text(
-                      "Mesmo Período (Ano Anterior):",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Color(0xFF606062)),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Text(
-                      "%",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Color(0xFF606062)),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: 9,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Expanded(
-                    flex: 4,
-                    child: Container(
-                      height: 50,
-                      decoration: myBoxDecoration(),
-                      child: Center(
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 4,
                         child: Text(
-                          "R\$4.000.000,00",
+                          "Mesmo Período (Ano Anterior):",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 16,
                               color: Color(0xFF606062)),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    )),
-                SizedBox(
-                  width: 13,
-                ),
-                Expanded(
-                    flex: 2,
-                    child: Container(
-                      height: 50,
-                      decoration: myBoxDecoration(),
-                      child: Center(
+                        )),
+                    Expanded(
+                        flex: 1,
                         child: Text(
-                          "33,33",
+                          "%",
                           style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 20,
-                              color: Color(0XFF00ab85)),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            Container(
-              height: 390,
-              child: GFCarousel(
-                  viewportFraction: 0.99,
-                  aspectRatio: 1,
-                  pagination: true,
-                  autoPlay: false,
-                  items: <Widget>[
-                    FaturamentoVisaoMensal(widget.filtroFaturamento),
-                    FaturamentoVisaoUn(),
-                    FaturamentoCliente(),
-                    Text("Slide 3"),
-                  ]),
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            Container(
-              height: 60,
-              child: Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: 295,
-                  height: 60,
-                  child: RaisedButton(
-                    color: Color(COR_PRIMARY),
-                    textColor: Colors.white,
-                    child: Text(
-                      "Voltar",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xFF606062)),
+                        )),
+                  ],
+                ),
+                SizedBox(
+                  height: 9,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 4,
+                        child: Container(
+                          height: 50,
+                          decoration: myBoxDecoration(),
+                          child: Center(
+                            child: Text(
+                              "R\$" +
+                                  controllerFaturamentoUn
+                                      .faturamento.valorAnoAnterior
+                                      .toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Color(0xFF606062)),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )),
+                    SizedBox(
+                      width: 13,
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                    Expanded(
+                        flex: 2,
+                        child: Container(
+                          height: 50,
+                          decoration: myBoxDecoration(),
+                          child: Center(
+                            child: Text(
+                              controllerFaturamentoUn.faturamento.perCresValor
+                                  .toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20,
+                                  color: Color(0XFF00ab85)),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                Container(
+                  height: 390,
+                  child: GFCarousel(
+                      viewportFraction: 0.99,
+                      aspectRatio: 1,
+                      pagination: true,
+                      autoPlay: false,
+                      items: <Widget>[
+                        FaturamentoVisaoMensal(widget.filtroFaturamento),
+                        FaturamentoVisaoUn(widget.filtroFaturamento),
+                        FaturamentoCliente(),
+                        Text("Slide 3"),
+                      ]),
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                Container(
+                  height: 60,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: 295,
+                      height: 60,
+                      child: RaisedButton(
+                        color: Color(COR_PRIMARY),
+                        textColor: Colors.white,
+                        child: Text(
+                          "Voltar",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

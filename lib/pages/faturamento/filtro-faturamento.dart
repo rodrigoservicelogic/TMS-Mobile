@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-cliente-controller.dart';
+import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
@@ -20,6 +21,7 @@ class FiltroFaturamento extends StatefulWidget {
 
 class _FiltroFaturamentoState extends State<FiltroFaturamento> {
   final controllerEmpresa = GetIt.I.get<FaturamentoClienteController>();
+  final controllerFaturamentoUn = FaturamentoUnController();
 
   DateTime _dataInicial, _dataFinal;
 
@@ -135,9 +137,13 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeUnidadeNegocio,
                     icon: IconButton(
-                      icon: controllerEmpresa.selectedUnidade != null ? Icon(Icons.clear) : Icon(Icons.arrow_drop_down),
+                      icon: controllerEmpresa.selectedUnidade != null
+                          ? Icon(Icons.clear)
+                          : Icon(Icons.arrow_drop_down),
                       onPressed: controllerEmpresa.clearSelectedUnidadeNegocio,
-                      color: controllerEmpresa.selectedUnidade != null ? Colors.red : Colors.black54,
+                      color: controllerEmpresa.selectedUnidade != null
+                          ? Colors.red
+                          : Colors.black54,
                     ),
                     items: controllerEmpresa.filiais.map((unidade) {
                       return DropdownMenuItem(
@@ -155,9 +161,13 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeTipoFrete,
                     icon: IconButton(
-                      icon: controllerEmpresa.selectedFrete != null ? Icon(Icons.clear) : Icon(Icons.arrow_drop_down),
+                      icon: controllerEmpresa.selectedFrete != null
+                          ? Icon(Icons.clear)
+                          : Icon(Icons.arrow_drop_down),
                       onPressed: controllerEmpresa.clearSelectedTipoFrete,
-                      color: controllerEmpresa.selectedFrete != null ? Colors.red : Colors.black54,
+                      color: controllerEmpresa.selectedFrete != null
+                          ? Colors.red
+                          : Colors.black54,
                     ),
                     items: controllerEmpresa.tiposFrete.map((frete) {
                       return DropdownMenuItem(
@@ -175,9 +185,13 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeCliente,
                     icon: IconButton(
-                      icon: controllerEmpresa.selectedCliente != null ? Icon(Icons.clear) : Icon(Icons.arrow_drop_down),
+                      icon: controllerEmpresa.selectedCliente != null
+                          ? Icon(Icons.clear)
+                          : Icon(Icons.arrow_drop_down),
                       onPressed: controllerEmpresa.clearSelectedCliente,
-                      color: controllerEmpresa.selectedCliente != null ? Colors.red : Colors.black54,
+                      color: controllerEmpresa.selectedCliente != null
+                          ? Colors.red
+                          : Colors.black54,
                     ),
                     items: controllerEmpresa.clientes.map((cliente) {
                       return DropdownMenuItem(

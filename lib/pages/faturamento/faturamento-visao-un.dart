@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 
 class FaturamentoVisaoUn extends StatefulWidget {
+  final ModelFiltroFaturamento filtro;
+
+  FaturamentoVisaoUn(this.filtro);
+
   @override
   _FaturamentoVisaoUnState createState() => _FaturamentoVisaoUnState();
 }
 
 class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
+  final controllerFaturamentoUn = FaturamentoUnController();
+
+
   bool visaoGrafico = false;
   bool visaoTabela = true;
   Color corGrafico = Colors.black26;
