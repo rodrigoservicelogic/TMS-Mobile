@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-cliente-controller.dart';
-import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
@@ -21,7 +20,6 @@ class FiltroFaturamento extends StatefulWidget {
 
 class _FiltroFaturamentoState extends State<FiltroFaturamento> {
   final controllerEmpresa = GetIt.I.get<FaturamentoClienteController>();
-  final controllerFaturamentoUn = FaturamentoUnController();
 
   DateTime _dataInicial, _dataFinal;
 
@@ -35,9 +33,11 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
     _dataInicial = DateTime.now();
     _dataFinal = DateTime.now();
 
-    Future.delayed(Duration.zero, () async {
-      retorno = await controllerEmpresa.getListaFilial();
-    });
+    _init();
+  }
+
+  void _init() async {
+    await controllerEmpresa.getListaFilial();
   }
 
   @override
@@ -72,8 +72,13 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else {
-              return Column(
+            }
+
+            return Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   SizedBox(
                     height: 60,
@@ -267,8 +272,8 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     ),
                   ),
                 ],
-              );
-            }
+              ),
+            );
           },
         ),
       ),

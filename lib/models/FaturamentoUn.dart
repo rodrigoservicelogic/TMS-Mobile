@@ -13,9 +13,9 @@ class FaturamentoUn {
         listaFiliais.add(new ListaFiliais.fromJson(v));
       });
     }
-    valorTotal = json['ValorTotal'];
-    valorAnoAnterior = json['ValorAnoAnterior'];
-    perCresValor = json['PerCresValor'];
+    valorTotal = json['ValorTotal'] ?? 0.00;
+    valorAnoAnterior = json['ValorAnoAnterior'] ?? 0.00;
+    perCresValor = json['PerCresValor'] ?? 0.00;
   }
 
   Map<String, dynamic> toJson() {

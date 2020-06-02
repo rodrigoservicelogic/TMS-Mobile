@@ -84,6 +84,22 @@ mixin _$FaturamentoUnController on FaturamentoUnControllerBase, Store {
     });
   }
 
+  final _$faturamentoAtom =
+      Atom(name: 'FaturamentoUnControllerBase.faturamento');
+
+  @override
+  FaturamentoUn get faturamento {
+    _$faturamentoAtom.reportRead();
+    return super.faturamento;
+  }
+
+  @override
+  set faturamento(FaturamentoUn value) {
+    _$faturamentoAtom.reportWrite(value, super.faturamento, () {
+      super.faturamento = value;
+    });
+  }
+
   final _$getFaturamentoAsyncAction =
       AsyncAction('FaturamentoUnControllerBase.getFaturamento');
 
@@ -100,7 +116,8 @@ idUsuario: ${idUsuario},
 isLoad: ${isLoad},
 series: ${series},
 columns: ${columns},
-rows: ${rows}
+rows: ${rows},
+faturamento: ${faturamento}
     ''';
   }
 }

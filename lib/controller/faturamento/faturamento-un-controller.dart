@@ -29,8 +29,10 @@ abstract class FaturamentoUnControllerBase with Store {
   @observable
   List<DataRow> rows = List();
 
+  @observable
+  FaturamentoUn faturamento = FaturamentoUn();
+
   Http _http = Http();
-  FaturamentoUn faturamento;
 
   @action
   Future<bool> getFaturamento(ModelFiltroFaturamento filtroFaturamento) async {
@@ -43,10 +45,13 @@ abstract class FaturamentoUnControllerBase with Store {
 
       Response response = await _http.get(API_URL +
           'faturamento/un/$idUsuario?${filtroFaturamento.asQueryParams()}');
+
       if (response.data != null) {
         faturamento = FaturamentoUn.fromJson(response.data);
       }
+
       isLoad = false;
+
       return Future.value(true);
     } on DioError catch (e) {
       isLoad = false;

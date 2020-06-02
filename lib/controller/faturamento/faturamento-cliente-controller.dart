@@ -90,7 +90,7 @@ abstract class _FaturamentoClienteControllerBase with Store {
   }
 
   @action
-  clearSelectedUnidadeNegocio(){
+  clearSelectedUnidadeNegocio() {
     selectedUnidade = null;
     selectedUnidade = selectedUnidade;
   }
@@ -102,7 +102,7 @@ abstract class _FaturamentoClienteControllerBase with Store {
   }
 
   @action
-  clearSelectedTipoFrete(){
+  clearSelectedTipoFrete() {
     selectedFrete = null;
     selectedFrete = selectedFrete;
   }
@@ -114,12 +114,11 @@ abstract class _FaturamentoClienteControllerBase with Store {
   }
 
   @action
-  clearSelectedCliente(){
+  clearSelectedCliente() {
     selectedCliente = null;
     selectedCliente = selectedCliente;
   }
 
-  @action
   Future getListaFilial() async {
     try {
       isLoad = true;
