@@ -111,7 +111,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                             items: controller.empresas
                                 .map<DropdownMenuItem<String>>((var empresa) {
                               return DropdownMenuItem<String>(
-                                value: empresa.codigo,
+                                value: empresa.idEmpresa.toString(),
                                 child: Text(
                                   empresa.nome,
                                   overflow: TextOverflow.ellipsis,
