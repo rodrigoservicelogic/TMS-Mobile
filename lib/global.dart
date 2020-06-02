@@ -3,4 +3,4 @@ const COR_PRIMARY = 0xFFF58633;
 const COLOR_SECONDARY = 0xFF294C8C;
 const COLOR_CINZA = 0xFF294C8C;
 // const String API_URL = "http://23.111.136.126:8031/api/";
-const String API_URL = "http://192.168.70.105:44347/api/";
+const String API_URL = "http://192.168.50.88:44347/api/";

@@ -15,18 +15,16 @@ mixin _$FaturamentoVisaoMensalController
 
   @override
   List<charts.Series<FaturamentoVisaoMensalDataPoint, String>> get series {
-    _$seriesAtom.context.enforceReadPolicy(_$seriesAtom);
-    _$seriesAtom.reportObserved();
+    _$seriesAtom.reportRead();
     return super.series;
   }
 
   @override
   set series(
       List<charts.Series<FaturamentoVisaoMensalDataPoint, String>> value) {
-    _$seriesAtom.context.conditionallyRunInAction(() {
+    _$seriesAtom.reportWrite(value, super.series, () {
       super.series = value;
-      _$seriesAtom.reportChanged();
-    }, _$seriesAtom, name: '${_$seriesAtom.name}_set');
+    });
   }
 
   final _$columnsAtom =
@@ -34,40 +32,38 @@ mixin _$FaturamentoVisaoMensalController
 
   @override
   List<DataColumn> get columns {
-    _$columnsAtom.context.enforceReadPolicy(_$columnsAtom);
-    _$columnsAtom.reportObserved();
+    _$columnsAtom.reportRead();
     return super.columns;
   }
 
   @override
   set columns(List<DataColumn> value) {
-    _$columnsAtom.context.conditionallyRunInAction(() {
+    _$columnsAtom.reportWrite(value, super.columns, () {
       super.columns = value;
-      _$columnsAtom.reportChanged();
-    }, _$columnsAtom, name: '${_$columnsAtom.name}_set');
+    });
   }
 
   final _$rowsAtom = Atom(name: '_FaturamentoVisaoMensalControllerBase.rows');
 
   @override
   List<DataRow> get rows {
-    _$rowsAtom.context.enforceReadPolicy(_$rowsAtom);
-    _$rowsAtom.reportObserved();
+    _$rowsAtom.reportRead();
     return super.rows;
   }
 
   @override
   set rows(List<DataRow> value) {
-    _$rowsAtom.context.conditionallyRunInAction(() {
+    _$rowsAtom.reportWrite(value, super.rows, () {
       super.rows = value;
-      _$rowsAtom.reportChanged();
-    }, _$rowsAtom, name: '${_$rowsAtom.name}_set');
+    });
   }
 
   @override
   String toString() {
-    final string =
-        'series: ${series.toString()},columns: ${columns.toString()},rows: ${rows.toString()}';
-    return '{$string}';
+    return '''
+series: ${series},
+columns: ${columns},
+rows: ${rows}
+    ''';
   }
 }

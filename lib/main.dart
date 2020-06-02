@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 
 
 import 'controller/agregado/agregado-controller.dart';
@@ -19,6 +20,7 @@ void main() {
   getIt.registerSingleton<EmpresaController>(EmpresaController());
   getIt.registerSingleton<FaturamentoClienteController>(
       FaturamentoClienteController());
+  getIt.registerSingleton<FaturamentoUnController>(FaturamentoUnController());
 
   runApp(MyApp());
 }

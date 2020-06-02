@@ -13,170 +13,150 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   List<String> get regimes {
-    _$regimesAtom.context.enforceReadPolicy(_$regimesAtom);
-    _$regimesAtom.reportObserved();
+    _$regimesAtom.reportRead();
     return super.regimes;
   }
 
   @override
   set regimes(List<String> value) {
-    _$regimesAtom.context.conditionallyRunInAction(() {
+    _$regimesAtom.reportWrite(value, super.regimes, () {
       super.regimes = value;
-      _$regimesAtom.reportChanged();
-    }, _$regimesAtom, name: '${_$regimesAtom.name}_set');
+    });
   }
 
   final _$empresasAtom = Atom(name: 'EmpresaControllerBase.empresas');
 
   @override
   List<dynamic> get empresas {
-    _$empresasAtom.context.enforceReadPolicy(_$empresasAtom);
-    _$empresasAtom.reportObserved();
+    _$empresasAtom.reportRead();
     return super.empresas;
   }
 
   @override
   set empresas(List<dynamic> value) {
-    _$empresasAtom.context.conditionallyRunInAction(() {
+    _$empresasAtom.reportWrite(value, super.empresas, () {
       super.empresas = value;
-      _$empresasAtom.reportChanged();
-    }, _$empresasAtom, name: '${_$empresasAtom.name}_set');
+    });
   }
 
   final _$competenciasAtom = Atom(name: 'EmpresaControllerBase.competencias');
 
   @override
   List<String> get competencias {
-    _$competenciasAtom.context.enforceReadPolicy(_$competenciasAtom);
-    _$competenciasAtom.reportObserved();
+    _$competenciasAtom.reportRead();
     return super.competencias;
   }
 
   @override
   set competencias(List<String> value) {
-    _$competenciasAtom.context.conditionallyRunInAction(() {
+    _$competenciasAtom.reportWrite(value, super.competencias, () {
       super.competencias = value;
-      _$competenciasAtom.reportChanged();
-    }, _$competenciasAtom, name: '${_$competenciasAtom.name}_set');
+    });
   }
 
   final _$receitaAtom = Atom(name: 'EmpresaControllerBase.receita');
 
   @override
   String get receita {
-    _$receitaAtom.context.enforceReadPolicy(_$receitaAtom);
-    _$receitaAtom.reportObserved();
+    _$receitaAtom.reportRead();
     return super.receita;
   }
 
   @override
   set receita(String value) {
-    _$receitaAtom.context.conditionallyRunInAction(() {
+    _$receitaAtom.reportWrite(value, super.receita, () {
       super.receita = value;
-      _$receitaAtom.reportChanged();
-    }, _$receitaAtom, name: '${_$receitaAtom.name}_set');
+    });
   }
 
   final _$despesaAtom = Atom(name: 'EmpresaControllerBase.despesa');
 
   @override
   String get despesa {
-    _$despesaAtom.context.enforceReadPolicy(_$despesaAtom);
-    _$despesaAtom.reportObserved();
+    _$despesaAtom.reportRead();
     return super.despesa;
   }
 
   @override
   set despesa(String value) {
-    _$despesaAtom.context.conditionallyRunInAction(() {
+    _$despesaAtom.reportWrite(value, super.despesa, () {
       super.despesa = value;
-      _$despesaAtom.reportChanged();
-    }, _$despesaAtom, name: '${_$despesaAtom.name}_set');
+    });
   }
 
   final _$impostoValAtom = Atom(name: 'EmpresaControllerBase.impostoVal');
 
   @override
   String get impostoVal {
-    _$impostoValAtom.context.enforceReadPolicy(_$impostoValAtom);
-    _$impostoValAtom.reportObserved();
+    _$impostoValAtom.reportRead();
     return super.impostoVal;
   }
 
   @override
   set impostoVal(String value) {
-    _$impostoValAtom.context.conditionallyRunInAction(() {
+    _$impostoValAtom.reportWrite(value, super.impostoVal, () {
       super.impostoVal = value;
-      _$impostoValAtom.reportChanged();
-    }, _$impostoValAtom, name: '${_$impostoValAtom.name}_set');
+    });
   }
 
   final _$impostoPercAtom = Atom(name: 'EmpresaControllerBase.impostoPerc');
 
   @override
   String get impostoPerc {
-    _$impostoPercAtom.context.enforceReadPolicy(_$impostoPercAtom);
-    _$impostoPercAtom.reportObserved();
+    _$impostoPercAtom.reportRead();
     return super.impostoPerc;
   }
 
   @override
   set impostoPerc(String value) {
-    _$impostoPercAtom.context.conditionallyRunInAction(() {
+    _$impostoPercAtom.reportWrite(value, super.impostoPerc, () {
       super.impostoPerc = value;
-      _$impostoPercAtom.reportChanged();
-    }, _$impostoPercAtom, name: '${_$impostoPercAtom.name}_set');
+    });
   }
 
   final _$freteTerValAtom = Atom(name: 'EmpresaControllerBase.freteTerVal');
 
   @override
   String get freteTerVal {
-    _$freteTerValAtom.context.enforceReadPolicy(_$freteTerValAtom);
-    _$freteTerValAtom.reportObserved();
+    _$freteTerValAtom.reportRead();
     return super.freteTerVal;
   }
 
   @override
   set freteTerVal(String value) {
-    _$freteTerValAtom.context.conditionallyRunInAction(() {
+    _$freteTerValAtom.reportWrite(value, super.freteTerVal, () {
       super.freteTerVal = value;
-      _$freteTerValAtom.reportChanged();
-    }, _$freteTerValAtom, name: '${_$freteTerValAtom.name}_set');
+    });
   }
 
   final _$freteTerPercAtom = Atom(name: 'EmpresaControllerBase.freteTerPerc');
 
   @override
   String get freteTerPerc {
-    _$freteTerPercAtom.context.enforceReadPolicy(_$freteTerPercAtom);
-    _$freteTerPercAtom.reportObserved();
+    _$freteTerPercAtom.reportRead();
     return super.freteTerPerc;
   }
 
   @override
   set freteTerPerc(String value) {
-    _$freteTerPercAtom.context.conditionallyRunInAction(() {
+    _$freteTerPercAtom.reportWrite(value, super.freteTerPerc, () {
       super.freteTerPerc = value;
-      _$freteTerPercAtom.reportChanged();
-    }, _$freteTerPercAtom, name: '${_$freteTerPercAtom.name}_set');
+    });
   }
 
   final _$freteFrotaValAtom = Atom(name: 'EmpresaControllerBase.freteFrotaVal');
 
   @override
   String get freteFrotaVal {
-    _$freteFrotaValAtom.context.enforceReadPolicy(_$freteFrotaValAtom);
-    _$freteFrotaValAtom.reportObserved();
+    _$freteFrotaValAtom.reportRead();
     return super.freteFrotaVal;
   }
 
   @override
   set freteFrotaVal(String value) {
-    _$freteFrotaValAtom.context.conditionallyRunInAction(() {
+    _$freteFrotaValAtom.reportWrite(value, super.freteFrotaVal, () {
       super.freteFrotaVal = value;
-      _$freteFrotaValAtom.reportChanged();
-    }, _$freteFrotaValAtom, name: '${_$freteFrotaValAtom.name}_set');
+    });
   }
 
   final _$freteFrotaPercAtom =
@@ -184,17 +164,15 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get freteFrotaPerc {
-    _$freteFrotaPercAtom.context.enforceReadPolicy(_$freteFrotaPercAtom);
-    _$freteFrotaPercAtom.reportObserved();
+    _$freteFrotaPercAtom.reportRead();
     return super.freteFrotaPerc;
   }
 
   @override
   set freteFrotaPerc(String value) {
-    _$freteFrotaPercAtom.context.conditionallyRunInAction(() {
+    _$freteFrotaPercAtom.reportWrite(value, super.freteFrotaPerc, () {
       super.freteFrotaPerc = value;
-      _$freteFrotaPercAtom.reportChanged();
-    }, _$freteFrotaPercAtom, name: '${_$freteFrotaPercAtom.name}_set');
+    });
   }
 
   final _$freteAgregadosValAtom =
@@ -202,17 +180,15 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get freteAgregadosVal {
-    _$freteAgregadosValAtom.context.enforceReadPolicy(_$freteAgregadosValAtom);
-    _$freteAgregadosValAtom.reportObserved();
+    _$freteAgregadosValAtom.reportRead();
     return super.freteAgregadosVal;
   }
 
   @override
   set freteAgregadosVal(String value) {
-    _$freteAgregadosValAtom.context.conditionallyRunInAction(() {
+    _$freteAgregadosValAtom.reportWrite(value, super.freteAgregadosVal, () {
       super.freteAgregadosVal = value;
-      _$freteAgregadosValAtom.reportChanged();
-    }, _$freteAgregadosValAtom, name: '${_$freteAgregadosValAtom.name}_set');
+    });
   }
 
   final _$freteAgregadosPercAtom =
@@ -220,18 +196,15 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get freteAgregadosPerc {
-    _$freteAgregadosPercAtom.context
-        .enforceReadPolicy(_$freteAgregadosPercAtom);
-    _$freteAgregadosPercAtom.reportObserved();
+    _$freteAgregadosPercAtom.reportRead();
     return super.freteAgregadosPerc;
   }
 
   @override
   set freteAgregadosPerc(String value) {
-    _$freteAgregadosPercAtom.context.conditionallyRunInAction(() {
+    _$freteAgregadosPercAtom.reportWrite(value, super.freteAgregadosPerc, () {
       super.freteAgregadosPerc = value;
-      _$freteAgregadosPercAtom.reportChanged();
-    }, _$freteAgregadosPercAtom, name: '${_$freteAgregadosPercAtom.name}_set');
+    });
   }
 
   final _$despesasAdmValAtom =
@@ -239,17 +212,15 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get despesasAdmVal {
-    _$despesasAdmValAtom.context.enforceReadPolicy(_$despesasAdmValAtom);
-    _$despesasAdmValAtom.reportObserved();
+    _$despesasAdmValAtom.reportRead();
     return super.despesasAdmVal;
   }
 
   @override
   set despesasAdmVal(String value) {
-    _$despesasAdmValAtom.context.conditionallyRunInAction(() {
+    _$despesasAdmValAtom.reportWrite(value, super.despesasAdmVal, () {
       super.despesasAdmVal = value;
-      _$despesasAdmValAtom.reportChanged();
-    }, _$despesasAdmValAtom, name: '${_$despesasAdmValAtom.name}_set');
+    });
   }
 
   final _$despesasAdmPercAtom =
@@ -257,17 +228,15 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get despesasAdmPerc {
-    _$despesasAdmPercAtom.context.enforceReadPolicy(_$despesasAdmPercAtom);
-    _$despesasAdmPercAtom.reportObserved();
+    _$despesasAdmPercAtom.reportRead();
     return super.despesasAdmPerc;
   }
 
   @override
   set despesasAdmPerc(String value) {
-    _$despesasAdmPercAtom.context.conditionallyRunInAction(() {
+    _$despesasAdmPercAtom.reportWrite(value, super.despesasAdmPerc, () {
       super.despesasAdmPerc = value;
-      _$despesasAdmPercAtom.reportChanged();
-    }, _$despesasAdmPercAtom, name: '${_$despesasAdmPercAtom.name}_set');
+    });
   }
 
   final _$despesasOperValAtom =
@@ -275,17 +244,15 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get despesasOperVal {
-    _$despesasOperValAtom.context.enforceReadPolicy(_$despesasOperValAtom);
-    _$despesasOperValAtom.reportObserved();
+    _$despesasOperValAtom.reportRead();
     return super.despesasOperVal;
   }
 
   @override
   set despesasOperVal(String value) {
-    _$despesasOperValAtom.context.conditionallyRunInAction(() {
+    _$despesasOperValAtom.reportWrite(value, super.despesasOperVal, () {
       super.despesasOperVal = value;
-      _$despesasOperValAtom.reportChanged();
-    }, _$despesasOperValAtom, name: '${_$despesasOperValAtom.name}_set');
+    });
   }
 
   final _$despesasOperPercAtom =
@@ -293,17 +260,15 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get despesasOperPerc {
-    _$despesasOperPercAtom.context.enforceReadPolicy(_$despesasOperPercAtom);
-    _$despesasOperPercAtom.reportObserved();
+    _$despesasOperPercAtom.reportRead();
     return super.despesasOperPerc;
   }
 
   @override
   set despesasOperPerc(String value) {
-    _$despesasOperPercAtom.context.conditionallyRunInAction(() {
+    _$despesasOperPercAtom.reportWrite(value, super.despesasOperPerc, () {
       super.despesasOperPerc = value;
-      _$despesasOperPercAtom.reportChanged();
-    }, _$despesasOperPercAtom, name: '${_$despesasOperPercAtom.name}_set');
+    });
   }
 
   final _$investimentosValAtom =
@@ -311,17 +276,15 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get investimentosVal {
-    _$investimentosValAtom.context.enforceReadPolicy(_$investimentosValAtom);
-    _$investimentosValAtom.reportObserved();
+    _$investimentosValAtom.reportRead();
     return super.investimentosVal;
   }
 
   @override
   set investimentosVal(String value) {
-    _$investimentosValAtom.context.conditionallyRunInAction(() {
+    _$investimentosValAtom.reportWrite(value, super.investimentosVal, () {
       super.investimentosVal = value;
-      _$investimentosValAtom.reportChanged();
-    }, _$investimentosValAtom, name: '${_$investimentosValAtom.name}_set');
+    });
   }
 
   final _$investimentosPercAtom =
@@ -329,51 +292,45 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String get investimentosPerc {
-    _$investimentosPercAtom.context.enforceReadPolicy(_$investimentosPercAtom);
-    _$investimentosPercAtom.reportObserved();
+    _$investimentosPercAtom.reportRead();
     return super.investimentosPerc;
   }
 
   @override
   set investimentosPerc(String value) {
-    _$investimentosPercAtom.context.conditionallyRunInAction(() {
+    _$investimentosPercAtom.reportWrite(value, super.investimentosPerc, () {
       super.investimentosPerc = value;
-      _$investimentosPercAtom.reportChanged();
-    }, _$investimentosPercAtom, name: '${_$investimentosPercAtom.name}_set');
+    });
   }
 
   final _$resultadoValAtom = Atom(name: 'EmpresaControllerBase.resultadoVal');
 
   @override
   String get resultadoVal {
-    _$resultadoValAtom.context.enforceReadPolicy(_$resultadoValAtom);
-    _$resultadoValAtom.reportObserved();
+    _$resultadoValAtom.reportRead();
     return super.resultadoVal;
   }
 
   @override
   set resultadoVal(String value) {
-    _$resultadoValAtom.context.conditionallyRunInAction(() {
+    _$resultadoValAtom.reportWrite(value, super.resultadoVal, () {
       super.resultadoVal = value;
-      _$resultadoValAtom.reportChanged();
-    }, _$resultadoValAtom, name: '${_$resultadoValAtom.name}_set');
+    });
   }
 
   final _$resultadoPercAtom = Atom(name: 'EmpresaControllerBase.resultadoPerc');
 
   @override
   String get resultadoPerc {
-    _$resultadoPercAtom.context.enforceReadPolicy(_$resultadoPercAtom);
-    _$resultadoPercAtom.reportObserved();
+    _$resultadoPercAtom.reportRead();
     return super.resultadoPerc;
   }
 
   @override
   set resultadoPerc(String value) {
-    _$resultadoPercAtom.context.conditionallyRunInAction(() {
+    _$resultadoPercAtom.reportWrite(value, super.resultadoPerc, () {
       super.resultadoPerc = value;
-      _$resultadoPercAtom.reportChanged();
-    }, _$resultadoPercAtom, name: '${_$resultadoPercAtom.name}_set');
+    });
   }
 
   final _$EmpresaControllerBaseActionController =
@@ -381,7 +338,8 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   dynamic popularListaRegimes() {
-    final _$actionInfo = _$EmpresaControllerBaseActionController.startAction();
+    final _$actionInfo = _$EmpresaControllerBaseActionController.startAction(
+        name: 'EmpresaControllerBase.popularListaRegimes');
     try {
       return super.popularListaRegimes();
     } finally {
@@ -391,7 +349,8 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   dynamic popularListaCompetencias() {
-    final _$actionInfo = _$EmpresaControllerBaseActionController.startAction();
+    final _$actionInfo = _$EmpresaControllerBaseActionController.startAction(
+        name: 'EmpresaControllerBase.popularListaCompetencias');
     try {
       return super.popularListaCompetencias();
     } finally {
@@ -401,8 +360,28 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'regimes: ${regimes.toString()},empresas: ${empresas.toString()},competencias: ${competencias.toString()},receita: ${receita.toString()},despesa: ${despesa.toString()},impostoVal: ${impostoVal.toString()},impostoPerc: ${impostoPerc.toString()},freteTerVal: ${freteTerVal.toString()},freteTerPerc: ${freteTerPerc.toString()},freteFrotaVal: ${freteFrotaVal.toString()},freteFrotaPerc: ${freteFrotaPerc.toString()},freteAgregadosVal: ${freteAgregadosVal.toString()},freteAgregadosPerc: ${freteAgregadosPerc.toString()},despesasAdmVal: ${despesasAdmVal.toString()},despesasAdmPerc: ${despesasAdmPerc.toString()},despesasOperVal: ${despesasOperVal.toString()},despesasOperPerc: ${despesasOperPerc.toString()},investimentosVal: ${investimentosVal.toString()},investimentosPerc: ${investimentosPerc.toString()},resultadoVal: ${resultadoVal.toString()},resultadoPerc: ${resultadoPerc.toString()}';
-    return '{$string}';
+    return '''
+regimes: ${regimes},
+empresas: ${empresas},
+competencias: ${competencias},
+receita: ${receita},
+despesa: ${despesa},
+impostoVal: ${impostoVal},
+impostoPerc: ${impostoPerc},
+freteTerVal: ${freteTerVal},
+freteTerPerc: ${freteTerPerc},
+freteFrotaVal: ${freteFrotaVal},
+freteFrotaPerc: ${freteFrotaPerc},
+freteAgregadosVal: ${freteAgregadosVal},
+freteAgregadosPerc: ${freteAgregadosPerc},
+despesasAdmVal: ${despesasAdmVal},
+despesasAdmPerc: ${despesasAdmPerc},
+despesasOperVal: ${despesasOperVal},
+despesasOperPerc: ${despesasOperPerc},
+investimentosVal: ${investimentosVal},
+investimentosPerc: ${investimentosPerc},
+resultadoVal: ${resultadoVal},
+resultadoPerc: ${resultadoPerc}
+    ''';
   }
 }

@@ -12,64 +12,62 @@ mixin _$LoginController on _LoginControllerBase, Store {
   Computed<bool> _$isValidComputed;
 
   @override
-  bool get isValid =>
-      (_$isValidComputed ??= Computed<bool>(() => super.isValid)).value;
+  bool get isValid => (_$isValidComputed ??= Computed<bool>(() => super.isValid,
+          name: '_LoginControllerBase.isValid'))
+      .value;
 
   final _$isLoadAtom = Atom(name: '_LoginControllerBase.isLoad');
 
   @override
   bool get isLoad {
-    _$isLoadAtom.context.enforceReadPolicy(_$isLoadAtom);
-    _$isLoadAtom.reportObserved();
+    _$isLoadAtom.reportRead();
     return super.isLoad;
   }
 
   @override
   set isLoad(bool value) {
-    _$isLoadAtom.context.conditionallyRunInAction(() {
+    _$isLoadAtom.reportWrite(value, super.isLoad, () {
       super.isLoad = value;
-      _$isLoadAtom.reportChanged();
-    }, _$isLoadAtom, name: '${_$isLoadAtom.name}_set');
+    });
   }
 
   final _$usuarioAtom = Atom(name: '_LoginControllerBase.usuario');
 
   @override
   Usuario get usuario {
-    _$usuarioAtom.context.enforceReadPolicy(_$usuarioAtom);
-    _$usuarioAtom.reportObserved();
+    _$usuarioAtom.reportRead();
     return super.usuario;
   }
 
   @override
   set usuario(Usuario value) {
-    _$usuarioAtom.context.conditionallyRunInAction(() {
+    _$usuarioAtom.reportWrite(value, super.usuario, () {
       super.usuario = value;
-      _$usuarioAtom.reportChanged();
-    }, _$usuarioAtom, name: '${_$usuarioAtom.name}_set');
+    });
   }
 
   final _$empresasAtom = Atom(name: '_LoginControllerBase.empresas');
 
   @override
   List<Empresa> get empresas {
-    _$empresasAtom.context.enforceReadPolicy(_$empresasAtom);
-    _$empresasAtom.reportObserved();
+    _$empresasAtom.reportRead();
     return super.empresas;
   }
 
   @override
   set empresas(List<Empresa> value) {
-    _$empresasAtom.context.conditionallyRunInAction(() {
+    _$empresasAtom.reportWrite(value, super.empresas, () {
       super.empresas = value;
-      _$empresasAtom.reportChanged();
-    }, _$empresasAtom, name: '${_$empresasAtom.name}_set');
+    });
   }
 
   @override
   String toString() {
-    final string =
-        'isLoad: ${isLoad.toString()},usuario: ${usuario.toString()},empresas: ${empresas.toString()},isValid: ${isValid.toString()}';
-    return '{$string}';
+    return '''
+isLoad: ${isLoad},
+usuario: ${usuario},
+empresas: ${empresas},
+isValid: ${isValid}
+    ''';
   }
 }
