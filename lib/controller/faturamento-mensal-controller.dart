@@ -81,12 +81,20 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         }
       }
     }
-    
-    List cores = [ 
-      charts.Color(a: 255, r: 151, g: 99, b: 145), 
-      charts.Color(a: 255, r: 41, g: 76, b: 140), 
-      charts.Color(a: 255, r: 245, g: 134, b: 51), 
+
+    List cores;
+    if (dataGroups.keys.length == 2) {
+      cores = [
+        charts.Color(a: 255, r: 41, g: 76, b: 140),
+        charts.Color(a: 255, r: 245, g: 134, b: 51),
       ];
+    } else {
+      cores = [
+        charts.Color(a: 255, r: 151, g: 99, b: 145),
+        charts.Color(a: 255, r: 41, g: 76, b: 140),
+        charts.Color(a: 255, r: 245, g: 134, b: 51),
+      ];
+    }
     int ref = 0;
     for (int ano in dataGroups.keys) {
       series.add(
@@ -152,7 +160,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       }
     }
 
-    for (int m in this._monthOrder){
+    for (int m in this._monthOrder) {
       rows.add(months[m]);
     }
   }
