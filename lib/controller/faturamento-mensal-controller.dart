@@ -30,11 +30,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
   List<DataRow> rows = List();
 
   Http _http = Http();
-  List<FaturamentoVisaoMensalDataPoint> data = List();
+  List<FaturamentoVisaoMensalDataPoint> _data = List();
+  List<int> _monthOrder = List();
 
   Future<bool> getVisaoMensal(ModelFiltroFaturamento filtroFaturamento) async {
     try {
-      if (this.data == null || this.data.isEmpty) {
+      if (this._data == null || this._data.isEmpty) {
         int idEmpresa = 0;
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -56,7 +57,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
           buildSeries(data);
           buildTable(data, filtroFaturamento.dataDe, filtroFaturamento.dataAte);
-          this.data = data;
+          this._data = data;
         }
         return Future.value(true);
       }
@@ -80,11 +81,18 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         }
       }
     }
-
+    
+    List cores = [ 
+      charts.Color(a: 255, r: 151, g: 99, b: 145), 
+      charts.Color(a: 255, r: 41, g: 76, b: 140), 
+      charts.Color(a: 255, r: 245, g: 134, b: 51), 
+      ];
+    int ref = 0;
     for (int ano in dataGroups.keys) {
       series.add(
-        new charts.Series(
+        new charts.Series<FaturamentoVisaoMensalDataPoint, String>(
             id: ano.toString(),
+            seriesColor: cores[ref++],
             data: dataGroups[ano],
             domainFn: (FaturamentoVisaoMensalDataPoint p, _) =>
                 p.mes.toString(),
@@ -110,8 +118,14 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         if (point != null) {
           months[m].cells.add(
                 new DataCell(
-                  Text(
-                    "${point.faturamento < 0 ? '-' : formatoMoeda.format(point.faturamento)}",
+                  Center(
+                    child: Text(
+                      "${point.faturamento < 0 ? '-' : formatoMoeda.format(point.faturamento)}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
                   ),
                 ),
               );
@@ -125,36 +139,54 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       if (point != null) {
         months[m].cells.add(
               new DataCell(
-                Text(
-                  "${point.faturamento == 1 || point.faturamento == -1 ? '-' : point.faturamento < 0 ? formatoPercentual.format(-point.faturamento) : formatoPercentual.format(point.faturamento)}",
-                  style: TextStyle(
-                      color: point.faturamento < 0 ? Colors.red : Colors.green),
+                Center(
+                  child: Text(
+                    "${point.faturamento == 1 || point.faturamento == -1 ? '-' : point.faturamento < 0 ? formatoPercentual.format(-point.faturamento) : formatoPercentual.format(point.faturamento)}",
+                    style: TextStyle(
+                      color: point.faturamento < 0 ? Colors.red : Colors.green,
+                    ),
+                  ),
                 ),
               ),
             );
       }
     }
 
-    rows = months.values.toList();
+    for (int m in this._monthOrder){
+      rows.add(months[m]);
+    }
   }
 
   HashMap<int, DataRow> buildTable_Rows(DateTime dateFrom, DateTime dateTo) {
     HashMap<int, DataRow> months = HashMap();
 
+    var dateFormat = DateFormat.MMM('pt_BR');
+    var lineNumber = 1;
+
     rows.clear();
     DateTime current = dateFrom;
     while (current.isBefore(dateTo)) {
       if (!months.containsKey(current.month)) {
+        this._monthOrder.add(current.month);
         months[current.month] = DataRow(cells: []);
         months[current.month].cells.add(
               new DataCell(
+                Center(
+                  child: Text(
+                    (lineNumber++).toString(),
+                  ),
+                ),
+              ),
+            );
+        months[current.month].cells.add(
+              new DataCell(
                 Text(
-                  current.month.toString(),
+                  dateFormat.format(current).toUpperCase(),
                 ),
               ),
             );
       }
-      current = current.add(Duration(days: 15));
+      current = current.add(Duration(days: 1));
     }
     return months;
   }
@@ -171,20 +203,37 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
     columns.add(
       DataColumn(
-        label: Text(
-          "MÊS",
-          style: tableHeaderStyle,
-          textAlign: TextAlign.center,
+        label: Center(
+          child: Text(
+            "#",
+            style: tableHeaderStyle,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        numeric: true,
+      ),
+    );
+
+    columns.add(
+      DataColumn(
+        label: Center(
+          child: Text(
+            "MÊS",
+            style: tableHeaderStyle,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
 
     columns.add(
       DataColumn(
-        label: Text(
-          "${dateTo.year}(R\$)",
-          style: tableHeaderStyle,
-          textAlign: TextAlign.center,
+        label: Center(
+          child: Text(
+            "${dateTo.year}(R\$)",
+            style: tableHeaderStyle,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
@@ -193,10 +242,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
     if (dateFrom.year != dateTo.year) {
       columns.add(
         DataColumn(
-          label: Text(
-            "${dateFrom.year}(R\$)",
-            style: tableHeaderStyle,
-            textAlign: TextAlign.center,
+          label: Center(
+            child: Text(
+              "${dateFrom.year}(R\$)",
+              style: tableHeaderStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       );
@@ -205,10 +256,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
     columns.add(
       DataColumn(
-        label: Text(
-          "${dateFrom.year - 1}(R\$)",
-          style: tableHeaderStyle,
-          textAlign: TextAlign.center,
+        label: Center(
+          child: Text(
+            "${dateFrom.year - 1}(R\$)",
+            style: tableHeaderStyle,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
@@ -216,10 +269,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
     columns.add(
       DataColumn(
-        label: Text(
-          "%",
-          style: tableHeaderStyle,
-          textAlign: TextAlign.center,
+        label: Center(
+          child: Text(
+            "%",
+            style: tableHeaderStyle,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
