@@ -1,5 +1,8 @@
+import 'dart:collection';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/models/FaturamentoUn.dart';
@@ -58,5 +61,75 @@ abstract class FaturamentoUnControllerBase with Store {
       print(e.message);
       return Future.value(false);
     }
+  }
+
+  void buildTable() {
+    var formatoMoeda =
+        new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+
+    var formatoPercentual = new NumberFormat.decimalPattern("pt_BR");
+
+    buildTableColumns();
+
+    if (this.faturamento != null) {
+      this.faturamento.listaFiliais.forEach((element) {
+        rows.add(DataRow(cells: <DataCell>[
+          DataCell(Text("${element.nomeFilial}")),
+          DataCell(Container(
+              width: 50,
+              child: Text(
+                  '${element.valorTotal < 0 ? '-' : formatoMoeda.format(element.valorTotal)}'))),
+          DataCell(
+            Text(
+              "${element.perCresValor < 0 ? '-' : formatoPercentual.format(element.perCresValor)}",
+              textAlign: TextAlign.center,
+            ),
+          )
+        ]));
+      });
+    }
+    else{
+      rows.add(DataRow(cells: <DataCell>[]));
+    }
+  }
+
+  void buildTableColumns() {
+    columns.clear();
+
+    var tableHeaderStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 12,
+      color: Colors.black,
+    );
+
+    columns.add(
+      DataColumn(
+        label: Text(
+          "Filial",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
+    columns.add(
+      DataColumn(
+        label: Text(
+          "R\$",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
+    columns.add(
+      DataColumn(
+        label: Text(
+          "%",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
   }
 }
