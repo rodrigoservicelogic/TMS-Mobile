@@ -106,11 +106,13 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
                   } else {
                     return SizedBox(
                       height: 200.0,
-                      child: charts.BarChart(
+                      child: charts.TimeSeriesChart(
                         controller.series,
                         animate: true,
-                        vertical: true,
-                        barGroupingType: charts.BarGroupingType.grouped,
+                        defaultRenderer: new charts.LineRendererConfig(
+                          includePoints: true,
+                          includeArea: true,
+                        ),
                         behaviors: [
                           charts.SeriesLegend(
                             position: charts.BehaviorPosition.bottom,
