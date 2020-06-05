@@ -24,7 +24,7 @@ abstract class FaturamentoUnControllerBase with Store {
   bool isLoad = false;
 
   @observable
-  List<charts.Series<FaturamentoUn, String>> series = List();
+  List<charts.Series<ListaFiliais, String>> series = List();
 
   @observable
   List<DataColumn> columns = List();
@@ -66,8 +66,9 @@ abstract class FaturamentoUnControllerBase with Store {
   void buildTable() {
     var formatoMoeda =
         new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
-
     var formatoPercentual = new NumberFormat.decimalPattern("pt_BR");
+    columns.clear();
+    rows.clear();
 
     buildTableColumns();
 
@@ -87,8 +88,7 @@ abstract class FaturamentoUnControllerBase with Store {
           )
         ]));
       });
-    }
-    else{
+    } else {
       rows.add(DataRow(cells: <DataCell>[]));
     }
   }
@@ -131,5 +131,28 @@ abstract class FaturamentoUnControllerBase with Store {
         ),
       ),
     );
+  }
+
+  void buildCharts() {
+    var formatoMoeda =
+        new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+
+    series.clear();
+    if (this.faturamento != null) {
+      series.add(charts.Series(
+        data: this.faturamento.listaFiliais,
+        domainFn: (ListaFiliais task, _) => task.nomeFilial,
+        measureFn: (ListaFiliais task, _) => task.perCresValor,
+        id: 'Faturamento Und',
+        labelAccessorFn: (ListaFiliais row, _) =>
+            '${formatoMoeda.format(row.valorTotal)}',
+      ));
+    } else {
+      series.add(charts.Series(
+          data: <ListaFiliais>[],
+          domainFn: (ListaFiliais task, _) {},
+          id: null,
+          measureFn: (ListaFiliais task, _) {}));
+    }
   }
 }

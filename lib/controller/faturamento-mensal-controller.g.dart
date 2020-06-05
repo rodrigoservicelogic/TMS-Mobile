@@ -14,14 +14,14 @@ mixin _$FaturamentoVisaoMensalController
       Atom(name: '_FaturamentoVisaoMensalControllerBase.series');
 
   @override
-  List<charts.Series<FaturamentoVisaoMensalDataPoint, String>> get series {
+  List<charts.Series<FaturamentoVisaoMensalDataPoint, DateTime>> get series {
     _$seriesAtom.reportRead();
     return super.series;
   }
 
   @override
   set series(
-      List<charts.Series<FaturamentoVisaoMensalDataPoint, String>> value) {
+      List<charts.Series<FaturamentoVisaoMensalDataPoint, DateTime>> value) {
     _$seriesAtom.reportWrite(value, super.series, () {
       super.series = value;
     });

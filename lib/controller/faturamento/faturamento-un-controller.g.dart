@@ -42,13 +42,13 @@ mixin _$FaturamentoUnController on FaturamentoUnControllerBase, Store {
   final _$seriesAtom = Atom(name: 'FaturamentoUnControllerBase.series');
 
   @override
-  List<charts.Series<FaturamentoUn, String>> get series {
+  List<charts.Series<ListaFiliais, String>> get series {
     _$seriesAtom.reportRead();
     return super.series;
   }
 
   @override
-  set series(List<charts.Series<FaturamentoUn, String>> value) {
+  set series(List<charts.Series<ListaFiliais, String>> value) {
     _$seriesAtom.reportWrite(value, super.series, () {
       super.series = value;
     });
