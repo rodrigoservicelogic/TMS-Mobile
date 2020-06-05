@@ -46,7 +46,28 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
   }
 
   void _init() async {
-    await controllerFaturamentoUn.getFaturamento(widget.filtroFaturamento);
+    String retorno =
+        await controllerFaturamentoUn.getFaturamento(widget.filtroFaturamento);
+
+    if (retorno != 'ok') {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Atenção"),
+              content: Text(retorno),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+    }
   }
 
   BoxDecoration myBoxDecoration() {

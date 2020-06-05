@@ -231,14 +231,6 @@ mixin _$FaturamentoClienteController
     });
   }
 
-  final _$getListaFilialAsyncAction =
-      AsyncAction('_FaturamentoClienteControllerBase.getListaFilial');
-
-  @override
-  Future<dynamic> getListaFilial() {
-    return _$getListaFilialAsyncAction.run(() => super.getListaFilial());
-  }
-
   final _$_FaturamentoClienteControllerBaseActionController =
       ActionController(name: '_FaturamentoClienteControllerBase');
 

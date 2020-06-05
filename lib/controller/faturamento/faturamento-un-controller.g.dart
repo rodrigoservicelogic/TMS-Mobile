@@ -104,7 +104,7 @@ mixin _$FaturamentoUnController on FaturamentoUnControllerBase, Store {
       AsyncAction('FaturamentoUnControllerBase.getFaturamento');
 
   @override
-  Future<bool> getFaturamento(ModelFiltroFaturamento filtroFaturamento) {
+  Future<String> getFaturamento(ModelFiltroFaturamento filtroFaturamento) {
     return _$getFaturamentoAsyncAction
         .run(() => super.getFaturamento(filtroFaturamento));
   }

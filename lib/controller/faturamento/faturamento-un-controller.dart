@@ -38,7 +38,8 @@ abstract class FaturamentoUnControllerBase with Store {
   Http _http = Http();
 
   @action
-  Future<bool> getFaturamento(ModelFiltroFaturamento filtroFaturamento) async {
+  Future<String> getFaturamento(
+      ModelFiltroFaturamento filtroFaturamento) async {
     try {
       isLoad = true;
       faturamento = new FaturamentoUn();
@@ -55,11 +56,10 @@ abstract class FaturamentoUnControllerBase with Store {
 
       isLoad = false;
 
-      return Future.value(true);
+      return Future.value('ok');
     } on DioError catch (e) {
       isLoad = false;
-      print(e.message);
-      return Future.value(false);
+      return Future.value(e.message);
     }
   }
 
