@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -14,40 +15,18 @@ class FaturamentoVisaoUn extends StatefulWidget {
 }
 
 class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
-  final controllerFaturamentoUn = FaturamentoUnController();
-
+  final controllerFaturamentoUn = GetIt.I.get<FaturamentoUnController>();
 
   bool visaoGrafico = false;
   bool visaoTabela = true;
   Color corGrafico = Colors.black26;
   Color corTabela = Color(COR_PRIMARY);
-  List<charts.Series<Task, String>> _seriesPieData;
-  List<Widget> listWidget = List();
-
-  _generateData() {
-    var pieData = [
-      new Task('Matriz', '2.000.000,00', 33.33, Color(0xffbee8d5)),
-      new Task('Filial A', '1.000.000,00', 16.66, Color(0xffc8d1e1)),
-      new Task('Filial B', '1.500.000,00', 25.00, Color(0xfffef1c9)),
-      new Task('Filial C', '1.500.000,00', 25.00, Color(0xfffce0cb)),
-    ];
-
-    _seriesPieData.add(charts.Series(
-      data: pieData,
-      domainFn: (Task task, _) => task.task,
-      measureFn: (Task task, _) => task.taskPercent,
-      colorFn: (Task task, _) => charts.ColorUtil.fromDartColor(task.colorVal),
-      id: 'Daily task',
-      labelAccessorFn: (Task row, _) => '${row.taskValue}',
-    ));
-  }
 
   @override
   void initState() {
     super.initState();
-
-    _seriesPieData = List<charts.Series<Task, String>>();
-    _generateData();
+    controllerFaturamentoUn.buildTable();
+    controllerFaturamentoUn.buildCharts();
   }
 
   BoxDecoration myBoxDecoration() {
@@ -84,10 +63,12 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(
-                    width: 40,
+                    width: 10,
                   ),
                   IconButton(
                     icon: Icon(Icons.grid_on, color: corTabela),
+                    iconSize: 22,
+                    tooltip: "Tabela",
                     onPressed: () {
                       setState(() {
                         visaoTabela = true;
@@ -99,6 +80,8 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                   ),
                   IconButton(
                     icon: Icon(Icons.pie_chart, color: corGrafico),
+                    iconSize: 22,
+                    tooltip: "Gráfico",
                     onPressed: () {
                       setState(() {
                         visaoGrafico = true;
@@ -116,67 +99,11 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
             visible: visaoTabela,
             child: SizedBox(
               height: 320,
-              child: DataTable(
-                columns: [
-                  DataColumn(
-                      label: Text(
-                    'Und. Neg.',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.black),
-                    textAlign: TextAlign.center,
-                  )),
-                  DataColumn(
-                      label: Text(
-                    '2020 (R\$)',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.black),
-                    textAlign: TextAlign.center,
-                  )),
-                  DataColumn(
-                      label: Text(
-                    '%',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.black),
-                    textAlign: TextAlign.center,
-                  ))
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text('Matriz')),
-                    DataCell(Text('2.000.000,00')),
-                    DataCell(Text('33,33')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Filial A')),
-                    DataCell(Text('1.000.000,00')),
-                    DataCell(Text('16,66')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Filial B')),
-                    DataCell(Text('1.500.000,00')),
-                    DataCell(Text('25,00')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Filial C')),
-                    DataCell(Text('1.500.000,00')),
-                    DataCell(Text('25,00')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Total',
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataCell(Text('6.000.000,00',
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataCell(Text('100,00',
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                  ]),
-                ],
-              ),
+              child: SingleChildScrollView(
+                  child: DataTable(  
+                columns: controllerFaturamentoUn.columns,
+                rows: controllerFaturamentoUn.rows,
+              )),
             ),
           ),
           Visibility(
@@ -184,21 +111,21 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
             child: SizedBox(
               height: 320,
               child: charts.PieChart(
-                _seriesPieData,
+                controllerFaturamentoUn.series,
                 animate: true,
                 animationDuration: Duration(seconds: 1),
                 behaviors: [
                   new charts.DatumLegend(
                       position: charts.BehaviorPosition.bottom,
                       outsideJustification:
-                          charts.OutsideJustification.startDrawArea,
+                          charts.OutsideJustification.start,
                       horizontalFirst: false,
-                      desiredMaxRows: 1,
-                      cellPadding: new EdgeInsets.all(4),
+                      desiredMaxRows: 4,
+                      cellPadding: new EdgeInsets.all(0.3),
                       entryTextStyle: charts.TextStyleSpec(
-                          color: charts.MaterialPalette.purple.shadeDefault,
+                          color: charts.MaterialPalette.black,
                           fontFamily: 'Georgia',
-                          fontSize: 11))
+                          fontSize: 7))
                 ],
                 defaultRenderer: new charts.ArcRendererConfig(
                     arcWidth: 100,
