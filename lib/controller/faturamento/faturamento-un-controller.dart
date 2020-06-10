@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -59,7 +57,8 @@ abstract class FaturamentoUnControllerBase with Store {
       return Future.value('ok');
     } on DioError catch (e) {
       isLoad = false;
-      return Future.value(e.message);
+      Map response = e.response.data;
+      return Future.value(response["Message"]);
     }
   }
 
@@ -150,9 +149,13 @@ abstract class FaturamentoUnControllerBase with Store {
     } else {
       series.add(charts.Series(
           data: <ListaFiliais>[],
-          domainFn: (ListaFiliais task, _) {},
+          domainFn: (ListaFiliais task, _) {
+            return null;
+          },
           id: null,
-          measureFn: (ListaFiliais task, _) {}));
+          measureFn: (ListaFiliais task, _) {
+            return null;
+          }));
     }
   }
 }

@@ -1,14 +1,9 @@
 import 'package:mobx/mobx.dart';
 import 'package:tms_mobile/models/usuario.dart';
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/empresa.dart';
-import 'package:tms_mobile/models/login-model.dart';
-import 'package:tms_mobile/models/usuario.dart';
 import 'package:tms_mobile/util/http_helper.dart';
 part 'login-controller.g.dart';
 
@@ -51,7 +46,7 @@ abstract class _LoginControllerBase with Store {
 
       if (response.data != null) {
         usuario = Usuario.fromMap(response.data);
-        prefs.setInt("Usuario",this.usuario.id);
+        prefs.setInt("Usuario", this.usuario.id);
       }
 
       isLoad = false;

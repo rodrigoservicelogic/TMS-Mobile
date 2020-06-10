@@ -231,6 +231,14 @@ mixin _$FaturamentoClienteController
     });
   }
 
+  final _$getListaFilialAsyncAction =
+      AsyncAction('_FaturamentoClienteControllerBase.getListaFilial');
+
+  @override
+  Future<String> getListaFilial() {
+    return _$getListaFilialAsyncAction.run(() => super.getListaFilial());
+  }
+
   final _$_FaturamentoClienteControllerBaseActionController =
       ActionController(name: '_FaturamentoClienteControllerBase');
 
@@ -366,20 +374,20 @@ mixin _$FaturamentoClienteController
   @override
   String toString() {
     return '''
-tipoCliente: ${tipoCliente},
-valorReal: ${valorReal},
-valorPercent: ${valorPercent},
-valor: ${valor},
-valorPerc: ${valorPerc},
-anoAtual: ${anoAtual},
-listaAnos: ${listaAnos},
-isLoad: ${isLoad},
-filiais: ${filiais},
-tiposFrete: ${tiposFrete},
-clientes: ${clientes},
-selectedUnidade: ${selectedUnidade},
-selectedFrete: ${selectedFrete},
-selectedCliente: ${selectedCliente}
+tipoCliente: $tipoCliente,
+valorReal: $valorReal,
+valorPercent: $valorPercent,
+valor: $valor,
+valorPerc: $valorPerc,
+anoAtual: $anoAtual,
+listaAnos: $listaAnos,
+isLoad: $isLoad,
+filiais: $filiais,
+tiposFrete: $tiposFrete,
+clientes: $clientes,
+selectedUnidade: $selectedUnidade,
+selectedFrete: $selectedFrete,
+selectedCliente: $selectedCliente
     ''';
   }
 }
