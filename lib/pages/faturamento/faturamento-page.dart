@@ -123,12 +123,16 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12.0, vertical: 8.0),
                             child: Center(
-                              child: Text(
-                                "FATURAMENTO",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                    color: Colors.white),
+                              child: SizedBox(
+                                width: constraints.maxWidth * .50,
+                                child: FittedBox(
+                                  child: Text(
+                                    "FATURAMENTO",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -182,18 +186,22 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12.0, vertical: 6.0),
                             child: Center(
-                              child: Text(
-                                controllerFaturamentoUn
-                                            .faturamento.valorTotal !=
-                                        null
-                                    ? format.format(controllerFaturamentoUn
-                                        .faturamento.valorTotal)
-                                    : "R\$ 0,00",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                    color: Color(COR_PRIMARY)),
-                                textAlign: TextAlign.center,
+                              child: SizedBox(
+                                width: constraints.maxWidth * 0.5,
+                                child: FittedBox(
+                                  child: Text(
+                                    controllerFaturamentoUn
+                                                .faturamento.valorTotal !=
+                                            null
+                                        ? format.format(controllerFaturamentoUn
+                                            .faturamento.valorTotal)
+                                        : "R\$ 0,00",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(COR_PRIMARY)),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -207,21 +215,35 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                         children: <Widget>[
                           Expanded(
                               flex: 4,
-                              child: Text(
-                                "Mesmo Período (Ano Anterior):",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Color(0xFF606062)),
+                              child: Center(
+                                child: SizedBox(
+                                  width: constraints.maxWidth * 0.60,
+                                  height: constraints.maxHeight * 0.05,
+                                  child: FittedBox(
+                                    child: Text(
+                                      "Mesmo Período (Ano Anterior):",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF606062)),
+                                    ),
+                                  ),
+                                ),
                               )),
                           Expanded(
                               flex: 1,
-                              child: Text(
-                                "%",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Color(0xFF606062)),
+                              child: Center(
+                                child: SizedBox(
+                                  height: constraints.maxHeight * 0.05,
+                                  width: constraints.maxWidth * 0.30,
+                                  child: FittedBox(
+                                    child: Text(
+                                      "%",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF606062)),
+                                    ),
+                                  ),
+                                ),
                               )),
                         ],
                       ),
@@ -239,19 +261,25 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0, vertical: 6.0),
                                   child: Center(
-                                    child: Text(
-                                      controllerFaturamentoUn.faturamento
-                                                  .valorAnoAnterior !=
-                                              null
-                                          ? format.format(
-                                              controllerFaturamentoUn
-                                                  .faturamento.valorAnoAnterior)
-                                          : "R\$ 0,00",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Color(0xFF606062)),
-                                      textAlign: TextAlign.center,
+                                    child: SizedBox(
+                                      width: constraints.maxWidth * 0.60,
+                                      height: constraints.maxHeight * 0.06,
+                                      child: FittedBox(
+                                        child: Text(
+                                          controllerFaturamentoUn.faturamento
+                                                      .valorAnoAnterior !=
+                                                  null
+                                              ? format.format(
+                                                  controllerFaturamentoUn
+                                                      .faturamento
+                                                      .valorAnoAnterior)
+                                              : "R\$ 0,00",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF606062)),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -267,19 +295,24 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0, vertical: 6.0),
                                   child: Center(
-                                    child: Text(
-                                      controllerFaturamentoUn
-                                                  .faturamento.perCresValor !=
-                                              null
-                                          ? controllerFaturamentoUn
-                                              .faturamento.perCresValor
-                                              .toString()
-                                          : "0,00",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 20,
-                                          color: Color(0XFF00ab85)),
-                                      textAlign: TextAlign.center,
+                                    child: SizedBox(
+                                      width: constraints.maxWidth * 0.30,
+                                      height: constraints.maxHeight * 0.06,
+                                      child: FittedBox(
+                                        child: Text(
+                                          controllerFaturamentoUn.faturamento
+                                                      .perCresValor !=
+                                                  null
+                                              ? controllerFaturamentoUn
+                                                  .faturamento.perCresValor
+                                                  .toString()
+                                              : "0,00",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              color: Color(0XFF00ab85)),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -293,7 +326,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                         child: GFCarousel(
                             height: constraints.maxHeight * 0.50,
                             viewportFraction: 0.98,
-                            aspectRatio: 4 / 3,
+                            aspectRatio: MediaQuery.of(context).devicePixelRatio,
                             pagerSize: 0.0,
                             pagination: true,
                             autoPlay: false,
@@ -301,7 +334,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                               FaturamentoVisaoMensal(widget.filtroFaturamento),
                               FaturamentoVisaoUn(widget.filtroFaturamento),
                               FaturamentoCliente(),
-                              Text("Slide 3"),
+                              FittedBox(child: Text("Slide 3")),
                             ]),
                       ),
                       SizedBox(
@@ -315,11 +348,13 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                               color: Color(COR_PRIMARY),
                               textColor: Colors.white,
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal:  30.0, vertical: 15.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30.0, vertical: 15.0),
                                 child: Text(
                                   "Voltar",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                               ),
                               onPressed: () {
