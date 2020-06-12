@@ -33,53 +33,51 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
             height: 50,
             width: double.infinity,
             color: Colors.black12,
-            child: SizedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "MENSAL (ANO X ANO)",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Color(0xFF606062),
                   ),
-                  Text(
-                    "VISÃO MENSAL (ANO X ANO)",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: Color(0xFF606062),
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.grid_on),
-                    color: visaoTabela ? corSelecionado : corNaoSelecionado,
-                    iconSize: 22,
-                    tooltip: "Tabela",
-                    onPressed: () {
-                      setState(() {
-                        visaoTabela = true;
-                      });
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.pie_chart),
-                    iconSize: 22,
-                    tooltip: "Gráfico",
-                    color: visaoTabela ? corNaoSelecionado : corSelecionado,
-                    onPressed: () {
-                      setState(() {
-                        visaoTabela = false;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                IconButton(
+                  icon: Icon(Icons.grid_on),
+                  color: visaoTabela ? corSelecionado : corNaoSelecionado,
+                  iconSize: 22,
+                  tooltip: "Tabela",
+                  onPressed: () {
+                    setState(() {
+                      visaoTabela = true;
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.pie_chart),
+                  iconSize: 22,
+                  tooltip: "Gráfico",
+                  color: visaoTabela ? corNaoSelecionado : corSelecionado,
+                  onPressed: () {
+                    setState(() {
+                      visaoTabela = false;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
           ),
           FutureBuilder(
@@ -96,12 +94,10 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
                       child: Text("Falha em obter dados - ${snapshot.error}"));
                 } else {
                   if (visaoTabela) {
-                    return SingleChildScrollView(
-                      child: DataTable(
-                        columnSpacing: 3.5,
-                        columns: controller.columns,
-                        rows: controller.rows,
-                      ),
+                    return DataTable(
+                      columnSpacing: 3.5,
+                      columns: controller.columns,
+                      rows: controller.rows,
                     );
                   } else {
                     return SizedBox(

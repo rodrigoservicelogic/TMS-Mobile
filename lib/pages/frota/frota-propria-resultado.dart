@@ -140,8 +140,8 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
                 },
                 items: controller.motorista.map((motorista) {
                   return DropdownMenuItem(
-                    child: new Text(motorista),
-                    value: motorista,
+                    child: new Text(motorista.nome),
+                    value: motorista.codMotorista,
                   );
                 }).toList(),
               );
@@ -302,7 +302,7 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
                 ),
               ),
             ),
-               Center(
+            Center(
               child: Container(
                 height: 25,
                 width: MediaQuery.of(context).size.width - 50,
@@ -417,7 +417,7 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     onPressed: () {
-                       Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                   ),
                 ),

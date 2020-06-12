@@ -274,9 +274,10 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                   ),
                   Container(
                     height: 390,
+                    width: MediaQuery.of(context).size.width,
                     child: GFCarousel(
                         viewportFraction: 0.99,
-                        aspectRatio: 1,
+                        aspectRatio: MediaQuery.of(context).devicePixelRatio,
                         pagination: true,
                         autoPlay: false,
                         items: <Widget>[

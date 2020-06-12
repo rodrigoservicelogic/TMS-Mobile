@@ -112,12 +112,12 @@ mixin _$FaturamentoUnController on FaturamentoUnControllerBase, Store {
   @override
   String toString() {
     return '''
-idUsuario: $idUsuario,
-isLoad: $isLoad,
-series: $series,
-columns: $columns,
-rows: $rows,
-faturamento: $faturamento
+idUsuario: ${idUsuario},
+isLoad: ${isLoad},
+series: ${series},
+columns: ${columns},
+rows: ${rows},
+faturamento: ${faturamento}
     ''';
   }
 }

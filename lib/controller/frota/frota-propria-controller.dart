@@ -1,4 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
+import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/models/motorista.dart';
+import 'package:tms_mobile/util/http_helper.dart';
 part 'frota-propria-controller.g.dart';
 
 class FrotaPropriaController = _FrotaPropriaControllerBase
@@ -6,9 +10,11 @@ class FrotaPropriaController = _FrotaPropriaControllerBase
 
 abstract class _FrotaPropriaControllerBase with Store {
   @observable
-  List<String> motorista = List();
+  List<Motorista> motorista = List();
   @observable
   List<String> placas = List();
+  @observable
+  bool isLoad = false;
   @observable
   String receita = "50.000,00";
   @observable
@@ -31,18 +37,46 @@ abstract class _FrotaPropriaControllerBase with Store {
   String resultadoPerc = "40,00";
 
   @action
-  popularListaMotorista() {
-    motorista.add('Motorista 1');
-    motorista.add('Motorista 2');
-    motorista.add('Motorista 3');
-    motorista.add('Motorista 4');
+  Future getListaMotorista() async {
+    try {
+      isLoad = true;
+
+      Http _http = Http();
+
+      Response response = await _http.get(API_URL + 'frota-propria/motoristas');
+
+      if (response.data != null) {
+        for (Map m in response.data) {
+          motorista.add(Motorista.fromJson(m));
+        }
+      }
+
+      isLoad = false;
+    } catch (e) {
+      isLoad = false;
+      print(e.toString());
+    }
   }
 
   @action
-  popularListaPlacas() {
-    placas.add('Placa 1');
-    placas.add('Placa 2');
-    placas.add('Placa 3');
-    placas.add('Placa 4');
+  Future getListaPlacas() async {
+    try {
+      isLoad = true;
+
+      Http _http = Http();
+
+      Response response = await _http.get(API_URL + 'frota-propria/placas');
+
+      if (response.data != null) {
+        for (String m in response.data) {
+          placas.add(m);
+        }
+      }
+
+      isLoad = false;
+    } catch (e) {
+      isLoad = false;
+      print(e.toString());
+    }
   }
 }
