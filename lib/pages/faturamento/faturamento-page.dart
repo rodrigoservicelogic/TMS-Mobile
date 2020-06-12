@@ -100,222 +100,277 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
               ])),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Observer(
-          builder: (_) {
-            if (controllerFaturamentoUn.isLoad) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+      body: LayoutBuilder(
+        builder: (_, constraints) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.all(20),
+            child: Observer(
+              builder: (_) {
+                if (controllerFaturamentoUn.isLoad) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 60,
-                    width: double.infinity,
-                    child: Container(
-                      color: Color(COR_PRIMARY),
-                      child: Center(
-                        child: Text(
-                          "FATURAMENTO",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: Colors.white),
+                return Container(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        width: constraints.maxWidth,
+                        child: Container(
+                          color: Color(COR_PRIMARY),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 8.0),
+                            child: Center(
+                              child: SizedBox(
+                                width: constraints.maxWidth * .50,
+                                child: FittedBox(
+                                  child: Text(
+                                    "FATURAMENTO",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 13,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 4,
-                        child: DateTimePicker(
-                          labelText: "De:",
-                          selectedDate: _dataInicial,
-                          selectDate: (DateTime date) {
-                            print(date);
-                            setState(() {
-                              _dataInicial = date;
-                            });
-                          },
+                      SizedBox(
+                        height: constraints.maxHeight * 0.02,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 4,
+                            child: DateTimePicker(
+                              labelText: "De:",
+                              selectedDate: _dataInicial,
+                              selectDate: (DateTime date) {
+                                print(date);
+                                setState(() {
+                                  _dataInicial = date;
+                                });
+                              },
+                            ),
+                          ),
+                          Container(
+                            width: constraints.maxWidth * 0.02,
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: DateTimePicker(
+                              labelText: "Até:",
+                              selectedDate: _dataFinal,
+                              selectDate: (DateTime date) {
+                                print(date);
+                                setState(() {
+                                  _dataFinal = date;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.02,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Container(
+                          decoration: myBoxDecoration(),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 6.0),
+                            child: Center(
+                              child: SizedBox(
+                                width: constraints.maxWidth * 0.5,
+                                child: FittedBox(
+                                  child: Text(
+                                    controllerFaturamentoUn
+                                                .faturamento.valorTotal !=
+                                            null
+                                        ? format.format(controllerFaturamentoUn
+                                            .faturamento.valorTotal)
+                                        : "R\$ 0,00",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(COR_PRIMARY)),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.02,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Expanded(
+                              flex: 4,
+                              child: Center(
+                                child: SizedBox(
+                                  width: constraints.maxWidth * 0.60,
+                                  height: constraints.maxHeight * 0.05,
+                                  child: FittedBox(
+                                    child: Text(
+                                      "Mesmo Período (Ano Anterior):",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF606062)),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                          Expanded(
+                              flex: 1,
+                              child: Center(
+                                child: SizedBox(
+                                  height: constraints.maxHeight * 0.05,
+                                  width: constraints.maxWidth * 0.30,
+                                  child: FittedBox(
+                                    child: Text(
+                                      "%",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF606062)),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.005,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Expanded(
+                              flex: 4,
+                              child: Container(
+                                decoration: myBoxDecoration(),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 6.0),
+                                  child: Center(
+                                    child: SizedBox(
+                                      width: constraints.maxWidth * 0.60,
+                                      height: constraints.maxHeight * 0.06,
+                                      child: FittedBox(
+                                        child: Text(
+                                          controllerFaturamentoUn.faturamento
+                                                      .valorAnoAnterior !=
+                                                  null
+                                              ? format.format(
+                                                  controllerFaturamentoUn
+                                                      .faturamento
+                                                      .valorAnoAnterior)
+                                              : "R\$ 0,00",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFF606062)),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                          SizedBox(
+                            width: constraints.maxWidth * 0.02,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Container(
+                                decoration: myBoxDecoration(),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 6.0),
+                                  child: Center(
+                                    child: SizedBox(
+                                      width: constraints.maxWidth * 0.30,
+                                      height: constraints.maxHeight * 0.06,
+                                      child: FittedBox(
+                                        child: Text(
+                                          controllerFaturamentoUn.faturamento
+                                                      .perCresValor !=
+                                                  null
+                                              ? controllerFaturamentoUn
+                                                  .faturamento.perCresValor
+                                                  .toString()
+                                              : "0,00",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              color: Color(0XFF00ab85)),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.02,
                       ),
                       Container(
-                        width: 15,
+                        child: GFCarousel(
+                            height: constraints.maxHeight * 0.50,
+                            viewportFraction: 0.98,
+                            aspectRatio: MediaQuery.of(context).devicePixelRatio,
+                            pagerSize: 0.0,
+                            pagination: true,
+                            autoPlay: false,
+                            items: <Widget>[
+                              FaturamentoVisaoMensal(widget.filtroFaturamento),
+                              FaturamentoVisaoUn(widget.filtroFaturamento),
+                              FaturamentoCliente(),
+                              FittedBox(child: Text("Slide 3")),
+                            ]),
                       ),
-                      Expanded(
-                        flex: 4,
-                        child: DateTimePicker(
-                          labelText: "Até:",
-                          selectedDate: _dataFinal,
-                          selectDate: (DateTime date) {
-                            print(date);
-                            setState(() {
-                              _dataFinal = date;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 13,
-                  ),
-                  SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: Container(
-                      decoration: myBoxDecoration(),
-                      child: Center(
-                        child: Text(
-                          controllerFaturamentoUn.faturamento.valorTotal != null
-                              ? format.format(controllerFaturamentoUn
-                                  .faturamento.valorTotal)
-                              : "R\$ 0,00",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: Color(COR_PRIMARY)),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 13,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 4,
-                          child: Text(
-                            "Mesmo Período (Ano Anterior):",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Color(0xFF606062)),
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: Text(
-                            "%",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Color(0xFF606062)),
-                          )),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 9,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 4,
-                          child: Container(
-                            height: 50,
-                            decoration: myBoxDecoration(),
-                            child: Center(
-                              child: Text(
-                                controllerFaturamentoUn
-                                            .faturamento.valorAnoAnterior !=
-                                        null
-                                    ? format.format(controllerFaturamentoUn
-                                        .faturamento.valorAnoAnterior)
-                                    : "R\$ 0,00",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Color(0xFF606062)),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          )),
                       SizedBox(
-                        width: 13,
+                        height: constraints.maxHeight * 0.02,
                       ),
-                      Expanded(
-                          flex: 2,
-                          child: Container(
-                            height: 50,
-                            decoration: myBoxDecoration(),
-                            child: Center(
-                              child: Text(
-                                controllerFaturamentoUn
-                                            .faturamento.perCresValor !=
-                                        null
-                                    ? controllerFaturamentoUn
-                                        .faturamento.perCresValor
-                                        .toString()
-                                    : "0,00",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 20,
-                                    color: Color(0XFF00ab85)),
-                                textAlign: TextAlign.center,
+                      Container(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            child: RaisedButton(
+                              color: Color(COR_PRIMARY),
+                              textColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30.0, vertical: 15.0),
+                                child: Text(
+                                  "Voltar",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
                               ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
                             ),
-                          )),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 13,
-                  ),
-                  Container(
-                    height: 390,
-                    child: GFCarousel(
-                        viewportFraction: 0.99,
-                        aspectRatio: 1,
-                        pagination: true,
-                        autoPlay: false,
-                        items: <Widget>[
-                          FaturamentoVisaoMensal(widget.filtroFaturamento),
-                          FaturamentoVisaoUn(widget.filtroFaturamento),
-                          FaturamentoCliente(),
-                          Text("Slide 3"),
-                        ]),
-                  ),
-                  SizedBox(
-                    height: 13,
-                  ),
-                  Container(
-                    height: 60,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: 295,
-                        height: 60,
-                        child: RaisedButton(
-                          color: Color(COR_PRIMARY),
-                          textColor: Colors.white,
-                          child: Text(
-                            "Voltar",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          },
-        ),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
