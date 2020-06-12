@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-cliente-controller.dart';
+import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -10,12 +12,9 @@ class FaturamentoCliente extends StatefulWidget {
 }
 
 class _FaturamentoCliente extends State<FaturamentoCliente> {
-  List empresas;
   String empresaSelected;
 
-  final controller = FaturamentoClienteController();
-
-  MediaQueryData queryData;
+  final controllerFaturamentoUn = GetIt.I.get<FaturamentoUnController>();
 
   String dropdownValue = '';
   bool visaoTabela = true;
@@ -26,16 +25,8 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
   @override
   void initState() {
     super.initState();
-
-    controller.popularListaAnos();
-
-    empresas = [
-      {'id': 1, 'nome': 'Empresa 1'},
-      {'id': 2, 'nome': 'Empresa 2'},
-      {'id': 3, 'nome': 'Empresa 3'},
-      {'id': 4, 'nome': 'Empresa 4'},
-      {'id': 5, 'nome': 'Empresa 5'},
-    ];
+    controllerFaturamentoUn.buildTableCli();
+    controllerFaturamentoUn.buildChartsCli();
   }
 
   BoxDecoration myBoxDecoration() {
@@ -46,15 +37,6 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
 
   @override
   Widget build(BuildContext context) {
-    var series = [
-      charts.Series(
-        domainFn: (Dados clickData, _) => clickData.ano,
-        measureFn: (Dados clickData, _) => clickData.valor,
-        id: 'Clicks',
-        data: controller.listaAnos,
-      ),
-    ];
-
     return Container(
       height: 400,
       width: double.infinity,
@@ -73,7 +55,7 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                     height: 10,
                   ),
                   Text(
-                    "VISÃO POR CLIENTE                                 ",
+                    "VISÃO POR CLIENTE",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -81,13 +63,12 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(
-                    height: 10,
+                    width: 10,
                   ),
                   IconButton(
-                    icon: Icon(Icons.grid_on),
-                    color: corTabela,
+                    icon: Icon(Icons.grid_on, color: corTabela),
                     iconSize: 22,
-                    tooltip: 'Tabela',
+                    tooltip: "Tabela",
                     onPressed: () {
                       setState(() {
                         visaoTabela = true;
@@ -98,10 +79,9 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                     },
                   ),
                   IconButton(
-                    color: corGrafico,
-                    icon: Icon(Icons.pie_chart),
+                    icon: Icon(Icons.pie_chart, color: corGrafico),
                     iconSize: 22,
-                    tooltip: 'Gráficos',
+                    tooltip: "Gráfico",
                     onPressed: () {
                       setState(() {
                         visaoGrafico = true;
@@ -111,9 +91,6 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                       });
                     },
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
                 ],
               ),
             ),
@@ -122,54 +99,8 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
             visible: visaoTabela,
             child: SingleChildScrollView(
               child: DataTable(
-                columns: [
-                  DataColumn(
-                      label: Text(
-                    'Tp. Cliente',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.black),
-                    textAlign: TextAlign.center,
-                  )),
-                  DataColumn(
-                    label: Text(
-                      '${controller.anoAtual}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.black),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  DataColumn(
-                      label: Text(
-                    '%',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.black),
-                    textAlign: TextAlign.center,
-                  )),
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text('Tipo 1')),
-                    DataCell(Text('6,50')),
-                    DataCell(Text('5')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Tipo 2')),
-                    DataCell(Text('9,50')),
-                    DataCell(Text('4')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Tipo 3')),
-                    DataCell(Text('50')),
-                    DataCell(Text('45')),
-                  ]),
-                ],
-              ),
+                  columns: controllerFaturamentoUn.columnsCli,
+                  rows: controllerFaturamentoUn.rowsCli),
             ),
           ),
           Visibility(
@@ -177,9 +108,11 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
             child: SizedBox(
               height: 200.0,
               child: charts.BarChart(
-                series,
+                controllerFaturamentoUn.seriesCli,
+                animationDuration: Duration(seconds: 1),
                 animate: true,
                 vertical: false,
+                barRendererDecorator: new charts.BarLabelDecorator<String>(),
               ),
             ),
           ),

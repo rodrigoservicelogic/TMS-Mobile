@@ -39,48 +39,93 @@ mixin _$FaturamentoUnController on FaturamentoUnControllerBase, Store {
     });
   }
 
-  final _$seriesAtom = Atom(name: 'FaturamentoUnControllerBase.series');
+  final _$seriesUnAtom = Atom(name: 'FaturamentoUnControllerBase.seriesUn');
 
   @override
-  List<charts.Series<ListaFiliais, String>> get series {
-    _$seriesAtom.reportRead();
-    return super.series;
+  List<charts.Series<ListaFiliais, String>> get seriesUn {
+    _$seriesUnAtom.reportRead();
+    return super.seriesUn;
   }
 
   @override
-  set series(List<charts.Series<ListaFiliais, String>> value) {
-    _$seriesAtom.reportWrite(value, super.series, () {
-      super.series = value;
+  set seriesUn(List<charts.Series<ListaFiliais, String>> value) {
+    _$seriesUnAtom.reportWrite(value, super.seriesUn, () {
+      super.seriesUn = value;
     });
   }
 
-  final _$columnsAtom = Atom(name: 'FaturamentoUnControllerBase.columns');
+  final _$columnsUnAtom = Atom(name: 'FaturamentoUnControllerBase.columnsUn');
 
   @override
-  List<DataColumn> get columns {
-    _$columnsAtom.reportRead();
-    return super.columns;
+  List<DataColumn> get columnsUn {
+    _$columnsUnAtom.reportRead();
+    return super.columnsUn;
   }
 
   @override
-  set columns(List<DataColumn> value) {
-    _$columnsAtom.reportWrite(value, super.columns, () {
-      super.columns = value;
+  set columnsUn(List<DataColumn> value) {
+    _$columnsUnAtom.reportWrite(value, super.columnsUn, () {
+      super.columnsUn = value;
     });
   }
 
-  final _$rowsAtom = Atom(name: 'FaturamentoUnControllerBase.rows');
+  final _$rowsUnAtom = Atom(name: 'FaturamentoUnControllerBase.rowsUn');
 
   @override
-  List<DataRow> get rows {
-    _$rowsAtom.reportRead();
-    return super.rows;
+  List<DataRow> get rowsUn {
+    _$rowsUnAtom.reportRead();
+    return super.rowsUn;
   }
 
   @override
-  set rows(List<DataRow> value) {
-    _$rowsAtom.reportWrite(value, super.rows, () {
-      super.rows = value;
+  set rowsUn(List<DataRow> value) {
+    _$rowsUnAtom.reportWrite(value, super.rowsUn, () {
+      super.rowsUn = value;
+    });
+  }
+
+  final _$seriesCliAtom = Atom(name: 'FaturamentoUnControllerBase.seriesCli');
+
+  @override
+  List<charts.Series<ListaClientes, String>> get seriesCli {
+    _$seriesCliAtom.reportRead();
+    return super.seriesCli;
+  }
+
+  @override
+  set seriesCli(List<charts.Series<ListaClientes, String>> value) {
+    _$seriesCliAtom.reportWrite(value, super.seriesCli, () {
+      super.seriesCli = value;
+    });
+  }
+
+  final _$columnsCliAtom = Atom(name: 'FaturamentoUnControllerBase.columnsCli');
+
+  @override
+  List<DataColumn> get columnsCli {
+    _$columnsCliAtom.reportRead();
+    return super.columnsCli;
+  }
+
+  @override
+  set columnsCli(List<DataColumn> value) {
+    _$columnsCliAtom.reportWrite(value, super.columnsCli, () {
+      super.columnsCli = value;
+    });
+  }
+
+  final _$rowsCliAtom = Atom(name: 'FaturamentoUnControllerBase.rowsCli');
+
+  @override
+  List<DataRow> get rowsCli {
+    _$rowsCliAtom.reportRead();
+    return super.rowsCli;
+  }
+
+  @override
+  set rowsCli(List<DataRow> value) {
+    _$rowsCliAtom.reportWrite(value, super.rowsCli, () {
+      super.rowsCli = value;
     });
   }
 
@@ -112,12 +157,15 @@ mixin _$FaturamentoUnController on FaturamentoUnControllerBase, Store {
   @override
   String toString() {
     return '''
-idUsuario: $idUsuario,
-isLoad: $isLoad,
-series: $series,
-columns: $columns,
-rows: $rows,
-faturamento: $faturamento
+idUsuario: ${idUsuario},
+isLoad: ${isLoad},
+seriesUn: ${seriesUn},
+columnsUn: ${columnsUn},
+rowsUn: ${rowsUn},
+seriesCli: ${seriesCli},
+columnsCli: ${columnsCli},
+rowsCli: ${rowsCli},
+faturamento: ${faturamento}
     ''';
   }
 }

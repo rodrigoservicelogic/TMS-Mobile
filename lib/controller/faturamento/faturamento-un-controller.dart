@@ -22,13 +22,22 @@ abstract class FaturamentoUnControllerBase with Store {
   bool isLoad = false;
 
   @observable
-  List<charts.Series<ListaFiliais, String>> series = List();
+  List<charts.Series<ListaFiliais, String>> seriesUn = List();
 
   @observable
-  List<DataColumn> columns = List();
+  List<DataColumn> columnsUn = List();
 
   @observable
-  List<DataRow> rows = List();
+  List<DataRow> rowsUn = List();
+
+  @observable
+  List<charts.Series<ListaClientes, String>> seriesCli = List();
+
+  @observable
+  List<DataColumn> columnsCli = List();
+
+  @observable
+  List<DataRow> rowsCli = List();
 
   @observable
   FaturamentoUn faturamento = FaturamentoUn();
@@ -62,18 +71,18 @@ abstract class FaturamentoUnControllerBase with Store {
     }
   }
 
-  void buildTable() {
+  void buildTableUn() {
     var formatoMoeda =
         new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
     var formatoPercentual = new NumberFormat.decimalPattern("pt_BR");
-    columns.clear();
-    rows.clear();
+    columnsUn.clear();
+    rowsUn.clear();
 
-    buildTableColumns();
+    buildTableColumnsUn();
 
     if (this.faturamento != null) {
       this.faturamento.listaFiliais.forEach((element) {
-        rows.add(DataRow(cells: <DataCell>[
+        rowsUn.add(DataRow(cells: <DataCell>[
           DataCell(Text("${element.nomeFilial}")),
           DataCell(Container(
               width: 50,
@@ -88,12 +97,12 @@ abstract class FaturamentoUnControllerBase with Store {
         ]));
       });
     } else {
-      rows.add(DataRow(cells: <DataCell>[]));
+      rowsUn.add(DataRow(cells: <DataCell>[]));
     }
   }
 
-  void buildTableColumns() {
-    columns.clear();
+  void buildTableColumnsUn() {
+    columnsUn.clear();
 
     var tableHeaderStyle = TextStyle(
       fontWeight: FontWeight.bold,
@@ -101,7 +110,7 @@ abstract class FaturamentoUnControllerBase with Store {
       color: Colors.black,
     );
 
-    columns.add(
+    columnsUn.add(
       DataColumn(
         label: Text(
           "Filial",
@@ -111,7 +120,7 @@ abstract class FaturamentoUnControllerBase with Store {
       ),
     );
 
-    columns.add(
+    columnsUn.add(
       DataColumn(
         label: Text(
           "R\$",
@@ -121,7 +130,7 @@ abstract class FaturamentoUnControllerBase with Store {
       ),
     );
 
-    columns.add(
+    columnsUn.add(
       DataColumn(
         label: Text(
           "%",
@@ -132,13 +141,13 @@ abstract class FaturamentoUnControllerBase with Store {
     );
   }
 
-  void buildCharts() {
+  void buildChartsUn() {
     var formatoMoeda =
         new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
 
-    series.clear();
+    seriesUn.clear();
     if (this.faturamento != null) {
-      series.add(charts.Series(
+      seriesUn.add(charts.Series(
         data: this.faturamento.listaFiliais,
         domainFn: (ListaFiliais task, _) => task.nomeFilial,
         measureFn: (ListaFiliais task, _) => task.perCresValor,
@@ -147,7 +156,7 @@ abstract class FaturamentoUnControllerBase with Store {
             '${formatoMoeda.format(row.valorTotal)}',
       ));
     } else {
-      series.add(charts.Series(
+      seriesUn.add(charts.Series(
           data: <ListaFiliais>[],
           domainFn: (ListaFiliais task, _) {
             return null;
@@ -158,4 +167,101 @@ abstract class FaturamentoUnControllerBase with Store {
           }));
     }
   }
+
+  void buildTableCli() {
+    var formatoMoeda =
+        new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+    var formatoPercentual = new NumberFormat.decimalPattern("pt_BR");
+    columnsCli.clear();
+    rowsCli.clear();
+
+    buildTableColumnsCli();
+
+    if (this.faturamento != null) {
+      this.faturamento.listaClientes.forEach((element) {
+        rowsCli.add(DataRow(cells: <DataCell>[
+          DataCell(Container(width: 90, child: Text("${element.nomeCliente}"))),
+          DataCell(Container(
+              width: 50,
+              child: Text(
+                  '${element.valorTotal < 0 ? '-' : formatoMoeda.format(element.valorTotal)}'))),
+          DataCell(
+            Text(
+              "${element.perCresValor < 0 ? '-' : formatoPercentual.format(element.perCresValor)}",
+              textAlign: TextAlign.center,
+            ),
+          )
+        ]));
+      });
+    } else {
+      rowsCli.add(DataRow(cells: <DataCell>[]));
+    }
+  }
+
+  void buildTableColumnsCli() {
+    columnsCli.clear();
+
+    var tableHeaderStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 12,
+      color: Colors.black,
+    );
+
+    columnsCli.add(
+      DataColumn(
+        label: Text(
+          "Cliente",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
+    columnsCli.add(
+      DataColumn(
+        label: Text(
+          "R\$",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
+    columnsCli.add(
+      DataColumn(
+        label: Text(
+          "%",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  void buildChartsCli() {
+    seriesCli.clear();
+    if (this.faturamento != null) {
+      var formatoMoeda =
+          new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+
+      seriesCli.add(charts.Series(
+        data: this.faturamento.listaClientes,
+        domainFn: (ListaClientes task, _) => task.nomeCliente.substring(0,9),
+        measureFn: (ListaClientes task, _) => task.perCresValor,
+        id: 'Faturamento Cli',
+        labelAccessorFn: (ListaClientes row, _) =>
+            '${formatoMoeda.format(row.valorTotal)}',
+      ));
+    } else {
+      seriesCli.add(charts.Series(
+          data: <ListaClientes>[],
+          domainFn: (ListaClientes task, _) {
+            return null;
+          },
+          id: null,
+          measureFn: (ListaClientes task, _) {
+            return null;
+          }));
+    }
+  }  
 }

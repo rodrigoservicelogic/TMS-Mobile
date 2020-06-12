@@ -224,18 +224,18 @@ mixin _$FrotaPropriaController on _FrotaPropriaControllerBase, Store {
   @override
   String toString() {
     return '''
-motorista: $motorista,
-placas: $placas,
-receita: $receita,
-despesa: $despesa,
-impostoVal: $impostoVal,
-impostoPerc: $impostoPerc,
-custoFixoVal: $custoFixoVal,
-custoFixoPerc: $custoFixoPerc,
-custoVariavelVal: $custoVariavelVal,
-custoVariavelPerc: $custoVariavelPerc,
-resultadoVal: $resultadoVal,
-resultadoPerc: $resultadoPerc
+motorista: ${motorista},
+placas: ${placas},
+receita: ${receita},
+despesa: ${despesa},
+impostoVal: ${impostoVal},
+impostoPerc: ${impostoPerc},
+custoFixoVal: ${custoFixoVal},
+custoFixoPerc: ${custoFixoPerc},
+custoVariavelVal: ${custoVariavelVal},
+custoVariavelPerc: ${custoVariavelPerc},
+resultadoVal: ${resultadoVal},
+resultadoPerc: ${resultadoPerc}
     ''';
   }
 }
