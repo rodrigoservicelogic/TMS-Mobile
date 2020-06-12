@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/pages/terceiro/filtro-terceiro.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 import 'empresa/filtro-empresa.dart';
@@ -130,8 +129,8 @@ class _ResultadoPage extends State<ResultadoPage> {
                       ),
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              FiltroTerceiro(widget.pageCtrl)));
+                            builder: (context) =>
+                                FiltroTerceiro(widget.pageCtrl)));
                       },
                     ),
                   ),
@@ -152,8 +151,8 @@ class _ResultadoPage extends State<ResultadoPage> {
                       onPressed: () {
                         if (true == true) {
                           Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              FiltroEmpresa(widget.pageCtrl)));
+                              builder: (context) =>
+                                  FiltroEmpresa(widget.pageCtrl)));
                         }
                       },
                     ),

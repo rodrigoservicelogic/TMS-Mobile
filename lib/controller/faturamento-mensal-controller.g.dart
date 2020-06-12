@@ -61,9 +61,9 @@ mixin _$FaturamentoVisaoMensalController
   @override
   String toString() {
     return '''
-series: ${series},
-columns: ${columns},
-rows: ${rows}
+series: $series,
+columns: $columns,
+rows: $rows
     ''';
   }
 }

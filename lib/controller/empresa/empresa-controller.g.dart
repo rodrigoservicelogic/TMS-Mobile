@@ -361,27 +361,27 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
   @override
   String toString() {
     return '''
-regimes: ${regimes},
-empresas: ${empresas},
-competencias: ${competencias},
-receita: ${receita},
-despesa: ${despesa},
-impostoVal: ${impostoVal},
-impostoPerc: ${impostoPerc},
-freteTerVal: ${freteTerVal},
-freteTerPerc: ${freteTerPerc},
-freteFrotaVal: ${freteFrotaVal},
-freteFrotaPerc: ${freteFrotaPerc},
-freteAgregadosVal: ${freteAgregadosVal},
-freteAgregadosPerc: ${freteAgregadosPerc},
-despesasAdmVal: ${despesasAdmVal},
-despesasAdmPerc: ${despesasAdmPerc},
-despesasOperVal: ${despesasOperVal},
-despesasOperPerc: ${despesasOperPerc},
-investimentosVal: ${investimentosVal},
-investimentosPerc: ${investimentosPerc},
-resultadoVal: ${resultadoVal},
-resultadoPerc: ${resultadoPerc}
+regimes: $regimes,
+empresas: $empresas,
+competencias: $competencias,
+receita: receita,
+despesa: $despesa,
+impostoVal: $impostoVal,
+impostoPerc: $impostoPerc,
+freteTerVal: $freteTerVal,
+freteTerPerc: $freteTerPerc,
+freteFrotaVal: $freteFrotaVal,
+freteFrotaPerc: $freteFrotaPerc,
+freteAgregadosVal: $freteAgregadosVal,
+freteAgregadosPerc: $freteAgregadosPerc,
+despesasAdmVal: $despesasAdmVal,
+despesasAdmPerc: $despesasAdmPerc,
+despesasOperVal: $despesasOperVal,
+despesasOperPerc: $despesasOperPerc,
+investimentosVal: $investimentosVal,
+investimentosPerc: $investimentosPerc,
+resultadoVal: $resultadoVal,
+resultadoPerc: $resultadoPerc
     ''';
   }
 }

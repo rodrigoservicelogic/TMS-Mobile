@@ -190,16 +190,16 @@ mixin _$AgregadoController on AgregadoControllerBase, Store {
   @override
   String toString() {
     return '''
-agregados: ${agregados},
-placas: ${placas},
-receita: ${receita},
-despesa: ${despesa},
-impostoVal: ${impostoVal},
-impostoPerc: ${impostoPerc},
-ferePagoTerVal: ${ferePagoTerVal},
-ferePagoTerPerc: ${ferePagoTerPerc},
-resultadoVal: ${resultadoVal},
-resultadoPerc: ${resultadoPerc}
+agregados: $agregados,
+placas: $placas,
+receita: $receita,
+despesa: $despesa,
+impostoVal: $impostoVal,
+impostoPerc: $impostoPerc,
+ferePagoTerVal: $ferePagoTerVal,
+ferePagoTerPerc: $ferePagoTerPerc,
+resultadoVal: $resultadoVal,
+resultadoPerc: $resultadoPerc
     ''';
   }
 }

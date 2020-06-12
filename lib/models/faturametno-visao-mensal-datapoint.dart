@@ -1,7 +1,4 @@
-import 'package:flutter/rendering.dart';
-import 'package:tms_mobile/controller/faturamento-mensal-controller.dart';
-
-class FaturamentoVisaoMensalDataPoint{
+class FaturamentoVisaoMensalDataPoint {
   double faturamentoPeriodo;
   double faturamentoAnterior;
   double variacao;
@@ -10,9 +7,15 @@ class FaturamentoVisaoMensalDataPoint{
   int sequencia;
 
   // FaturamentoVisaoMensalDataPoint();
-  FaturamentoVisaoMensalDataPoint(this.faturamentoPeriodo, this.faturamentoAnterior, this.variacao, this.mes, this.ano, this.sequencia);
+  FaturamentoVisaoMensalDataPoint(
+      this.faturamentoPeriodo,
+      this.faturamentoAnterior,
+      this.variacao,
+      this.mes,
+      this.ano,
+      this.sequencia);
 
-  FaturamentoVisaoMensalDataPoint.fromMap(Map<String, dynamic> map){
+  FaturamentoVisaoMensalDataPoint.fromMap(Map<String, dynamic> map) {
     faturamentoPeriodo = map["FaturamentoPeriodo"];
     faturamentoAnterior = map["FaturamentoAnterior"];
     variacao = map["Variacao"];
@@ -21,18 +24,17 @@ class FaturamentoVisaoMensalDataPoint{
     sequencia = map["OrderInSet"];
   }
 
-  factory FaturamentoVisaoMensalDataPoint.fromJson(dynamic json){
+  factory FaturamentoVisaoMensalDataPoint.fromJson(dynamic json) {
     return FaturamentoVisaoMensalDataPoint(
-      json['FaturamentoPeriodo'] as double, 
-      json['FaturamentoAnterior'] as double, 
-      json['Variacao'] as double, 
-      json['Mes'] as int, 
-      json['Ano'] as int, 
-      json['OrderInSet'] as int);
+        json['FaturamentoPeriodo'] as double,
+        json['FaturamentoAnterior'] as double,
+        json['Variacao'] as double,
+        json['Mes'] as int,
+        json['Ano'] as int,
+        json['OrderInSet'] as int);
   }
 
-  int compareTo(FaturamentoVisaoMensalDataPoint other){
+  int compareTo(FaturamentoVisaoMensalDataPoint other) {
     return this.sequencia.compareTo(other.sequencia);
   }
-
 }
