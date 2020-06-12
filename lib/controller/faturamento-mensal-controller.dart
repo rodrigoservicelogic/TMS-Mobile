@@ -103,9 +103,11 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       newRow.cells.add(
         DataCell(
           Center(
-            child: Text(
-              "${ponto.sequencia + 1}",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: FittedBox(
+              child: Text(
+                "${ponto.sequencia + 1}",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
@@ -114,9 +116,11 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       newRow.cells.add(
         DataCell(
           Center(
-            child: Text(
-              "${dateFormat.format(new DateTime(ponto.ano, ponto.mes)).toUpperCase()}",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: FittedBox(
+              child: Text(
+                "${dateFormat.format(new DateTime(ponto.ano, ponto.mes)).toUpperCase()}",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
@@ -126,8 +130,10 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         newRow.cells.add(
           DataCell(
             Center(
-              child: Text(
-                "-",
+              child: FittedBox(
+                child: Text(
+                  "-",
+                ),
               ),
             ),
           ),
@@ -137,9 +143,10 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       newRow.cells.add(
         DataCell(
           Center(
-            child: Text(
-              "${ponto.faturamentoPeriodo < 0 ? '-' : formatoMoeda.format(ponto.faturamentoPeriodo)}",
-              style: TextStyle(fontSize: 11),
+            child: FittedBox(
+              child: Text(
+                "${ponto.faturamentoPeriodo < 0 ? '-' : formatoMoeda.format(ponto.faturamentoPeriodo)}",
+              ),
             ),
           ),
         ),
@@ -148,9 +155,10 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       newRow.cells.add(
         DataCell(
           Center(
-            child: Text(
-              "${ponto.faturamentoAnterior < 0 ? '-' : formatoMoeda.format(ponto.faturamentoAnterior)}",
-              style: TextStyle(fontSize: 11),
+            child: FittedBox(
+              child: Text(
+                "${ponto.faturamentoAnterior < 0 ? '-' : formatoMoeda.format(ponto.faturamentoAnterior)}",
+              ),
             ),
           ),
         ),
@@ -160,8 +168,10 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         newRow.cells.add(
           DataCell(
             Center(
-              child: Text(
-                "-",
+              child: FittedBox(
+                child: Text(
+                  "-",
+                ),
               ),
             ),
           ),
@@ -171,14 +181,15 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       newRow.cells.add(
         DataCell(
           Center(
-            child: Text(
-              "${ponto.variacao == 1 || ponto.variacao == -1 ? '-' : (ponto.variacao < 0 ? formatoPercentual.format(-ponto.variacao) : formatoPercentual.format(ponto.variacao))}",
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: ponto.variacao == 1 || ponto.variacao == -1
-                      ? Colors.black
-                      : (ponto.variacao < 0 ? Colors.red : Colors.green)),
+            child: FittedBox(
+              child: Text(
+                "${ponto.variacao == 1 || ponto.variacao == -1 ? '-' : (ponto.variacao < 0 ? formatoPercentual.format(-ponto.variacao) : formatoPercentual.format(ponto.variacao))}",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: ponto.variacao == 1 || ponto.variacao == -1
+                        ? Colors.black
+                        : (ponto.variacao < 0 ? Colors.red : Colors.green)),
+              ),
             ),
           ),
         ),
@@ -194,17 +205,19 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
     var tableHeaderStyle = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 12,
+      // fontSize: 12,
       color: Colors.black,
     );
 
     columns.add(
       DataColumn(
         label: Center(
-          child: Text(
-            "#",
-            style: tableHeaderStyle,
-            textAlign: TextAlign.center,
+          child: FittedBox(
+            child: Text(
+              "#",
+              style: tableHeaderStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
         numeric: true,
@@ -214,10 +227,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
     columns.add(
       DataColumn(
         label: Center(
-          child: Text(
-            "MÊS",
-            style: tableHeaderStyle,
-            textAlign: TextAlign.center,
+          child: FittedBox(
+            child: Text(
+              "MÊS",
+              style: tableHeaderStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),
@@ -226,10 +241,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
     columns.add(
       DataColumn(
         label: Center(
-          child: Text(
-            "${dateTo.year}(R\$)",
-            style: tableHeaderStyle,
-            textAlign: TextAlign.center,
+          child: FittedBox(
+            child: Text(
+              "${dateTo.year}(R\$)",
+              style: tableHeaderStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),
@@ -240,10 +257,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       columns.add(
         DataColumn(
           label: Center(
-            child: Text(
-              "${dateFrom.year}(R\$)",
-              style: tableHeaderStyle,
-              textAlign: TextAlign.center,
+            child: FittedBox(
+              child: Text(
+                "${dateFrom.year}(R\$)",
+                style: tableHeaderStyle,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -254,10 +273,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
     columns.add(
       DataColumn(
         label: Center(
-          child: Text(
-            "${dateFrom.year - 1}(R\$)",
-            style: tableHeaderStyle,
-            textAlign: TextAlign.center,
+          child: FittedBox(
+            child: Text(
+              "${dateFrom.year - 1}(R\$)",
+              style: tableHeaderStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),
@@ -267,10 +288,12 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
     columns.add(
       DataColumn(
         label: Center(
-          child: Text(
-            "%",
-            style: tableHeaderStyle,
-            textAlign: TextAlign.center,
+          child: FittedBox(
+            child: Text(
+              "%",
+              style: tableHeaderStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),

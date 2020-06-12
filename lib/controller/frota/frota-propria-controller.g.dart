@@ -12,13 +12,13 @@ mixin _$FrotaPropriaController on _FrotaPropriaControllerBase, Store {
   final _$motoristaAtom = Atom(name: '_FrotaPropriaControllerBase.motorista');
 
   @override
-  List<String> get motorista {
+  List<Motorista> get motorista {
     _$motoristaAtom.reportRead();
     return super.motorista;
   }
 
   @override
-  set motorista(List<String> value) {
+  set motorista(List<Motorista> value) {
     _$motoristaAtom.reportWrite(value, super.motorista, () {
       super.motorista = value;
     });
@@ -36,6 +36,21 @@ mixin _$FrotaPropriaController on _FrotaPropriaControllerBase, Store {
   set placas(List<String> value) {
     _$placasAtom.reportWrite(value, super.placas, () {
       super.placas = value;
+    });
+  }
+
+  final _$isLoadAtom = Atom(name: '_FrotaPropriaControllerBase.isLoad');
+
+  @override
+  bool get isLoad {
+    _$isLoadAtom.reportRead();
+    return super.isLoad;
+  }
+
+  @override
+  set isLoad(bool value) {
+    _$isLoadAtom.reportWrite(value, super.isLoad, () {
+      super.isLoad = value;
     });
   }
 
@@ -196,29 +211,20 @@ mixin _$FrotaPropriaController on _FrotaPropriaControllerBase, Store {
     });
   }
 
-  final _$_FrotaPropriaControllerBaseActionController =
-      ActionController(name: '_FrotaPropriaControllerBase');
+  final _$getListaMotoristaAsyncAction =
+      AsyncAction('_FrotaPropriaControllerBase.getListaMotorista');
 
   @override
-  dynamic popularListaMotorista() {
-    final _$actionInfo = _$_FrotaPropriaControllerBaseActionController
-        .startAction(name: '_FrotaPropriaControllerBase.popularListaMotorista');
-    try {
-      return super.popularListaMotorista();
-    } finally {
-      _$_FrotaPropriaControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future<dynamic> getListaMotorista() {
+    return _$getListaMotoristaAsyncAction.run(() => super.getListaMotorista());
   }
 
+  final _$getListaPlacasAsyncAction =
+      AsyncAction('_FrotaPropriaControllerBase.getListaPlacas');
+
   @override
-  dynamic popularListaPlacas() {
-    final _$actionInfo = _$_FrotaPropriaControllerBaseActionController
-        .startAction(name: '_FrotaPropriaControllerBase.popularListaPlacas');
-    try {
-      return super.popularListaPlacas();
-    } finally {
-      _$_FrotaPropriaControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future<dynamic> getListaPlacas() {
+    return _$getListaPlacasAsyncAction.run(() => super.getListaPlacas());
   }
 
   @override
@@ -226,6 +232,7 @@ mixin _$FrotaPropriaController on _FrotaPropriaControllerBase, Store {
     return '''
 motorista: ${motorista},
 placas: ${placas},
+isLoad: ${isLoad},
 receita: ${receita},
 despesa: ${despesa},
 impostoVal: ${impostoVal},

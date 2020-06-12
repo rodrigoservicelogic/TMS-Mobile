@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/frota/frota-propria-controller.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
@@ -17,7 +18,7 @@ class FiltroFrotaPropria extends StatefulWidget {
 class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
   DateTime _dataInicial, _dataFinal;
   String _selectedMotorista;
-  final controller = FrotaPropriaController();
+  final controller = GetIt.I.get<FrotaPropriaController>();
   String _selectedPlaca;
 
   String dropdownValue = '';
@@ -28,8 +29,8 @@ class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
 
     _dataInicial = DateTime.now();
     _dataFinal = DateTime.now();
-    controller.popularListaMotorista();
-    controller.popularListaPlacas();
+    // controller.popularListaMotorista();
+    // controller.popularListaPlacas();
   }
 
   @override
@@ -130,8 +131,8 @@ class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
               },
               items: controller.motorista.map((motorista) {
                 return DropdownMenuItem(
-                  child: new Text(motorista),
-                  value: motorista,
+                  child: new Text(motorista.nome),
+                  value: motorista.codMotorista,
                 );
               }).toList(),
             ),
@@ -200,7 +201,7 @@ class _FiltroFrotaPropriaState extends State<FiltroFrotaPropria> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     onPressed: () {
-                       Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                   ),
                 ),
