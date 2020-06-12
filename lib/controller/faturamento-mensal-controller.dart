@@ -1,16 +1,10 @@
-import 'dart:collection';
-import 'dart:ffi';
-import 'dart:io';
-
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/faturametno-visao-mensal-datapoint.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
-import 'package:tms_mobile/pages/faturamento-mensal.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:tms_mobile/util/http_helper.dart';
@@ -32,7 +26,6 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
   Http _http = Http();
   List<FaturamentoVisaoMensalDataPoint> _data = List();
-  List<int> _monthOrder = List();
 
   Future<bool> getVisaoMensal(ModelFiltroFaturamento filtroFaturamento) async {
     try {
@@ -60,11 +53,13 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
           buildTable(data, filtroFaturamento.dataDe, filtroFaturamento.dataAte);
           this._data = data;
         }
-        return Future.value(true);
+        return true;
       }
+
+      return false;
     } on DioError catch (e) {
       print(e.message);
-      return Future.value(false);
+      return false;
     }
   }
 
@@ -73,7 +68,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
     series.clear();
 
     series.add(new charts.Series<FaturamentoVisaoMensalDataPoint, DateTime>(
-        id: "Faturamento",
+        id: "Faturamento mensal",
         seriesColor: charts.Color(a: 255, r: 245, g: 134, b: 51),
         data: data,
         domainFn: (FaturamentoVisaoMensalDataPoint ponto, _) =>
@@ -100,7 +95,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
     var dateFormat = DateFormat.MMM('pt_BR');
 
-    List<int> years = buildTable_Columns(dateTo, dateFrom);
+    List<int> years = buildTableColumns(dateTo, dateFrom);
 
     for (FaturamentoVisaoMensalDataPoint ponto in data) {
       DataRow newRow = DataRow(cells: []);
@@ -204,7 +199,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
     }
   }
 
-  List<int> buildTable_Columns(DateTime dateTo, DateTime dateFrom) {
+  List<int> buildTableColumns(DateTime dateTo, DateTime dateFrom) {
     columns.clear();
     List<int> years = List();
 

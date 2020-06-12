@@ -10,7 +10,6 @@ class FaturamentoCliente extends StatefulWidget {
 }
 
 class _FaturamentoCliente extends State<FaturamentoCliente> {
-  DateTime _dataInicial;
   List empresas;
   String empresaSelected;
 
@@ -28,7 +27,6 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
   void initState() {
     super.initState();
 
-    _dataInicial = DateTime.now();
     controller.popularListaAnos();
 
     empresas = [

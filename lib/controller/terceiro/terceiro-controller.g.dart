@@ -190,16 +190,16 @@ mixin _$TerceiroController on TerceiroControllerBase, Store {
   @override
   String toString() {
     return '''
-terceiros: ${terceiros},
-placas: ${placas},
-receita: ${receita},
-despesa: ${despesa},
-impostoVal: ${impostoVal},
-impostoPerc: ${impostoPerc},
-fretePagoTerVal: ${fretePagoTerVal},
-fretePagoTerPerc: ${fretePagoTerPerc},
-resultadoVal: ${resultadoVal},
-resultadoPerc: ${resultadoPerc}
+terceiros: $terceiros,
+placas: $placas,
+receita: $receita,
+despesa: $despesa,
+impostoVal: $impostoVal,
+impostoPerc: $impostoPerc,
+fretePagoTerVal: $fretePagoTerVal,
+fretePagoTerPerc: $fretePagoTerPerc,
+resultadoVal: $resultadoVal,
+resultadoPerc: $resultadoPerc
     ''';
   }
 }

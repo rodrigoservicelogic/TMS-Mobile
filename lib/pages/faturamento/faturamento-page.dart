@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:getflutter/getflutter.dart';
-import 'package:tms_mobile/controller/empresa/empresa-controller.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-cliente-controller.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
@@ -50,6 +49,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
         await controllerFaturamentoUn.getFaturamento(widget.filtroFaturamento);
 
     if (retorno != 'ok') {
+      Navigator.of(context).pop();
       showDialog(
           context: context,
           barrierDismissible: false,

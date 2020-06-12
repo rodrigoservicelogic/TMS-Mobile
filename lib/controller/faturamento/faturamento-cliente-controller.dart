@@ -35,7 +35,7 @@ abstract class _FaturamentoClienteControllerBase with Store {
   List<Dados> listaAnos = List();
 
   @observable
-  bool isLoad = false;
+  bool isLoad;
 
   @observable
   List<Filial> filiais = List();
@@ -119,7 +119,8 @@ abstract class _FaturamentoClienteControllerBase with Store {
     selectedCliente = selectedCliente;
   }
 
-  Future getListaFilial() async {
+  @action
+  Future<String> getListaFilial() async {
     try {
       isLoad = true;
       SharedPreferences prefs = await SharedPreferences.getInstance();

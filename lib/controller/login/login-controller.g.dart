@@ -64,10 +64,10 @@ mixin _$LoginController on _LoginControllerBase, Store {
   @override
   String toString() {
     return '''
-isLoad: ${isLoad},
-usuario: ${usuario},
-empresas: ${empresas},
-isValid: ${isValid}
+isLoad: $isLoad,
+usuario: $usuario,
+empresas: $empresas,
+isValid: $isValid
     ''';
   }
 }

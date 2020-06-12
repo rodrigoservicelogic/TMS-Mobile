@@ -20,6 +20,9 @@ class FiltroFaturamento extends StatefulWidget {
 
 class _FiltroFaturamentoState extends State<FiltroFaturamento> {
   final controllerEmpresa = GetIt.I.get<FaturamentoClienteController>();
+  final GlobalKey _dropdownButtonUN = GlobalKey();
+  final GlobalKey _dropdownButtonFrete = GlobalKey();
+  final GlobalKey _dropdownButtonCliente = GlobalKey();
 
   DateTime _dataInicial, _dataFinal;
 
@@ -37,7 +40,8 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
   }
 
   void _init() async {
-    await controllerEmpresa.getListaFilial();
+    String result = await controllerEmpresa.getListaFilial();
+    print(result);
   }
 
   @override
@@ -75,10 +79,11 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
             }
 
             return Container(
+              width: MediaQuery.of(context).size.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   SizedBox(
                     height: 60,
@@ -137,6 +142,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     height: 13,
                   ),
                   DropdownButton(
+                    key: _dropdownButtonUN,
                     hint: Text('Por Unidade de Negócio'),
                     value: controllerEmpresa.selectedUnidade,
                     isExpanded: true,
@@ -145,7 +151,9 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                       icon: controllerEmpresa.selectedUnidade != null
                           ? Icon(Icons.clear)
                           : Icon(Icons.arrow_drop_down),
-                      onPressed: controllerEmpresa.clearSelectedUnidadeNegocio,
+                      onPressed: controllerEmpresa.selectedUnidade != null
+                          ? controllerEmpresa.clearSelectedUnidadeNegocio
+                          : openDropdownUN,
                       color: controllerEmpresa.selectedUnidade != null
                           ? Colors.red
                           : Colors.black54,
@@ -161,6 +169,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     height: 13,
                   ),
                   DropdownButton(
+                    key: _dropdownButtonFrete,
                     hint: Text('Por Tipo de Frete'),
                     value: controllerEmpresa.selectedFrete,
                     isExpanded: true,
@@ -169,7 +178,9 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                       icon: controllerEmpresa.selectedFrete != null
                           ? Icon(Icons.clear)
                           : Icon(Icons.arrow_drop_down),
-                      onPressed: controllerEmpresa.clearSelectedTipoFrete,
+                      onPressed: controllerEmpresa.selectedFrete != null
+                          ? controllerEmpresa.clearSelectedTipoFrete
+                          : openDropdownFrete,
                       color: controllerEmpresa.selectedFrete != null
                           ? Colors.red
                           : Colors.black54,
@@ -185,6 +196,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     height: 13,
                   ),
                   DropdownButton(
+                    key: _dropdownButtonCliente,
                     hint: Text('Por Cliente'),
                     value: controllerEmpresa.selectedCliente,
                     isExpanded: true,
@@ -193,7 +205,9 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                       icon: controllerEmpresa.selectedCliente != null
                           ? Icon(Icons.clear)
                           : Icon(Icons.arrow_drop_down),
-                      onPressed: controllerEmpresa.clearSelectedCliente,
+                      onPressed: controllerEmpresa.selectedCliente != null
+                          ? controllerEmpresa.clearSelectedCliente
+                          : openDropdownCliente,
                       color: controllerEmpresa.selectedCliente != null
                           ? Colors.red
                           : Colors.black54,
@@ -229,7 +243,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                               MaterialPageRoute(
                                 builder: (context) => FaturamentoPage(
                                   widget.pageController,
-                                  new ModelFiltroFaturamento(
+                                  ModelFiltroFaturamento(
                                       _dataInicial, _dataFinal,
                                       idUnidadeNegocio:
                                           controllerEmpresa.selectedUnidade,
@@ -278,5 +292,50 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
         ),
       ),
     );
+  }
+
+  void openDropdownUN() {
+    _dropdownButtonUN.currentContext.visitChildElements((element) {
+      if (element.widget != null && element.widget is Semantics) {
+        element.visitChildElements((element) {
+          if (element.widget != null && element.widget is Actions) {
+            element.visitChildElements((element) {
+              Actions.invoke(element, Intent(ActivateAction.key));
+              return false;
+            });
+          }
+        });
+      }
+    });
+  }
+
+  void openDropdownCliente() {
+    _dropdownButtonCliente.currentContext.visitChildElements((element) {
+      if (element.widget != null && element.widget is Semantics) {
+        element.visitChildElements((element) {
+          if (element.widget != null && element.widget is Actions) {
+            element.visitChildElements((element) {
+              Actions.invoke(element, Intent(ActivateAction.key));
+              return false;
+            });
+          }
+        });
+      }
+    });
+  }
+
+  void openDropdownFrete() {
+    _dropdownButtonFrete.currentContext.visitChildElements((element) {
+      if (element.widget != null && element.widget is Semantics) {
+        element.visitChildElements((element) {
+          if (element.widget != null && element.widget is Actions) {
+            element.visitChildElements((element) {
+              Actions.invoke(element, Intent(ActivateAction.key));
+              return false;
+            });
+          }
+        });
+      }
+    });
   }
 }
