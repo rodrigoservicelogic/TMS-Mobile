@@ -25,8 +25,8 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
   @override
   void initState() {
     super.initState();
-    controllerFaturamentoUn.buildTable();
-    controllerFaturamentoUn.buildCharts();
+    controllerFaturamentoUn.buildTableUn();
+    controllerFaturamentoUn.buildChartsUn();
   }
 
   BoxDecoration myBoxDecoration() {
@@ -101,8 +101,8 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
               height: 320,
               child: SingleChildScrollView(
                   child: DataTable(
-                columns: controllerFaturamentoUn.columns,
-                rows: controllerFaturamentoUn.rows,
+                columns: controllerFaturamentoUn.columnsUn,
+                rows: controllerFaturamentoUn.rowsUn,
               )),
             ),
           ),
@@ -111,7 +111,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
             child: SizedBox(
               height: 320,
               child: charts.PieChart(
-                controllerFaturamentoUn.series,
+                controllerFaturamentoUn.seriesUn,
                 animate: true,
                 animationDuration: Duration(seconds: 1),
                 behaviors: [
