@@ -38,9 +38,6 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         Response response = await _http.get(API_URL +
             'faturamentomensal/$idEmpresa?${filtroFaturamento.asQueryParams()}');
 
-        print(API_URL +
-            'faturamentomensal/$idEmpresa?${filtroFaturamento.asQueryParams()}');
-
         if (response != null) {
           List<FaturamentoVisaoMensalDataPoint> data = response.data
               .map<FaturamentoVisaoMensalDataPoint>(

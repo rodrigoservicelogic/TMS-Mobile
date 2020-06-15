@@ -38,7 +38,6 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
       width: double.infinity,
       child: ListView(
         children: <Widget>[
@@ -60,6 +59,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                         color: Color(0xFF606062)),
+                    overflow: TextOverflow.clip,
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(
@@ -100,7 +100,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
             child: SizedBox(
               height: 320,
               child: SingleChildScrollView(
-                  child: DataTable(  
+                  child: DataTable(
                 columns: controllerFaturamentoUn.columns,
                 rows: controllerFaturamentoUn.rows,
               )),
@@ -117,8 +117,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                 behaviors: [
                   new charts.DatumLegend(
                       position: charts.BehaviorPosition.bottom,
-                      outsideJustification:
-                          charts.OutsideJustification.start,
+                      outsideJustification: charts.OutsideJustification.start,
                       horizontalFirst: false,
                       desiredMaxRows: 4,
                       cellPadding: new EdgeInsets.all(0.3),
