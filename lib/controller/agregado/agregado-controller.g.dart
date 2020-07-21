@@ -9,16 +9,31 @@ part of 'agregado-controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AgregadoController on AgregadoControllerBase, Store {
+  final _$isLoadAtom = Atom(name: 'AgregadoControllerBase.isLoad');
+
+  @override
+  bool get isLoad {
+    _$isLoadAtom.reportRead();
+    return super.isLoad;
+  }
+
+  @override
+  set isLoad(bool value) {
+    _$isLoadAtom.reportWrite(value, super.isLoad, () {
+      super.isLoad = value;
+    });
+  }
+
   final _$agregadosAtom = Atom(name: 'AgregadoControllerBase.agregados');
 
   @override
-  List<String> get agregados {
+  List<Agregado> get agregados {
     _$agregadosAtom.reportRead();
     return super.agregados;
   }
 
   @override
-  set agregados(List<String> value) {
+  set agregados(List<Agregado> value) {
     _$agregadosAtom.reportWrite(value, super.agregados, () {
       super.agregados = value;
     });
@@ -39,149 +54,149 @@ mixin _$AgregadoController on AgregadoControllerBase, Store {
     });
   }
 
-  final _$receitaAtom = Atom(name: 'AgregadoControllerBase.receita');
+  final _$agregadoSelectedAtom =
+      Atom(name: 'AgregadoControllerBase.agregadoSelected');
 
   @override
-  String get receita {
-    _$receitaAtom.reportRead();
-    return super.receita;
+  Agregado get agregadoSelected {
+    _$agregadoSelectedAtom.reportRead();
+    return super.agregadoSelected;
   }
 
   @override
-  set receita(String value) {
-    _$receitaAtom.reportWrite(value, super.receita, () {
-      super.receita = value;
+  set agregadoSelected(Agregado value) {
+    _$agregadoSelectedAtom.reportWrite(value, super.agregadoSelected, () {
+      super.agregadoSelected = value;
     });
   }
 
-  final _$despesaAtom = Atom(name: 'AgregadoControllerBase.despesa');
+  final _$placaSelectedAtom =
+      Atom(name: 'AgregadoControllerBase.placaSelected');
 
   @override
-  String get despesa {
-    _$despesaAtom.reportRead();
-    return super.despesa;
+  String get placaSelected {
+    _$placaSelectedAtom.reportRead();
+    return super.placaSelected;
   }
 
   @override
-  set despesa(String value) {
-    _$despesaAtom.reportWrite(value, super.despesa, () {
-      super.despesa = value;
+  set placaSelected(String value) {
+    _$placaSelectedAtom.reportWrite(value, super.placaSelected, () {
+      super.placaSelected = value;
     });
   }
 
-  final _$impostoValAtom = Atom(name: 'AgregadoControllerBase.impostoVal');
+  final _$dataInicialAtom = Atom(name: 'AgregadoControllerBase.dataInicial');
 
   @override
-  String get impostoVal {
-    _$impostoValAtom.reportRead();
-    return super.impostoVal;
+  DateTime get dataInicial {
+    _$dataInicialAtom.reportRead();
+    return super.dataInicial;
   }
 
   @override
-  set impostoVal(String value) {
-    _$impostoValAtom.reportWrite(value, super.impostoVal, () {
-      super.impostoVal = value;
+  set dataInicial(DateTime value) {
+    _$dataInicialAtom.reportWrite(value, super.dataInicial, () {
+      super.dataInicial = value;
     });
   }
 
-  final _$impostoPercAtom = Atom(name: 'AgregadoControllerBase.impostoPerc');
+  final _$dataFinalAtom = Atom(name: 'AgregadoControllerBase.dataFinal');
 
   @override
-  String get impostoPerc {
-    _$impostoPercAtom.reportRead();
-    return super.impostoPerc;
+  DateTime get dataFinal {
+    _$dataFinalAtom.reportRead();
+    return super.dataFinal;
   }
 
   @override
-  set impostoPerc(String value) {
-    _$impostoPercAtom.reportWrite(value, super.impostoPerc, () {
-      super.impostoPerc = value;
+  set dataFinal(DateTime value) {
+    _$dataFinalAtom.reportWrite(value, super.dataFinal, () {
+      super.dataFinal = value;
     });
   }
 
-  final _$ferePagoTerValAtom =
-      Atom(name: 'AgregadoControllerBase.ferePagoTerVal');
+  final _$listaAgregadoAtom =
+      Atom(name: 'AgregadoControllerBase.listaAgregado');
 
   @override
-  String get ferePagoTerVal {
-    _$ferePagoTerValAtom.reportRead();
-    return super.ferePagoTerVal;
+  List<ResultadoAgregado> get listaAgregado {
+    _$listaAgregadoAtom.reportRead();
+    return super.listaAgregado;
   }
 
   @override
-  set ferePagoTerVal(String value) {
-    _$ferePagoTerValAtom.reportWrite(value, super.ferePagoTerVal, () {
-      super.ferePagoTerVal = value;
+  set listaAgregado(List<ResultadoAgregado> value) {
+    _$listaAgregadoAtom.reportWrite(value, super.listaAgregado, () {
+      super.listaAgregado = value;
     });
   }
 
-  final _$ferePagoTerPercAtom =
-      Atom(name: 'AgregadoControllerBase.ferePagoTerPerc');
+  final _$getListaAgregadoAsyncAction =
+      AsyncAction('AgregadoControllerBase.getListaAgregado');
 
   @override
-  String get ferePagoTerPerc {
-    _$ferePagoTerPercAtom.reportRead();
-    return super.ferePagoTerPerc;
+  Future<dynamic> getListaAgregado() {
+    return _$getListaAgregadoAsyncAction.run(() => super.getListaAgregado());
   }
 
+  final _$getListaPlacasAsyncAction =
+      AsyncAction('AgregadoControllerBase.getListaPlacas');
+
   @override
-  set ferePagoTerPerc(String value) {
-    _$ferePagoTerPercAtom.reportWrite(value, super.ferePagoTerPerc, () {
-      super.ferePagoTerPerc = value;
-    });
+  Future<dynamic> getListaPlacas() {
+    return _$getListaPlacasAsyncAction.run(() => super.getListaPlacas());
   }
 
-  final _$resultadoValAtom = Atom(name: 'AgregadoControllerBase.resultadoVal');
+  final _$filtrarAsyncAction = AsyncAction('AgregadoControllerBase.filtrar');
 
   @override
-  String get resultadoVal {
-    _$resultadoValAtom.reportRead();
-    return super.resultadoVal;
-  }
-
-  @override
-  set resultadoVal(String value) {
-    _$resultadoValAtom.reportWrite(value, super.resultadoVal, () {
-      super.resultadoVal = value;
-    });
-  }
-
-  final _$resultadoPercAtom =
-      Atom(name: 'AgregadoControllerBase.resultadoPerc');
-
-  @override
-  String get resultadoPerc {
-    _$resultadoPercAtom.reportRead();
-    return super.resultadoPerc;
-  }
-
-  @override
-  set resultadoPerc(String value) {
-    _$resultadoPercAtom.reportWrite(value, super.resultadoPerc, () {
-      super.resultadoPerc = value;
-    });
+  Future<dynamic> filtrar(ModelFiltroAgregado filtro) {
+    return _$filtrarAsyncAction.run(() => super.filtrar(filtro));
   }
 
   final _$AgregadoControllerBaseActionController =
       ActionController(name: 'AgregadoControllerBase');
 
   @override
-  dynamic popularListaAgregados() {
+  dynamic changeAgregado(Agregado value) {
     final _$actionInfo = _$AgregadoControllerBaseActionController.startAction(
-        name: 'AgregadoControllerBase.popularListaAgregados');
+        name: 'AgregadoControllerBase.changeAgregado');
     try {
-      return super.popularListaAgregados();
+      return super.changeAgregado(value);
     } finally {
       _$AgregadoControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic popularListaPlacas() {
+  dynamic changePlaca(String value) {
     final _$actionInfo = _$AgregadoControllerBaseActionController.startAction(
-        name: 'AgregadoControllerBase.popularListaPlacas');
+        name: 'AgregadoControllerBase.changePlaca');
     try {
-      return super.popularListaPlacas();
+      return super.changePlaca(value);
+    } finally {
+      _$AgregadoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeDataInicial(DateTime value) {
+    final _$actionInfo = _$AgregadoControllerBaseActionController.startAction(
+        name: 'AgregadoControllerBase.changeDataInicial');
+    try {
+      return super.changeDataInicial(value);
+    } finally {
+      _$AgregadoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeDataFinal(DateTime value) {
+    final _$actionInfo = _$AgregadoControllerBaseActionController.startAction(
+        name: 'AgregadoControllerBase.changeDataFinal');
+    try {
+      return super.changeDataFinal(value);
     } finally {
       _$AgregadoControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -190,16 +205,14 @@ mixin _$AgregadoController on AgregadoControllerBase, Store {
   @override
   String toString() {
     return '''
+isLoad: ${isLoad},
 agregados: ${agregados},
 placas: ${placas},
-receita: ${receita},
-despesa: ${despesa},
-impostoVal: ${impostoVal},
-impostoPerc: ${impostoPerc},
-ferePagoTerVal: ${ferePagoTerVal},
-ferePagoTerPerc: ${ferePagoTerPerc},
-resultadoVal: ${resultadoVal},
-resultadoPerc: ${resultadoPerc}
+agregadoSelected: ${agregadoSelected},
+placaSelected: ${placaSelected},
+dataInicial: ${dataInicial},
+dataFinal: ${dataFinal},
+listaAgregado: ${listaAgregado}
     ''';
   }
 }

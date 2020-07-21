@@ -1,65 +1,87 @@
+import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tms_mobile/models/filtro_resultado_empresa.dart';
+import 'package:tms_mobile/models/resultado_empresa.dart';
+import 'package:tms_mobile/util/http_helper.dart';
+
+import '../../global.dart';
 part 'empresa-controller.g.dart';
 
 class EmpresaController = EmpresaControllerBase with _$EmpresaController;
 
 abstract class EmpresaControllerBase with Store {
   @observable
+  bool isLoad;
+  @observable
   List<String> regimes = List();
   @observable
   List empresas = List();
   @observable
-  List<String> competencias = List();
+  List<ResultadoEmpresa> resultadoEmpresa = List();
   @observable
-  String receita = "5.000.000,00";
+  String regimeSelected;
   @observable
-  String despesa = "4.500.000,00";
+  DateTime dataInicial;
   @observable
-  String impostoVal = "10.000,00";
-  @observable
-  String impostoPerc = "33%";
-  @observable
-  String freteTerVal = "2.500.000,00";
-  @observable
-  String freteTerPerc = "50%";
-  @observable
-  String freteFrotaVal = "1.250.000,00";
-  @observable
-  String freteFrotaPerc = "25%";
-  @observable
-  String freteAgregadosVal = "1.250.000,00";
-  @observable
-  String freteAgregadosPerc = "25%";
-  @observable
-  String despesasAdmVal = "1.250.000,00";
-  @observable
-  String despesasAdmPerc = "25%";
-  @observable
-  String despesasOperVal = "1.250.000,00";
-  @observable
-  String despesasOperPerc = "25%";
-  @observable
-  String investimentosVal = "2.500.000,00";
-  @observable
-  String investimentosPerc = "50%";
-  @observable
-  String resultadoVal = "500.000,00";
-  @observable
-  String resultadoPerc = "10,00";
+  DateTime dataFinal;
 
   @action
-  popularListaRegimes() {
-    regimes.add('Regime 1');
-    regimes.add('Regime 2');
-    regimes.add('Regime 3');
-    regimes.add('Regime 4');
+  changeRegime(String value) => regimeSelected = value;
+
+  @action
+  changeDataInicial(DateTime value) => dataInicial = value;
+
+  @action
+  changeDataFinal(DateTime value) => dataFinal = value;
+
+  @action
+  Future getListaRegimes() async {
+    try {
+      isLoad = true;
+      regimes = [];
+
+      Http _http = Http();
+
+      Response response = await _http.get(API_URL + 'resultado-empresa/regimes');
+
+      if (response.data != null) {
+        for (String m in response.data) {
+          regimes.add(m);
+        }
+      }
+
+      isLoad = false;
+    } catch (e) {
+      isLoad = false;
+      print(e.toString());
+    }
   }
 
   @action
-  popularListaCompetencias() {
-    competencias.add('2019/01');
-    competencias.add('2020/01');
-    competencias.add('2020/02');
-    competencias.add('2020/03');
+  Future filtrar(ModelFiltroResultadoEmpresa filtro) async {
+    try {
+      isLoad = true;
+      resultadoEmpresa = [];
+
+      Http _http = Http();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      filtro.idFilial = int.parse(prefs.getString("Empresa"));
+      filtro.regime = filtro.regime != null && filtro.regime != "" ? filtro.regime : "Por Competência";
+
+      Response response = await _http.post(API_URL + 'resultado-empresa/filtrar', filtro.toMap());
+
+      if(response.data != null) {
+        for (Map map in response.data) {
+          resultadoEmpresa.add(ResultadoEmpresa.fromJson(map));
+        }
+      }
+
+      isLoad = false;
+    } catch (e) {
+      isLoad = false;
+      print(e.toString());
+    }
   }
 }

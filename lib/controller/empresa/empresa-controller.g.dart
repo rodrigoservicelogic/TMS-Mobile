@@ -9,6 +9,21 @@ part of 'empresa-controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$EmpresaController on EmpresaControllerBase, Store {
+  final _$isLoadAtom = Atom(name: 'EmpresaControllerBase.isLoad');
+
+  @override
+  bool get isLoad {
+    _$isLoadAtom.reportRead();
+    return super.isLoad;
+  }
+
+  @override
+  set isLoad(bool value) {
+    _$isLoadAtom.reportWrite(value, super.isLoad, () {
+      super.isLoad = value;
+    });
+  }
+
   final _$regimesAtom = Atom(name: 'EmpresaControllerBase.regimes');
 
   @override
@@ -39,320 +54,114 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
     });
   }
 
-  final _$competenciasAtom = Atom(name: 'EmpresaControllerBase.competencias');
+  final _$resultadoEmpresaAtom =
+      Atom(name: 'EmpresaControllerBase.resultadoEmpresa');
 
   @override
-  List<String> get competencias {
-    _$competenciasAtom.reportRead();
-    return super.competencias;
+  List<ResultadoEmpresa> get resultadoEmpresa {
+    _$resultadoEmpresaAtom.reportRead();
+    return super.resultadoEmpresa;
   }
 
   @override
-  set competencias(List<String> value) {
-    _$competenciasAtom.reportWrite(value, super.competencias, () {
-      super.competencias = value;
+  set resultadoEmpresa(List<ResultadoEmpresa> value) {
+    _$resultadoEmpresaAtom.reportWrite(value, super.resultadoEmpresa, () {
+      super.resultadoEmpresa = value;
     });
   }
 
-  final _$receitaAtom = Atom(name: 'EmpresaControllerBase.receita');
+  final _$regimeSelectedAtom =
+      Atom(name: 'EmpresaControllerBase.regimeSelected');
 
   @override
-  String get receita {
-    _$receitaAtom.reportRead();
-    return super.receita;
+  String get regimeSelected {
+    _$regimeSelectedAtom.reportRead();
+    return super.regimeSelected;
   }
 
   @override
-  set receita(String value) {
-    _$receitaAtom.reportWrite(value, super.receita, () {
-      super.receita = value;
+  set regimeSelected(String value) {
+    _$regimeSelectedAtom.reportWrite(value, super.regimeSelected, () {
+      super.regimeSelected = value;
     });
   }
 
-  final _$despesaAtom = Atom(name: 'EmpresaControllerBase.despesa');
+  final _$dataInicialAtom = Atom(name: 'EmpresaControllerBase.dataInicial');
 
   @override
-  String get despesa {
-    _$despesaAtom.reportRead();
-    return super.despesa;
+  DateTime get dataInicial {
+    _$dataInicialAtom.reportRead();
+    return super.dataInicial;
   }
 
   @override
-  set despesa(String value) {
-    _$despesaAtom.reportWrite(value, super.despesa, () {
-      super.despesa = value;
+  set dataInicial(DateTime value) {
+    _$dataInicialAtom.reportWrite(value, super.dataInicial, () {
+      super.dataInicial = value;
     });
   }
 
-  final _$impostoValAtom = Atom(name: 'EmpresaControllerBase.impostoVal');
+  final _$dataFinalAtom = Atom(name: 'EmpresaControllerBase.dataFinal');
 
   @override
-  String get impostoVal {
-    _$impostoValAtom.reportRead();
-    return super.impostoVal;
+  DateTime get dataFinal {
+    _$dataFinalAtom.reportRead();
+    return super.dataFinal;
   }
 
   @override
-  set impostoVal(String value) {
-    _$impostoValAtom.reportWrite(value, super.impostoVal, () {
-      super.impostoVal = value;
+  set dataFinal(DateTime value) {
+    _$dataFinalAtom.reportWrite(value, super.dataFinal, () {
+      super.dataFinal = value;
     });
   }
 
-  final _$impostoPercAtom = Atom(name: 'EmpresaControllerBase.impostoPerc');
+  final _$getListaRegimesAsyncAction =
+      AsyncAction('EmpresaControllerBase.getListaRegimes');
 
   @override
-  String get impostoPerc {
-    _$impostoPercAtom.reportRead();
-    return super.impostoPerc;
+  Future<dynamic> getListaRegimes() {
+    return _$getListaRegimesAsyncAction.run(() => super.getListaRegimes());
   }
 
-  @override
-  set impostoPerc(String value) {
-    _$impostoPercAtom.reportWrite(value, super.impostoPerc, () {
-      super.impostoPerc = value;
-    });
-  }
-
-  final _$freteTerValAtom = Atom(name: 'EmpresaControllerBase.freteTerVal');
+  final _$filtrarAsyncAction = AsyncAction('EmpresaControllerBase.filtrar');
 
   @override
-  String get freteTerVal {
-    _$freteTerValAtom.reportRead();
-    return super.freteTerVal;
-  }
-
-  @override
-  set freteTerVal(String value) {
-    _$freteTerValAtom.reportWrite(value, super.freteTerVal, () {
-      super.freteTerVal = value;
-    });
-  }
-
-  final _$freteTerPercAtom = Atom(name: 'EmpresaControllerBase.freteTerPerc');
-
-  @override
-  String get freteTerPerc {
-    _$freteTerPercAtom.reportRead();
-    return super.freteTerPerc;
-  }
-
-  @override
-  set freteTerPerc(String value) {
-    _$freteTerPercAtom.reportWrite(value, super.freteTerPerc, () {
-      super.freteTerPerc = value;
-    });
-  }
-
-  final _$freteFrotaValAtom = Atom(name: 'EmpresaControllerBase.freteFrotaVal');
-
-  @override
-  String get freteFrotaVal {
-    _$freteFrotaValAtom.reportRead();
-    return super.freteFrotaVal;
-  }
-
-  @override
-  set freteFrotaVal(String value) {
-    _$freteFrotaValAtom.reportWrite(value, super.freteFrotaVal, () {
-      super.freteFrotaVal = value;
-    });
-  }
-
-  final _$freteFrotaPercAtom =
-      Atom(name: 'EmpresaControllerBase.freteFrotaPerc');
-
-  @override
-  String get freteFrotaPerc {
-    _$freteFrotaPercAtom.reportRead();
-    return super.freteFrotaPerc;
-  }
-
-  @override
-  set freteFrotaPerc(String value) {
-    _$freteFrotaPercAtom.reportWrite(value, super.freteFrotaPerc, () {
-      super.freteFrotaPerc = value;
-    });
-  }
-
-  final _$freteAgregadosValAtom =
-      Atom(name: 'EmpresaControllerBase.freteAgregadosVal');
-
-  @override
-  String get freteAgregadosVal {
-    _$freteAgregadosValAtom.reportRead();
-    return super.freteAgregadosVal;
-  }
-
-  @override
-  set freteAgregadosVal(String value) {
-    _$freteAgregadosValAtom.reportWrite(value, super.freteAgregadosVal, () {
-      super.freteAgregadosVal = value;
-    });
-  }
-
-  final _$freteAgregadosPercAtom =
-      Atom(name: 'EmpresaControllerBase.freteAgregadosPerc');
-
-  @override
-  String get freteAgregadosPerc {
-    _$freteAgregadosPercAtom.reportRead();
-    return super.freteAgregadosPerc;
-  }
-
-  @override
-  set freteAgregadosPerc(String value) {
-    _$freteAgregadosPercAtom.reportWrite(value, super.freteAgregadosPerc, () {
-      super.freteAgregadosPerc = value;
-    });
-  }
-
-  final _$despesasAdmValAtom =
-      Atom(name: 'EmpresaControllerBase.despesasAdmVal');
-
-  @override
-  String get despesasAdmVal {
-    _$despesasAdmValAtom.reportRead();
-    return super.despesasAdmVal;
-  }
-
-  @override
-  set despesasAdmVal(String value) {
-    _$despesasAdmValAtom.reportWrite(value, super.despesasAdmVal, () {
-      super.despesasAdmVal = value;
-    });
-  }
-
-  final _$despesasAdmPercAtom =
-      Atom(name: 'EmpresaControllerBase.despesasAdmPerc');
-
-  @override
-  String get despesasAdmPerc {
-    _$despesasAdmPercAtom.reportRead();
-    return super.despesasAdmPerc;
-  }
-
-  @override
-  set despesasAdmPerc(String value) {
-    _$despesasAdmPercAtom.reportWrite(value, super.despesasAdmPerc, () {
-      super.despesasAdmPerc = value;
-    });
-  }
-
-  final _$despesasOperValAtom =
-      Atom(name: 'EmpresaControllerBase.despesasOperVal');
-
-  @override
-  String get despesasOperVal {
-    _$despesasOperValAtom.reportRead();
-    return super.despesasOperVal;
-  }
-
-  @override
-  set despesasOperVal(String value) {
-    _$despesasOperValAtom.reportWrite(value, super.despesasOperVal, () {
-      super.despesasOperVal = value;
-    });
-  }
-
-  final _$despesasOperPercAtom =
-      Atom(name: 'EmpresaControllerBase.despesasOperPerc');
-
-  @override
-  String get despesasOperPerc {
-    _$despesasOperPercAtom.reportRead();
-    return super.despesasOperPerc;
-  }
-
-  @override
-  set despesasOperPerc(String value) {
-    _$despesasOperPercAtom.reportWrite(value, super.despesasOperPerc, () {
-      super.despesasOperPerc = value;
-    });
-  }
-
-  final _$investimentosValAtom =
-      Atom(name: 'EmpresaControllerBase.investimentosVal');
-
-  @override
-  String get investimentosVal {
-    _$investimentosValAtom.reportRead();
-    return super.investimentosVal;
-  }
-
-  @override
-  set investimentosVal(String value) {
-    _$investimentosValAtom.reportWrite(value, super.investimentosVal, () {
-      super.investimentosVal = value;
-    });
-  }
-
-  final _$investimentosPercAtom =
-      Atom(name: 'EmpresaControllerBase.investimentosPerc');
-
-  @override
-  String get investimentosPerc {
-    _$investimentosPercAtom.reportRead();
-    return super.investimentosPerc;
-  }
-
-  @override
-  set investimentosPerc(String value) {
-    _$investimentosPercAtom.reportWrite(value, super.investimentosPerc, () {
-      super.investimentosPerc = value;
-    });
-  }
-
-  final _$resultadoValAtom = Atom(name: 'EmpresaControllerBase.resultadoVal');
-
-  @override
-  String get resultadoVal {
-    _$resultadoValAtom.reportRead();
-    return super.resultadoVal;
-  }
-
-  @override
-  set resultadoVal(String value) {
-    _$resultadoValAtom.reportWrite(value, super.resultadoVal, () {
-      super.resultadoVal = value;
-    });
-  }
-
-  final _$resultadoPercAtom = Atom(name: 'EmpresaControllerBase.resultadoPerc');
-
-  @override
-  String get resultadoPerc {
-    _$resultadoPercAtom.reportRead();
-    return super.resultadoPerc;
-  }
-
-  @override
-  set resultadoPerc(String value) {
-    _$resultadoPercAtom.reportWrite(value, super.resultadoPerc, () {
-      super.resultadoPerc = value;
-    });
+  Future<dynamic> filtrar(ModelFiltroResultadoEmpresa filtro) {
+    return _$filtrarAsyncAction.run(() => super.filtrar(filtro));
   }
 
   final _$EmpresaControllerBaseActionController =
       ActionController(name: 'EmpresaControllerBase');
 
   @override
-  dynamic popularListaRegimes() {
+  dynamic changeRegime(String value) {
     final _$actionInfo = _$EmpresaControllerBaseActionController.startAction(
-        name: 'EmpresaControllerBase.popularListaRegimes');
+        name: 'EmpresaControllerBase.changeRegime');
     try {
-      return super.popularListaRegimes();
+      return super.changeRegime(value);
     } finally {
       _$EmpresaControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic popularListaCompetencias() {
+  dynamic changeDataInicial(DateTime value) {
     final _$actionInfo = _$EmpresaControllerBaseActionController.startAction(
-        name: 'EmpresaControllerBase.popularListaCompetencias');
+        name: 'EmpresaControllerBase.changeDataInicial');
     try {
-      return super.popularListaCompetencias();
+      return super.changeDataInicial(value);
+    } finally {
+      _$EmpresaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeDataFinal(DateTime value) {
+    final _$actionInfo = _$EmpresaControllerBaseActionController.startAction(
+        name: 'EmpresaControllerBase.changeDataFinal');
+    try {
+      return super.changeDataFinal(value);
     } finally {
       _$EmpresaControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -361,27 +170,13 @@ mixin _$EmpresaController on EmpresaControllerBase, Store {
   @override
   String toString() {
     return '''
+isLoad: ${isLoad},
 regimes: ${regimes},
 empresas: ${empresas},
-competencias: ${competencias},
-receita: ${receita},
-despesa: ${despesa},
-impostoVal: ${impostoVal},
-impostoPerc: ${impostoPerc},
-freteTerVal: ${freteTerVal},
-freteTerPerc: ${freteTerPerc},
-freteFrotaVal: ${freteFrotaVal},
-freteFrotaPerc: ${freteFrotaPerc},
-freteAgregadosVal: ${freteAgregadosVal},
-freteAgregadosPerc: ${freteAgregadosPerc},
-despesasAdmVal: ${despesasAdmVal},
-despesasAdmPerc: ${despesasAdmPerc},
-despesasOperVal: ${despesasOperVal},
-despesasOperPerc: ${despesasOperPerc},
-investimentosVal: ${investimentosVal},
-investimentosPerc: ${investimentosPerc},
-resultadoVal: ${resultadoVal},
-resultadoPerc: ${resultadoPerc}
+resultadoEmpresa: ${resultadoEmpresa},
+regimeSelected: ${regimeSelected},
+dataInicial: ${dataInicial},
+dataFinal: ${dataFinal}
     ''';
   }
 }

@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
 import 'package:tms_mobile/controller/frota/frota-propria-controller.dart';
+import 'package:tms_mobile/models/filtro_frota_propria_model.dart';
+import 'package:tms_mobile/pages/frota/table_resultado_frota_propria.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
@@ -16,19 +20,31 @@ class FrotaPropriaResultado extends StatefulWidget {
 }
 
 class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
-  DateTime _dataInicial, _dataFinal;
-  final controller = FrotaPropriaController();
+  final controller = GetIt.I.get<FrotaPropriaController>();
+  final GlobalKey _dropdownMotorista = GlobalKey();
+  final GlobalKey _dropdownPlaca = GlobalKey();
+  ModelFiltroFrotaPropria filtro = ModelFiltroFrotaPropria();
+  ScrollController _scroll = ScrollController();
 
-  String _selectedMotorista;
-  String _selectedPlaca;
   MediaQueryData queryData;
 
   String dropdownValue = '';
   @override
   void initState() {
     super.initState();
-    _dataInicial = DateTime.now();
-    _dataFinal = DateTime.now();
+    controller.dataInicial = DateTime.now();
+    controller.dataFinal = DateTime.now();
+
+    _init();
+  }
+
+  Future _init() async {
+    await controller.getListaMotorista();
+    await controller.getListaPlacas();
+
+    controller.motoristaSelected = null;
+    controller.placaSelected = null;
+    controller.listaFrotaPropria = [];
   }
 
   BoxDecoration myBoxDecoration(double size) {
@@ -43,13 +59,7 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
       endDrawer: DrawerPage(widget.pageController),
       appBar: AppBar(
         centerTitle: true,
-        title: Text("RESULTADOS"),
-        leading: Center(
-          child: Image.asset(
-            "images/icon_resultados.png",
-            width: 45,
-          ),
-        ),
+        title: Text("FROTA PRÓPRIA"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -63,369 +73,180 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
       ),
       body: Container(
         padding: EdgeInsets.all(20),
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 60,
-              width: double.infinity,
-              child: Container(
-                color: Color(COR_PRIMARY),
-                child: Center(
-                  child: Text(
-                    "RESULTADO - FROTA PRÓPRIA",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+        child: Observer(
+          builder: (_) {
+            if (controller.isLoad) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return ListView(
               children: <Widget>[
-                Expanded(
-                  flex: 4,
-                  child: DateTimePicker(
-                    labelText: "De:",
-                    valueStyle: TextStyle(color: Colors.red),
-                    selectedDate: _dataInicial,
-                    selectDate: (DateTime date) {
-                      print(date);
-                      setState(() {
-                        _dataInicial = date;
-                      });
-                    },
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: DateTimePicker(
+                        labelText: "De:",
+                        valueStyle: TextStyle(color: Colors.red),
+                        selectedDate: controller.dataInicial,
+                        selectDate: controller.changeDataInicial,
+                      ),
+                    ),
+                    Container(
+                      width: 15,
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: DateTimePicker(
+                        labelText: "Até:",
+                        selectedDate: controller.dataFinal,
+                        selectDate: controller.changeDataFinal,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                DropdownButton(
+                  hint: Text('Por Motorista'),
+                  key: _dropdownMotorista,
+                  value: controller.motoristaSelected,
+                  isExpanded: true,
+                  onChanged: controller.changeMotorista,
+                  icon: IconButton(
+                    icon: controller.motoristaSelected != null
+                        ? Icon(
+                            Icons.clear,
+                            size: 16,
+                          )
+                        : Icon(Icons.arrow_drop_down),
+                    onPressed: controller.motoristaSelected != null
+                        ? controller.clearSelectedMotorista
+                        : openDropDownMotorista,
                   ),
+                  items: controller.motorista.map((motorista) {
+                    return DropdownMenuItem(
+                      child: new Text(motorista.nome),
+                      value: motorista.codMotorista,
+                    );
+                  }).toList(),
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                SimpleAutocompleteFormField(
+                  maxSuggestions: 5,
+                  minSearchLength: 3,
+                  decoration: InputDecoration(
+                      labelText: "Por Placa",
+                      labelStyle: TextStyle(color: Color(COR_PRIMARY)),
+                      hintText: "ABC-0000 ou ABC0D00",
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(COR_PRIMARY))
+                      )),
+                  itemBuilder: (_, placa) => Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text(placa),
+                  ),
+                  onSearch: (search) async => controller.placas
+                      .where((placa) =>
+                          placa.toLowerCase().contains(search.toLowerCase()))
+                      .toList(),
+                  onChanged: controller.changePlaca,
+                  onSaved: controller.changePlaca,
+                ),
+
+                // DropdownButton(
+                //   hint: Text('Por Placa'),
+                //   key: _dropdownPlaca,
+                //   value: controller.placaSelected,
+                //   isExpanded: true,
+                //   onChanged: controller.changePlaca,
+                //   icon: IconButton(
+                //     icon: controller.placaSelected != null
+                //         ? Icon(Icons.clear, size: 16)
+                //         : Icon(Icons.arrow_drop_down),
+                //     onPressed: controller.placaSelected != null
+                //         ? controller.clearSelectedPlaca
+                //         : openDropDownPlaca,
+                //   ),
+                //   items: controller.placas.map((placa) {
+                //     return DropdownMenuItem(
+                //       child: new Text(placa),
+                //       value: placa,
+                //     );
+                //   }).toList(),
+                // ),
+                SizedBox(
+                  height: 13,
                 ),
                 Container(
-                  width: 15,
-                ),
-                Expanded(
-                  flex: 4,
-                  child: DateTimePicker(
-                    labelText: "Até:",
-                    selectedDate: _dataFinal,
-                    selectDate: (DateTime date) {
-                      print(date);
-                      setState(() {
-                        _dataFinal = date;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            Observer(builder: (_) {
-              return DropdownButton(
-                hint: Text(
-                  'Por Motorista',
-                  style: TextStyle(
-                    color: Color(COR_PRIMARY),
-                  ),
-                ),
-                value: _selectedMotorista,
-                isExpanded: true,
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedMotorista = newValue;
-                  });
-                },
-                items: controller.motorista.map((motorista) {
-                  return DropdownMenuItem(
-                    child: new Text(motorista.nome),
-                    value: motorista.codMotorista,
-                  );
-                }).toList(),
-              );
-            }),
-            SizedBox(
-              height: 13,
-            ),
-            Observer(builder: (_) {
-              return DropdownButton(
-                hint: Text(
-                  'Por Placa',
-                  style: TextStyle(
-                    color: Color(COR_PRIMARY),
-                  ),
-                ),
-                value: _selectedPlaca,
-                isExpanded: true,
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedPlaca = newValue;
-                  });
-                },
-                items: controller.placas.map((placas) {
-                  return DropdownMenuItem(
-                    child: new Text(placas),
-                    value: placas,
-                  );
-                }).toList(),
-              );
-            }),
-            Center(
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width - 50,
-                decoration: myBoxDecoration(1.4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "RECEITA (R\$)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.receita}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width - 50,
-                decoration: myBoxDecoration(1.4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "DESPESA (R\$)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.despesa}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 25,
-                width: MediaQuery.of(context).size.width - 50,
-                decoration: myBoxDecoration(.3),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "Impostos",
-                        style: TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${controller.impostoVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.impostoPerc}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 25,
-                width: MediaQuery.of(context).size.width - 50,
-                decoration: myBoxDecoration(.3),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "Custos Fixos",
-                        style: TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${controller.custoFixoVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.custoFixoPerc}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 25,
-                width: MediaQuery.of(context).size.width - 50,
-                decoration: myBoxDecoration(.3),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "Custos Variáveis",
-                        style: TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${controller.custoVariavelVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.custoVariavelPerc}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width - 50,
-                decoration: myBoxDecoration(1.4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "RESULTADO (R\$)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.resultadoVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 25,
-                width: MediaQuery.of(context).size.width - 50,
-                decoration: myBoxDecoration(1.4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "RESULTADO (%)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.resultadoPerc}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 100,
-            ),
-            Container(
-              height: 60,
-              child: Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: 295,
                   height: 60,
-                  child: RaisedButton(
-                    color: Color(COR_PRIMARY),
-                    textColor: Colors.white,
-                    child: Text(
-                      "Voltar",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 60,
+                      child: RaisedButton(
+                        color: Color(COR_PRIMARY),
+                        textColor: Colors.white,
+                        child: Text(
+                          "Aplicar Filtro",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        onPressed: () async {
+                          filtro.codMotorista = controller.motoristaSelected;
+                          filtro.placa = controller.placaSelected;
+                          filtro.dataInicial = controller.dataInicial;
+                          filtro.dataFinal = controller.dataFinal;
+
+                          await controller.filtrar(filtro);
+                        },
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
                   ),
                 ),
-              ),
-            ),
-          ],
+                TableResultadoFrotaPropria(),
+              ],
+            );
+          },
         ),
       ),
     );
+  }
+
+  void openDropDownMotorista() {
+    _dropdownMotorista.currentContext.visitChildElements((element) {
+      if (element.widget != null && element.widget is Semantics) {
+        element.visitChildElements((element) {
+          if (element.widget != null && element.widget is Actions) {
+            element.visitChildElements((element) {
+              Actions.invoke(element, Intent(ActivateAction.key));
+              return false;
+            });
+          }
+        });
+      }
+    });
+  }
+
+  void openDropDownPlaca() {
+    _dropdownPlaca.currentContext.visitChildElements((element) {
+      if (element.widget != null && element.widget is Semantics) {
+        element.visitChildElements((element) {
+          if (element.widget != null && element.widget is Actions) {
+            element.visitChildElements((element) {
+              Actions.invoke(element, Intent(ActivateAction.key));
+              return false;
+            });
+          }
+        });
+      }
+    });
   }
 }

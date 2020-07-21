@@ -97,13 +97,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
       endDrawer: DrawerPage(widget.pageController),
       appBar: AppBar(
         centerTitle: true,
-        title: Text("RESULTADOS"),
-        leading: Center(
-          child: Image.asset(
-            "images/icon_resultados.png",
-            width: 45,
-          ),
-        ),
+        title: Text("FATURAMENTO"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -127,25 +121,6 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
 
             return Column(
               children: <Widget>[
-                SizedBox(
-                  height: 60,
-                  width: double.infinity,
-                  child: Container(
-                    color: Color(COR_PRIMARY),
-                    child: Center(
-                      child: Text(
-                        "FATURAMENTO",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: titleSize,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 13,
-                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
@@ -179,6 +154,56 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                Container(
+                  height: 60,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 60,
+                      child: RaisedButton(
+                        color: Color(COR_PRIMARY),
+                        textColor: Colors.white,
+                        child: Text(
+                          "Aplicar Filtro",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        onPressed: () async {
+                          widget.filtroFaturamento.dataDe = _dataInicial;
+                          widget.filtroFaturamento.dataAte = _dataFinal;
+
+                          String retorno = await controllerFaturamentoUn
+                              .getFaturamento(widget.filtroFaturamento);
+
+                          if (retorno  != 'ok') {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Atenção"),
+                                    content: Text(retorno),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text("OK"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      )
+                                    ],
+                                  );
+                                });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 13,
@@ -297,33 +322,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                         FaturamentoVisaoMensal(widget.filtroFaturamento),
                         FaturamentoVisaoUn(widget.filtroFaturamento),
                         FaturamentoCliente(),
-                        Text("Slide 3"),
                       ]),
-                ),
-                SizedBox(
-                  height: 13,
-                ),
-                Container(
-                  height: 60,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: 295,
-                      height: 60,
-                      child: RaisedButton(
-                        color: Color(COR_PRIMARY),
-                        textColor: Colors.white,
-                        child: Text(
-                          "Voltar",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                  ),
                 ),
               ],
             );

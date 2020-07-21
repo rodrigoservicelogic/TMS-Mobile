@@ -21,11 +21,11 @@ class DateTimePicker extends StatelessWidget {
   final ValueChanged<TimeOfDay> selectTime;
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime picked = selectDate != null ? await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(1900, 1),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(2101)) : null;
     if (picked != null && picked != selectedDate) selectDate(picked);
   }
 

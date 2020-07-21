@@ -9,6 +9,69 @@ part of 'frota-propria-controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$FrotaPropriaController on _FrotaPropriaControllerBase, Store {
+  final _$motoristaSelectedAtom =
+      Atom(name: '_FrotaPropriaControllerBase.motoristaSelected');
+
+  @override
+  String get motoristaSelected {
+    _$motoristaSelectedAtom.reportRead();
+    return super.motoristaSelected;
+  }
+
+  @override
+  set motoristaSelected(String value) {
+    _$motoristaSelectedAtom.reportWrite(value, super.motoristaSelected, () {
+      super.motoristaSelected = value;
+    });
+  }
+
+  final _$placaSelectedAtom =
+      Atom(name: '_FrotaPropriaControllerBase.placaSelected');
+
+  @override
+  String get placaSelected {
+    _$placaSelectedAtom.reportRead();
+    return super.placaSelected;
+  }
+
+  @override
+  set placaSelected(String value) {
+    _$placaSelectedAtom.reportWrite(value, super.placaSelected, () {
+      super.placaSelected = value;
+    });
+  }
+
+  final _$dataInicialAtom =
+      Atom(name: '_FrotaPropriaControllerBase.dataInicial');
+
+  @override
+  DateTime get dataInicial {
+    _$dataInicialAtom.reportRead();
+    return super.dataInicial;
+  }
+
+  @override
+  set dataInicial(DateTime value) {
+    _$dataInicialAtom.reportWrite(value, super.dataInicial, () {
+      super.dataInicial = value;
+    });
+  }
+
+  final _$dataFinalAtom = Atom(name: '_FrotaPropriaControllerBase.dataFinal');
+
+  @override
+  DateTime get dataFinal {
+    _$dataFinalAtom.reportRead();
+    return super.dataFinal;
+  }
+
+  @override
+  set dataFinal(DateTime value) {
+    _$dataFinalAtom.reportWrite(value, super.dataFinal, () {
+      super.dataFinal = value;
+    });
+  }
+
   final _$motoristaAtom = Atom(name: '_FrotaPropriaControllerBase.motorista');
 
   @override
@@ -36,6 +99,22 @@ mixin _$FrotaPropriaController on _FrotaPropriaControllerBase, Store {
   set placas(List<String> value) {
     _$placasAtom.reportWrite(value, super.placas, () {
       super.placas = value;
+    });
+  }
+
+  final _$listaFrotaPropriaAtom =
+      Atom(name: '_FrotaPropriaControllerBase.listaFrotaPropria');
+
+  @override
+  List<FrotaPropria> get listaFrotaPropria {
+    _$listaFrotaPropriaAtom.reportRead();
+    return super.listaFrotaPropria;
+  }
+
+  @override
+  set listaFrotaPropria(List<FrotaPropria> value) {
+    _$listaFrotaPropriaAtom.reportWrite(value, super.listaFrotaPropria, () {
+      super.listaFrotaPropria = value;
     });
   }
 
@@ -227,11 +306,94 @@ mixin _$FrotaPropriaController on _FrotaPropriaControllerBase, Store {
     return _$getListaPlacasAsyncAction.run(() => super.getListaPlacas());
   }
 
+  final _$filtrarAsyncAction =
+      AsyncAction('_FrotaPropriaControllerBase.filtrar');
+
+  @override
+  Future<dynamic> filtrar(ModelFiltroFrotaPropria filtro) {
+    return _$filtrarAsyncAction.run(() => super.filtrar(filtro));
+  }
+
+  final _$_FrotaPropriaControllerBaseActionController =
+      ActionController(name: '_FrotaPropriaControllerBase');
+
+  @override
+  void changeMotorista(String value) {
+    final _$actionInfo = _$_FrotaPropriaControllerBaseActionController
+        .startAction(name: '_FrotaPropriaControllerBase.changeMotorista');
+    try {
+      return super.changeMotorista(value);
+    } finally {
+      _$_FrotaPropriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changePlaca(String value) {
+    final _$actionInfo = _$_FrotaPropriaControllerBaseActionController
+        .startAction(name: '_FrotaPropriaControllerBase.changePlaca');
+    try {
+      return super.changePlaca(value);
+    } finally {
+      _$_FrotaPropriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeDataInicial(DateTime value) {
+    final _$actionInfo = _$_FrotaPropriaControllerBaseActionController
+        .startAction(name: '_FrotaPropriaControllerBase.changeDataInicial');
+    try {
+      return super.changeDataInicial(value);
+    } finally {
+      _$_FrotaPropriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeDataFinal(DateTime value) {
+    final _$actionInfo = _$_FrotaPropriaControllerBaseActionController
+        .startAction(name: '_FrotaPropriaControllerBase.changeDataFinal');
+    try {
+      return super.changeDataFinal(value);
+    } finally {
+      _$_FrotaPropriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic clearSelectedMotorista() {
+    final _$actionInfo =
+        _$_FrotaPropriaControllerBaseActionController.startAction(
+            name: '_FrotaPropriaControllerBase.clearSelectedMotorista');
+    try {
+      return super.clearSelectedMotorista();
+    } finally {
+      _$_FrotaPropriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic clearSelectedPlaca() {
+    final _$actionInfo = _$_FrotaPropriaControllerBaseActionController
+        .startAction(name: '_FrotaPropriaControllerBase.clearSelectedPlaca');
+    try {
+      return super.clearSelectedPlaca();
+    } finally {
+      _$_FrotaPropriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
+motoristaSelected: ${motoristaSelected},
+placaSelected: ${placaSelected},
+dataInicial: ${dataInicial},
+dataFinal: ${dataFinal},
 motorista: ${motorista},
 placas: ${placas},
+listaFrotaPropria: ${listaFrotaPropria},
 isLoad: ${isLoad},
 receita: ${receita},
 despesa: ${despesa},

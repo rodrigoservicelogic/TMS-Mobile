@@ -50,13 +50,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
       endDrawer: DrawerPage(widget.pageController),
       appBar: AppBar(
         centerTitle: true,
-        title: Text("RESULTADOS"),
-        leading: Center(
-          child: Image.asset(
-            "images/icon_resultados.png",
-            width: 45,
-          ),
-        ),
+        title: Text("FATURAMENTO"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -85,26 +79,6 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(
-                    height: 60,
-                    width: double.infinity,
-                    child: Container(
-                      color: Color(COR_PRIMARY),
-                      child: Center(
-                        child: Text(
-                          "FATURAMENTO",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: Colors.white),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 13,
-                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
@@ -228,7 +202,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     child: Align(
                       alignment: Alignment.center,
                       child: SizedBox(
-                        width: 295,
+                        width: double.infinity,
                         height: 60,
                         child: RaisedButton(
                           color: Color(COR_PRIMARY),
@@ -255,31 +229,6 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                                 ),
                               ),
                             );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    height: 60,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: 295,
-                        height: 60,
-                        child: RaisedButton(
-                          color: Colors.grey,
-                          textColor: Colors.white,
-                          child: Text(
-                            "Voltar",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
                           },
                         ),
                       ),

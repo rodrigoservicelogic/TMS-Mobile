@@ -3,10 +3,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 
-
 import 'controller/agregado/agregado-controller.dart';
 import 'controller/empresa/empresa-controller.dart';
 import 'controller/faturamento/faturamento-cliente-controller.dart';
+import 'controller/frota/frota-propria-controller.dart';
 import 'controller/login/login-controller.dart';
 import 'controller/terceiro/terceiro-controller.dart';
 import 'pages/splash-screen.dart';
@@ -21,6 +21,7 @@ void main() {
   getIt.registerSingleton<FaturamentoClienteController>(
       FaturamentoClienteController());
   getIt.registerSingleton<FaturamentoUnController>(FaturamentoUnController());
+  getIt.registerSingleton<FrotaPropriaController>(FrotaPropriaController());
 
   runApp(MyApp());
 }

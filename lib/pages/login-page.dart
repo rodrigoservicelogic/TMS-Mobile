@@ -111,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: double.infinity,
                           child: RaisedButton(
                             color: Color(COR_PRIMARY),
+                            disabledColor: Color(COR_PRIMARY).withAlpha(600),
                             textColor: Colors.white,
                             child: Text(
                               "ENTRAR",

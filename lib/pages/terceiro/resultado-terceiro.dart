@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:simple_autocomplete_formfield/simple_autocomplete_formfield.dart';
 import 'package:tms_mobile/controller/terceiro/terceiro-controller.dart';
 import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/models/filtro_terceiro_model.dart';
+import 'package:tms_mobile/models/terceiro.dart';
+import 'package:tms_mobile/pages/terceiro/table_resultado_terceiro.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
@@ -17,11 +22,8 @@ class ResultadoTerceiro extends StatefulWidget {
 }
 
 class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
-  DateTime _dataInicial, _dataFinal;
-  final controller = TerceiroController();
-  String _selectedTerceiro;
-  String _selectedPlaca;
-  MediaQueryData queryData;
+  final controller = GetIt.I.get<TerceiroController>();
+  ModelFiltroTerceiro filtro = ModelFiltroTerceiro();
 
   String dropdownValue = '';
 
@@ -29,10 +31,18 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
   void initState() {
     super.initState();
 
-    _dataInicial = DateTime.now();
-    _dataFinal = DateTime.now();
-    controller.popularListaTerceiros();
-    controller.popularListaPlacas();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await controller.getListaTerceiros();
+    await controller.getListaPlacas();
+    
+    controller.dataInicial = DateTime.now();
+    controller.dataFinal = DateTime.now();
+    controller.terceiroSelected = null;
+    controller.placaSelected = null;
+    controller.resultadoterceiro = [];
   }
 
   BoxDecoration myBoxDecoration(double size) {
@@ -47,13 +57,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
       endDrawer: DrawerPage(widget.pageController),
       appBar: AppBar(
         centerTitle: true,
-        title: Text("RESULTADOS"),
-        leading: Center(
-          child: Image.asset(
-            "images/icon_resultados.png",
-            width: 45,
-          ),
-        ),
+        title: Text("TERCEIROS"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -65,330 +69,117 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
               ])),
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 60,
-              width: double.infinity,
-              child: Container(
-                color: Color(COR_PRIMARY),
-                child: Center(
-                  child: Text(
-                    "RESULTADO - TERCEIRO",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                        color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 13,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+      body: Observer(
+        builder: (_) {
+          if (controller.isLoad) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return Container(
+            padding: EdgeInsets.all(20),
+            child: ListView(
               children: <Widget>[
-                Expanded(
-                  flex: 4,
-                  child: DateTimePicker(
-                    labelText: "De:",
-                    valueStyle: TextStyle(color: Colors.red),
-                    selectedDate: _dataInicial,
-                    selectDate: (DateTime date) {
-                      print(date);
-                      setState(() {
-                        _dataInicial = date;
-                      });
-                    },
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: DateTimePicker(
+                        labelText: "De:",
+                        valueStyle: TextStyle(color: Colors.red),
+                        selectedDate: controller.dataInicial,
+                        selectDate: controller.changeDataInicial,
+                      ),
+                    ),
+                    Container(
+                      width: 15,
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: DateTimePicker(
+                        labelText: "Até:",
+                        selectedDate: controller.dataFinal,
+                        selectDate: controller.changeDataFinal,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                DropdownButton<Terceiro>(
+                  hint: Text('Por Terceiro'),
+                  value: controller.terceiroSelected,
+                  isExpanded: true,
+                  onChanged: controller.changeTerceiro,
+                  items: controller.terceiros.map((terceiro) {
+                    return DropdownMenuItem(
+                      child: new Text(terceiro.nomeTerceiro),
+                      value: terceiro,
+                    );
+                  }).toList(),
+                ),
+                SizedBox(
+                  height: 13,
+                ),
+                SimpleAutocompleteFormField(
+                  maxSuggestions: 5,
+                  minSearchLength: 3,
+                  decoration: InputDecoration(
+                      labelText: "Por Placa",
+                      labelStyle: TextStyle(color: Color(COR_PRIMARY)),
+                      hintText: "ABC-0000 ou ABC0D00",
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(COR_PRIMARY))
+                      )),
+                  itemBuilder: (_, placa) => Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text(placa),
                   ),
+                  onSearch: (search) async => controller.placas
+                      .where((placa) =>
+                          placa.toLowerCase().contains(search.toLowerCase()))
+                      .toList(),
+                  onChanged: controller.changePlaca,
+                  onSaved: controller.changePlaca,
+                ),
+                SizedBox(
+                  height: 13,
                 ),
                 Container(
-                  width: 15,
-                ),
-                Expanded(
-                  flex: 4,
-                  child: DateTimePicker(
-                    labelText: "Até:",
-                    selectedDate: _dataFinal,
-                    selectDate: (DateTime date) {
-                      print(date);
-                      setState(() {
-                        _dataFinal = date;
-                      });
-                    },
+                  height: 60,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 60,
+                      child: RaisedButton(
+                        color: Color(COR_PRIMARY),
+                        textColor: Colors.white,
+                        child: Text(
+                          "Aplicar Filtro",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        onPressed: () async {
+                          filtro.dataInicial = controller.dataInicial;
+                          filtro.dataFinal = controller.dataFinal;
+                          filtro.terceiro = controller.terceiroSelected;
+                          filtro.placa = controller.placaSelected;
+
+                          await controller.filtrar(filtro);
+                        },
+                      ),
+                    ),
                   ),
                 ),
+                TableResultadoTerceiro(controller.resultadoterceiro),                
               ],
             ),
-            SizedBox(
-              height: 13,
-            ),
-            Observer(builder: (_) {
-              return DropdownButton(
-                hint: Text(
-                  'Todos os Terceiros',
-                  style: TextStyle(color: Color(COR_PRIMARY)),
-                ),
-                value: _selectedTerceiro,
-                isExpanded: true,
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedTerceiro = newValue;
-                  });
-                },
-                items: controller.terceiros.map((agregado) {
-                  return DropdownMenuItem(
-                    child: new Text(agregado),
-                    value: agregado,
-                  );
-                }).toList(),
-              );
-            }),
-            SizedBox(
-              height: 13,
-            ),
-            DropdownButton(
-              hint: Text(
-                'Todas as Placas',
-                style: TextStyle(color: Color(COR_PRIMARY)),
-              ),
-              value: _selectedPlaca,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedPlaca = newValue;
-                });
-              },
-              items: controller.placas.map((placa) {
-                return DropdownMenuItem(
-                  child: new Text(placa),
-                  value: placa,
-                );
-              }).toList(),
-            ),
-            Center(
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width - 90,
-                decoration: myBoxDecoration(1.4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "RECEITA (R\$)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.receita}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width - 90,
-                decoration: myBoxDecoration(1.4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "DESPESA (R\$)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.despesa}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 25,
-                width: MediaQuery.of(context).size.width - 90,
-                decoration: myBoxDecoration(.3),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "Impostos",
-                        style: TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${controller.impostoVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.impostoPerc}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 25,
-                width: MediaQuery.of(context).size.width - 90,
-                decoration: myBoxDecoration(.3),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "Frete Pago ao Terceiro",
-                        style: TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${controller.fretePagoTerVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.fretePagoTerPerc}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width - 90,
-                decoration: myBoxDecoration(1.4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "RESULTADO (R\$)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.resultadoVal}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 25,
-                width: MediaQuery.of(context).size.width - 90,
-                decoration: myBoxDecoration(1.4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "RESULTADO (%)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        '${controller.resultadoPerc}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 80,
-            ),
-            Container(
-              height: 60,
-              child: Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: 295,
-                  height: 60,
-                  child: RaisedButton(
-                    color: Color(COR_PRIMARY),
-                    textColor: Colors.white,
-                    child: Text(
-                      "Voltar",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              FiltroTerceiro(widget.pageController)));
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

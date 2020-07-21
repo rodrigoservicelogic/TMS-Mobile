@@ -41,6 +41,8 @@ abstract class _LoginControllerBase with Store {
       isLoad = true;
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
+      // Response response = await _http
+      //     .post(API_URL + "Home/Login", { "Email": usuario.login, "Password": usuario.senha });
       Response response = await _http
           .get(API_URL + "login?email=${usuario.login}&senha=${usuario.senha}");
 

@@ -33,6 +33,7 @@ dependencies:
   charts_flutter: ^0.9.0
   dio: ^3.0.9
   intl: "^0.16.0"
+  simple_autocomplete_formfield: ^0.2.7
   mobx:
   flutter_mobx:
   get_it:

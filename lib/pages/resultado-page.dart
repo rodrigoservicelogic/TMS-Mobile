@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:tms_mobile/pages/empresa/resultado-empresa.dart';
 import 'package:tms_mobile/pages/terceiro/filtro-terceiro.dart';
+import 'package:tms_mobile/pages/terceiro/resultado-terceiro.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
+import 'agregado/resultado-agregado.dart';
 import 'empresa/filtro-empresa.dart';
 import 'agregado/filtro-agregado.dart';
 import 'faturamento/filtro-faturamento.dart';
 import 'frota/filtro-frota-propria.dart';
+import 'frota/frota-propria-resultado.dart';
 
 class ResultadoPage extends StatefulWidget {
   final PageController pageCtrl;
@@ -88,7 +92,7 @@ class _ResultadoPage extends State<ResultadoPage> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                FiltroFrotaPropria(widget.pageCtrl)));
+                                FrotaPropriaResultado(widget.pageCtrl)));
                       },
                     ),
                   ),
@@ -109,7 +113,7 @@ class _ResultadoPage extends State<ResultadoPage> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                FiltroAgregado(widget.pageCtrl)));
+                                ResultadoAgregado(widget.pageCtrl)));
                       },
                     ),
                   ),
@@ -130,7 +134,7 @@ class _ResultadoPage extends State<ResultadoPage> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                FiltroTerceiro(widget.pageCtrl)));
+                                ResultadoTerceiro(widget.pageCtrl)));
                       },
                     ),
                   ),
@@ -152,7 +156,7 @@ class _ResultadoPage extends State<ResultadoPage> {
                         if (true == true) {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  FiltroEmpresa(widget.pageCtrl)));
+                                  ResultadoEmpresa(widget.pageCtrl)));
                         }
                       },
                     ),

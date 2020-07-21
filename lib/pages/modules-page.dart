@@ -75,22 +75,22 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
                     text: "DESPESAS\n DE VIAGEM",
                     onPressed: () {},
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  CardButton(
-                    icon: "images/icon_comprovante_entrega.png",
-                    text: "COMPROVANTE\n DE ENTREGA",
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  CardButton(
-                    icon: "images/icon_e_papeleta.png",
-                    text: "e-PAPELETA",
-                    onPressed: () {},
-                  ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
+                  // CardButton(
+                  //   icon: "images/icon_comprovante_entrega.png",
+                  //   text: "COMPROVANTE\n DE ENTREGA",
+                  //   onPressed: () {},
+                  // ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
+                  // CardButton(
+                  //   icon: "images/icon_e_papeleta.png",
+                  //   text: "e-PAPELETA",
+                  //   onPressed: () {},
+                  // ),
                 ],
               ),
             )

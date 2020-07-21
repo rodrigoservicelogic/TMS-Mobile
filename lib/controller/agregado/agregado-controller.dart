@@ -1,45 +1,114 @@
+import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tms_mobile/models/agregado.dart';
+import 'package:tms_mobile/models/filtro_agregado_model.dart';
+import 'package:tms_mobile/models/resultado_agregado.dart';
+import 'package:tms_mobile/util/http_helper.dart';
+
+import '../../global.dart';
 part 'agregado-controller.g.dart';
 
 class AgregadoController = AgregadoControllerBase with _$AgregadoController;
 
 abstract class AgregadoControllerBase with Store {
   @observable
-  List<String> agregados = List();
+  bool isLoad = false;
+  @observable
+  List<Agregado> agregados = List();
   @observable
   List<String> placas = List();
   @observable
-  String receita = "50.000,00";
+  Agregado agregadoSelected;
   @observable
-  String despesa = "30.000,00";
+  String placaSelected;
   @observable
-  String impostoVal = "10.000,00";
+  DateTime dataInicial;
   @observable
-  String impostoPerc = "33%";
+  DateTime dataFinal;
   @observable
-  String ferePagoTerVal = "20.000,00";
-  @observable
-  String ferePagoTerPerc = "66%";
-  @observable
-  String resultadoVal = "20.000,00";
-  @observable
-  String resultadoPerc = "40,00";
-
+  List<ResultadoAgregado> listaAgregado = List();
 
   @action
-  popularListaAgregados() {
-    agregados.add('Agregado 1');
-    agregados.add('Agregado 2');
-    agregados.add('Agregado 3');
-    agregados.add('Agregado 4');
+  changeAgregado(Agregado value) => agregadoSelected = value;
+
+  @action
+  changePlaca(String value) => placaSelected = value;
+
+  @action
+  changeDataInicial(DateTime value) => dataInicial = value;
+
+  @action
+  changeDataFinal(DateTime value) => dataFinal = value;
+
+  @action
+  Future getListaAgregado() async {
+    try {
+      isLoad = true;
+
+      Http _http = Http();
+
+      Response response = await _http.get(API_URL + 'resultado-agregado/agregados');
+
+      if (response.data != null) {
+        for (Map m in response.data) {
+          agregados.add(Agregado.fromJson(m));
+        }
+      }
+
+      isLoad = false;
+    } catch (e) {
+      isLoad = false;
+      print(e.toString());
+    }
   }
 
   @action
-  popularListaPlacas() {
-    placas.add('Placa 1');
-    placas.add('Placa 2');
-    placas.add('Placa 3');
-    placas.add('Placa 4');
+  Future getListaPlacas() async {
+    try {
+      isLoad = true;
+
+      Http _http = Http();
+
+      Response response = await _http.get(API_URL + 'resultado-agregado/placas');
+
+      if (response.data != null) {
+        for (String m in response.data) {
+          placas.add(m);
+        }
+      }
+
+      isLoad = false;
+    } catch (e) {
+      isLoad = false;
+      print(e.toString());
+    }
+  }
+
+  @action
+  Future filtrar(ModelFiltroAgregado filtro) async {
+    try {
+      isLoad = true;
+      listaAgregado = [];
+
+      Http _http = Http();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      filtro.idFilial = int.parse(prefs.getString("Empresa"));
+
+      Response response = await _http.post(API_URL + 'resultado-agregado/filtrar', filtro.toMap());
+
+      if(response.data != null) {
+        for (Map map in response.data) {
+          listaAgregado.add(ResultadoAgregado.fromJson(map));
+        }
+      }
+
+      isLoad = false;
+    } catch (e) {
+      isLoad = false;
+      print(e.toString());
+    }
   }
 
 }
