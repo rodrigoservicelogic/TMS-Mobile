@@ -123,20 +123,6 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         ),
       );
 
-      if (years.length > 2 && ponto.ano != dateTo.year) {
-        newRow.cells.add(
-          DataCell(
-            Center(
-              child: FittedBox(
-                child: Text(
-                  "-",
-                ),
-              ),
-            ),
-          ),
-        );
-      }
-
       newRow.cells.add(
         DataCell(
           Center(
@@ -160,6 +146,20 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
           ),
         ),
       );
+
+      if (years.length > 2 && ponto.ano != dateTo.year) {
+        newRow.cells.add(
+          DataCell(
+            Center(
+              child: FittedBox(
+                child: Text(
+                  "-",
+                ),
+              ),
+            ),
+          ),
+        );
+      }
 
       if (years.length > 2 && ponto.ano == dateTo.year) {
         newRow.cells.add(
@@ -240,7 +240,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         label: Center(
           child: FittedBox(
             child: Text(
-              "${dateTo.year}(R\$)",
+              "${dateFrom.year - 1}(R\$)",
               style: tableHeaderStyle,
               textAlign: TextAlign.center,
             ),
@@ -248,7 +248,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         ),
       ),
     );
-    years.add(dateTo.year);
+    years.add(dateFrom.year - 1);
 
     if (dateFrom.year != dateTo.year) {
       columns.add(
@@ -272,7 +272,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         label: Center(
           child: FittedBox(
             child: Text(
-              "${dateFrom.year - 1}(R\$)",
+              "${dateTo.year}(R\$)",
               style: tableHeaderStyle,
               textAlign: TextAlign.center,
             ),
@@ -280,7 +280,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         ),
       ),
     );
-    years.add(dateFrom.year - 1);
+    years.add(dateTo.year);
 
     columns.add(
       DataColumn(
