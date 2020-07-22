@@ -56,34 +56,6 @@ abstract class _FaturamentoClienteControllerBase with Store {
   String selectedCliente;
 
   @action
-  popularListaAnos() {
-    listaAnos.add(Dados('2016', 12));
-    listaAnos.add(Dados('2017', 15));
-    listaAnos.add(Dados('2020', 10));
-  }
-
-  @action
-  popularListaTipoCliente() {
-    tipoCliente.add('Tipo 1');
-    tipoCliente.add('Tipo 2');
-    tipoCliente.add('Tipo 3');
-  }
-
-  @action
-  popularListaValorReal() {
-    valorPercent.add('55,00');
-    valorPercent.add('55,00');
-    valorPercent.add('12,00');
-  }
-
-  @action
-  popularListaValorPercent() {
-    valorPercent.add('10%');
-    valorPercent.add('15%');
-    valorPercent.add('25%');
-  }
-
-  @action
   changeUnidadeNegocio(int value) {
     selectedUnidade = value;
     selectedUnidade = selectedUnidade;
@@ -123,6 +95,10 @@ abstract class _FaturamentoClienteControllerBase with Store {
   Future<String> getListaFilial() async {
     try {
       isLoad = true;
+      filiais = [];
+      tiposFrete = [];
+      clientes = [];
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int idEmpresa = int.parse(prefs.getString("Empresa"));
 
@@ -132,27 +108,46 @@ abstract class _FaturamentoClienteControllerBase with Store {
           await _http.get(API_URL + "empresa/unidade-negocio/$idEmpresa");
 
       if (response.data != null) {
+        Filial filial = Filial();
+        filial.idFilial = 0;
+        filial.nomeFantasia = "Todos";
+
+        filiais.add(filial);
+        
         for (Map map in response.data) {
           filiais.add(Filial.fromJson(map));
         }
+
+        selectedUnidade = 0;
       }
 
       Response responseTipoFrete =
           await _http.get(API_URL + "faturamento/tipo-frete");
 
       if (responseTipoFrete.data != null) {
+        tiposFrete.add("Todos");
         for (String map in responseTipoFrete.data) {
           tiposFrete.add(map);
         }
+
+        selectedFrete = "Todos";
       }
 
       Response responseClientes =
           await _http.get(API_URL + "faturamento/clientes");
 
       if (responseClientes.data != null) {
+        ClienteFaturamento cliente = ClienteFaturamento();
+        cliente.codCliente = "0";
+        cliente.nomeCliente = "Todos";
+
+        clientes.add(cliente);
+        
         for (Map map in responseClientes.data) {
           clientes.add(ClienteFaturamento.fromJson(map));
         }
+
+        selectedCliente = "0";
       }
 
       isLoad = false;

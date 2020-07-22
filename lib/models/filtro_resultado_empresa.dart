@@ -11,7 +11,7 @@ class ModelFiltroResultadoEmpresa {
       'IdFiliai': this.idFilial,
       'DataInicial': this.dataInicial.toIso8601String(),
       'DataFinal': this.dataFinal.toIso8601String(),
-      'Regime': this.regime
+      'Regime': this.regime != "Todos" ? this.regime : null
     };
 
     return map;

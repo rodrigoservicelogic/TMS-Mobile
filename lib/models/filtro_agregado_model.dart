@@ -14,7 +14,7 @@ class ModelFiltroAgregado {
       'IdFiliai': this.idFilial,
       'DataInicial': this.dataInicial.toIso8601String(),
       'DataFinal': this.dataFinal.toIso8601String(),
-      'CodAgregado': this.agregado != null ? this.agregado.codAgregado : null,
+      'CodAgregado': this.agregado != null && this.agregado.codAgregado != "0" ? this.agregado.codAgregado : null,
       'Placa': this.placa
     };
 

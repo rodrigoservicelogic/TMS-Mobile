@@ -24,10 +24,10 @@ class ModelFiltroFaturamento{
     if (this.idUnidadeNegocio != null && this.idUnidadeNegocio > 0){
       queryParams += '&IdUnidadeNegocio=${this.idUnidadeNegocio}';
     }
-    if (this.tipoFrete != null && this.tipoFrete.isNotEmpty){
+    if (this.tipoFrete != null && this.tipoFrete.isNotEmpty && this.tipoFrete != "Todos"){
       queryParams += '&TipoFrete=${this.tipoFrete}';
     }
-    if (this.codigoCliente != null && this.codigoCliente.isNotEmpty){
+    if (this.codigoCliente != null && this.codigoCliente.isNotEmpty && this.codigoCliente != "0"){
       queryParams += '&CodigoCliente=${this.codigoCliente}';
     }
     return queryParams;

@@ -82,9 +82,17 @@ abstract class _FrotaPropriaControllerBase with Store {
       Response response = await _http.get(API_URL + 'frota-propria/motoristas');
 
       if (response.data != null) {
+        Motorista mot = Motorista();
+        mot.codMotorista = "0";
+        mot.nome = "Todos";
+
+        motorista.add(mot);
+
         for (Map m in response.data) {
           motorista.add(Motorista.fromJson(m));
         }
+
+        motoristaSelected = "0";
       }
 
       isLoad = false;

@@ -243,58 +243,6 @@ mixin _$FaturamentoClienteController
       ActionController(name: '_FaturamentoClienteControllerBase');
 
   @override
-  dynamic popularListaAnos() {
-    final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction(
-            name: '_FaturamentoClienteControllerBase.popularListaAnos');
-    try {
-      return super.popularListaAnos();
-    } finally {
-      _$_FaturamentoClienteControllerBaseActionController
-          .endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic popularListaTipoCliente() {
-    final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction(
-            name: '_FaturamentoClienteControllerBase.popularListaTipoCliente');
-    try {
-      return super.popularListaTipoCliente();
-    } finally {
-      _$_FaturamentoClienteControllerBaseActionController
-          .endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic popularListaValorReal() {
-    final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction(
-            name: '_FaturamentoClienteControllerBase.popularListaValorReal');
-    try {
-      return super.popularListaValorReal();
-    } finally {
-      _$_FaturamentoClienteControllerBaseActionController
-          .endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic popularListaValorPercent() {
-    final _$actionInfo =
-        _$_FaturamentoClienteControllerBaseActionController.startAction(
-            name: '_FaturamentoClienteControllerBase.popularListaValorPercent');
-    try {
-      return super.popularListaValorPercent();
-    } finally {
-      _$_FaturamentoClienteControllerBaseActionController
-          .endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic changeUnidadeNegocio(int value) {
     final _$actionInfo =
         _$_FaturamentoClienteControllerBaseActionController.startAction(

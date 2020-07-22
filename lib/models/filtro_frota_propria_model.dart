@@ -12,7 +12,7 @@ class ModelFiltroFrotaPropria {
       'IdFiliai': this.idFilial,
       'DataInicial': this.dataInicial.toIso8601String(),
       'DataFinal': this.dataFinal.toIso8601String(),
-      'CodMotorista': this.codMotorista,
+      'CodMotorista': this.codMotorista != null && this.codMotorista != "0" ? this.codMotorista : null,
       'Placa': this.placa
     };
 

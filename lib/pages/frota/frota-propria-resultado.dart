@@ -42,7 +42,7 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
     await controller.getListaMotorista();
     await controller.getListaPlacas();
 
-    controller.motoristaSelected = null;
+    controller.motoristaSelected = "0";
     controller.placaSelected = null;
     controller.listaFrotaPropria = [];
   }
@@ -111,8 +111,8 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
                 SizedBox(
                   height: 13,
                 ),
-                DropdownButton(
-                  hint: Text('Por Motorista'),
+                DropdownButtonFormField(
+                  decoration: InputDecoration(labelText: "Por Motorista", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                   key: _dropdownMotorista,
                   value: controller.motoristaSelected,
                   isExpanded: true,

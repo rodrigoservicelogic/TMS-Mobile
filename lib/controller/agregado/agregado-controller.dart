@@ -51,9 +51,17 @@ abstract class AgregadoControllerBase with Store {
       Response response = await _http.get(API_URL + 'resultado-agregado/agregados');
 
       if (response.data != null) {
+        Agregado agregado = Agregado();
+        agregado.codAgregado = "0";
+        agregado.nome = "Todos";
+
+        agregados.add(agregado);
+
         for (Map m in response.data) {
           agregados.add(Agregado.fromJson(m));
         }
+
+        agregadoSelected = agregado;
       }
 
       isLoad = false;

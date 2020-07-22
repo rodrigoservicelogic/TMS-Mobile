@@ -41,7 +41,6 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
 
   void _init() async {
     String result = await controllerEmpresa.getListaFilial();
-    print(result);
   }
 
   @override
@@ -115,9 +114,10 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   SizedBox(
                     height: 13,
                   ),
-                  DropdownButton(
+                  DropdownButtonFormField(
                     key: _dropdownButtonUN,
                     hint: Text('Por Unidade de Negócio'),
+                    decoration: InputDecoration(labelText: "Por Unidade de Negócio", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                     value: controllerEmpresa.selectedUnidade,
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeUnidadeNegocio,
@@ -142,9 +142,10 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   SizedBox(
                     height: 13,
                   ),
-                  DropdownButton(
+                  DropdownButtonFormField(
                     key: _dropdownButtonFrete,
-                    hint: Text('Por Tipo de Frete'),
+                    hint: Text('Por Tipo de Transporte'),
+                    decoration: InputDecoration(labelText: "Por Tipo de Transporte", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                     value: controllerEmpresa.selectedFrete,
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeTipoFrete,
@@ -169,9 +170,10 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   SizedBox(
                     height: 13,
                   ),
-                  DropdownButton(
+                  DropdownButtonFormField(
                     key: _dropdownButtonCliente,
                     hint: Text('Por Cliente'),
+                    decoration: InputDecoration(labelText: "Por Cliente", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                     value: controllerEmpresa.selectedCliente,
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeCliente,

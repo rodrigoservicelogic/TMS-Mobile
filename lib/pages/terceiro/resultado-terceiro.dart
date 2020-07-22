@@ -10,8 +10,6 @@ import 'package:tms_mobile/pages/terceiro/table_resultado_terceiro.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
-import 'filtro-terceiro.dart';
-
 class ResultadoTerceiro extends StatefulWidget {
   final PageController pageController;
 
@@ -40,7 +38,6 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
     
     controller.dataInicial = DateTime.now();
     controller.dataFinal = DateTime.now();
-    controller.terceiroSelected = null;
     controller.placaSelected = null;
     controller.resultadoterceiro = [];
   }
@@ -109,8 +106,8 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                 SizedBox(
                   height: 13,
                 ),
-                DropdownButton<Terceiro>(
-                  hint: Text('Por Terceiro'),
+                DropdownButtonFormField<Terceiro>(
+                  decoration: InputDecoration(labelText: "Por Terceiro", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                   value: controller.terceiroSelected,
                   isExpanded: true,
                   onChanged: controller.changeTerceiro,

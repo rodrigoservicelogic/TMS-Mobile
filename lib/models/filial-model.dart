@@ -7,7 +7,15 @@ class Filial {
   int desativado;
   String ultimaAtualizacao;
 
-  Filial();
+  Filial({
+    this.idFilial,
+    this.idEmpresa,
+    this.razaoSocial,
+    this.nomeFantasia,
+    this.cnpj,
+    this.desativado,
+    this.ultimaAtualizacao
+  });
 
   Filial.fromJson(Map<String, dynamic> json) {
     idFilial = json['IdFilial'];

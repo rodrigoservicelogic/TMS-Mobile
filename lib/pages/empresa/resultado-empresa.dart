@@ -8,8 +8,6 @@ import 'package:tms_mobile/pages/empresa/table_resultado_empresa.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
 
-import 'filtro-empresa.dart';
-
 class ResultadoEmpresa extends StatefulWidget {
   final PageController pageController;
 
@@ -36,7 +34,6 @@ class _ResultadoEmpresaState extends State<ResultadoEmpresa> {
     controller.dataInicial = DateTime.now();
     controller.dataFinal = DateTime.now();
     controller.resultadoEmpresa = [];
-    controller.regimeSelected = null;
   }
 
   BoxDecoration myBoxDecoration(double size) {
@@ -103,8 +100,8 @@ class _ResultadoEmpresaState extends State<ResultadoEmpresa> {
                 SizedBox(
                   height: 13,
                 ),
-                DropdownButton<String>(
-                  hint: Text('Por Regime'),
+                DropdownButtonFormField<String>(
+                  decoration: InputDecoration(labelText: "Por Regime", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                   value: controller.regimeSelected,
                   isExpanded: true,
                   onChanged: controller.changeRegime,

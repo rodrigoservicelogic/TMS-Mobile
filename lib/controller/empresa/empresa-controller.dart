@@ -46,9 +46,13 @@ abstract class EmpresaControllerBase with Store {
       Response response = await _http.get(API_URL + 'resultado-empresa/regimes');
 
       if (response.data != null) {
+        regimes.add("Todos");
+
         for (String m in response.data) {
           regimes.add(m);
         }
+
+        regimeSelected = "Todos";
       }
 
       isLoad = false;

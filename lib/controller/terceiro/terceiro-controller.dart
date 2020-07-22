@@ -44,15 +44,24 @@ abstract class TerceiroControllerBase with Store {
   Future getListaTerceiros() async {
     try {
       isLoad = true;
+      terceiros = [];
 
       Http _http = Http();
 
       Response response = await _http.get(API_URL + 'terceiros/terceiros');
 
       if (response.data != null) {
+        Terceiro terceiro = Terceiro();
+        terceiro.idTerceiros = 0;
+        terceiro.nomeTerceiro = "Todos";
+
+        terceiros.add(terceiro);
+
         for (Map m in response.data) {
           terceiros.add(Terceiro.fromJson(m));
         }
+
+        terceiroSelected = terceiro;
       }
 
       isLoad = false;
@@ -66,6 +75,7 @@ abstract class TerceiroControllerBase with Store {
   Future getListaPlacas() async {
     try {
       isLoad = true;
+      placas = [];
 
       Http _http = Http();
 

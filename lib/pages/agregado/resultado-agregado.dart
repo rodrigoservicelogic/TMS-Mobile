@@ -41,7 +41,6 @@ class _ResultadoAgregadoState extends State<ResultadoAgregado> {
 
     controller.dataInicial = DateTime.now();
     controller.dataFinal = DateTime.now();
-    controller.agregadoSelected = null;
     controller.placaSelected = null;
     controller.listaAgregado = [];
   }
@@ -110,8 +109,8 @@ class _ResultadoAgregadoState extends State<ResultadoAgregado> {
                 SizedBox(
                   height: 13,
                 ),
-                DropdownButton<Agregado>(
-                  hint: Text('Por Agregado'),
+                DropdownButtonFormField<Agregado>(
+                  decoration: InputDecoration(labelText: "Por Agregado", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                   value: controller.agregadoSelected,
                   isExpanded: true,
                   onChanged: controller.changeAgregado,

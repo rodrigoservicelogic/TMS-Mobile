@@ -14,7 +14,7 @@ class ModelFiltroTerceiro {
       'IdFilial': this.idFilial,
       'DataInicial': this.dataInicial.toIso8601String(),
       'DataFinal': this.dataFinal.toIso8601String(),
-      'CodTerceiro': this.terceiro != null ? this.terceiro.codTerceiro : null,
+      'CodTerceiro': this.terceiro != null && this.terceiro.idTerceiros != 0 ? this.terceiro.codTerceiro : null,
       'Placa': this.placa
     };
 
