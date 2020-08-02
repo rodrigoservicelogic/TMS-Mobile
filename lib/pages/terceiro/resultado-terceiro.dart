@@ -35,7 +35,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
   Future<void> _init() async {
     await controller.getListaTerceiros();
     await controller.getListaPlacas();
-    
+
     controller.dataInicial = DateTime.now();
     controller.dataFinal = DateTime.now();
     controller.placaSelected = null;
@@ -52,18 +52,43 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: DrawerPage(widget.pageController),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("TERCEIROS"),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                Color.fromRGBO(39, 74, 139, 1),
-                Color.fromRGBO(110, 170, 211, 1)
-              ])),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: AppBar(
+          centerTitle: true,
+          title: ListTile(
+            title: const Text("RESULTADOS",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center),
+            subtitle: const Text("Terceiro",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                  Color.fromRGBO(39, 74, 139, 1),
+                  Color.fromRGBO(110, 170, 211, 1)
+                ])),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () async {},
+            ),
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DrawerPage(widget.pageController),
+                    fullscreenDialog: true));
+              },
+            )
+          ],
         ),
       ),
       body: Observer(
@@ -107,7 +132,9 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                   height: 13,
                 ),
                 DropdownButtonFormField<Terceiro>(
-                  decoration: InputDecoration(labelText: "Por Terceiro", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
+                  decoration: InputDecoration(
+                      labelText: "Por Terceiro",
+                      labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                   value: controller.terceiroSelected,
                   isExpanded: true,
                   onChanged: controller.changeTerceiro,
@@ -129,8 +156,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                       labelStyle: TextStyle(color: Color(COR_PRIMARY)),
                       hintText: "ABC-0000 ou ABC0D00",
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(COR_PRIMARY))
-                      )),
+                          borderSide: BorderSide(color: Color(COR_PRIMARY)))),
                   itemBuilder: (_, placa) => Padding(
                     padding: EdgeInsets.all(8),
                     child: Text(placa),
@@ -172,7 +198,7 @@ class _ResultadoTerceiroState extends State<ResultadoTerceiro> {
                     ),
                   ),
                 ),
-                TableResultadoTerceiro(controller.resultadoterceiro),                
+                TableResultadoTerceiro(controller.resultadoterceiro),
               ],
             ),
           );

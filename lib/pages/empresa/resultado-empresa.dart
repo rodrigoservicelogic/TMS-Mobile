@@ -46,18 +46,43 @@ class _ResultadoEmpresaState extends State<ResultadoEmpresa> {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: DrawerPage(widget.pageController),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("RESULTADO EMPRESA"),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                Color.fromRGBO(39, 74, 139, 1),
-                Color.fromRGBO(110, 170, 211, 1)
-              ])),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: AppBar(
+          centerTitle: true,
+          title: ListTile(
+            title: const Text("RESULTADOS",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center),
+            subtitle: const Text("DRE - Financeiro",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                  Color.fromRGBO(39, 74, 139, 1),
+                  Color.fromRGBO(110, 170, 211, 1)
+                ])),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () async {},
+            ),
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DrawerPage(widget.pageController),
+                    fullscreenDialog: true));
+              },
+            )
+          ],
         ),
       ),
       body: Observer(
@@ -67,7 +92,7 @@ class _ResultadoEmpresaState extends State<ResultadoEmpresa> {
               child: CircularProgressIndicator(),
             );
           }
-          
+
           return Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -101,7 +126,9 @@ class _ResultadoEmpresaState extends State<ResultadoEmpresa> {
                   height: 13,
                 ),
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: "Por Regime", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
+                  decoration: InputDecoration(
+                      labelText: "Por Regime",
+                      labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                   value: controller.regimeSelected,
                   isExpanded: true,
                   onChanged: controller.changeRegime,

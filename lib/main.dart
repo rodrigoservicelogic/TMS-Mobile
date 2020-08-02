@@ -30,10 +30,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Map<int, Color> color = {
+      50:Color.fromRGBO(245, 134, 51, .1),
+      100:Color.fromRGBO(245, 134, 51, .2),
+      200:Color.fromRGBO(245, 134, 51, .3),
+      300:Color.fromRGBO(245, 134, 51, .4),
+      400:Color.fromRGBO(245, 134, 51, .5),
+      500:Color.fromRGBO(245, 134, 51, .6),
+      600:Color.fromRGBO(245, 134, 51, .7),
+      700:Color.fromRGBO(245, 134, 51, .8),
+      800:Color.fromRGBO(245, 134, 51, .9),
+      900:Color.fromRGBO(245, 134, 51, 1),
+    };
+
     return MaterialApp(
       title: 'TMS Mobile',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: MaterialColor(0xFFF58633, color), brightness: Brightness.light)
       ),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [

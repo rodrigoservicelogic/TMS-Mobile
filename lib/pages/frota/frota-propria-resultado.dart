@@ -23,6 +23,7 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
   final controller = GetIt.I.get<FrotaPropriaController>();
   final GlobalKey _dropdownMotorista = GlobalKey();
   final GlobalKey _dropdownPlaca = GlobalKey();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   ModelFiltroFrotaPropria filtro = ModelFiltroFrotaPropria();
   ScrollController _scroll = ScrollController();
 
@@ -56,19 +57,45 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: DrawerPage(widget.pageController),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("FROTA PRÓPRIA"),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                Color.fromRGBO(39, 74, 139, 1),
-                Color.fromRGBO(110, 170, 211, 1)
-              ])),
+      key: _scaffoldKey,
+      //endDrawer: DrawerPage(widget.pageController),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: AppBar(
+          centerTitle: true,
+          title: ListTile(
+            title: const Text("RESULTADOS",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center),
+            subtitle: const Text("Frota Própria",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                  Color.fromRGBO(39, 74, 139, 1),
+                  Color.fromRGBO(110, 170, 211, 1)
+                ])),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () async {},
+            ),
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DrawerPage(widget.pageController),
+                    fullscreenDialog: true));
+              },
+            )
+          ],
         ),
       ),
       body: Container(
@@ -112,7 +139,9 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
                   height: 13,
                 ),
                 DropdownButtonFormField(
-                  decoration: InputDecoration(labelText: "Por Motorista", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
+                  decoration: InputDecoration(
+                      labelText: "Por Motorista",
+                      labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                   key: _dropdownMotorista,
                   value: controller.motoristaSelected,
                   isExpanded: true,
@@ -146,8 +175,7 @@ class _FrotaPropriaResultadoState extends State<FrotaPropriaResultado> {
                       labelStyle: TextStyle(color: Color(COR_PRIMARY)),
                       hintText: "ABC-0000 ou ABC0D00",
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(COR_PRIMARY))
-                      )),
+                          borderSide: BorderSide(color: Color(COR_PRIMARY)))),
                   itemBuilder: (_, placa) => Padding(
                     padding: EdgeInsets.all(8),
                     child: Text(placa),

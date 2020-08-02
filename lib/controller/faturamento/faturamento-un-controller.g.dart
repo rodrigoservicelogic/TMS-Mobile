@@ -84,6 +84,54 @@ mixin _$FaturamentoUnController on FaturamentoUnControllerBase, Store {
     });
   }
 
+  final _$seriesTipoTranspAtom =
+      Atom(name: 'FaturamentoUnControllerBase.seriesTipoTransp');
+
+  @override
+  List<charts.Series<ListaTipoTransporte, String>> get seriesTipoTransp {
+    _$seriesTipoTranspAtom.reportRead();
+    return super.seriesTipoTransp;
+  }
+
+  @override
+  set seriesTipoTransp(List<charts.Series<ListaTipoTransporte, String>> value) {
+    _$seriesTipoTranspAtom.reportWrite(value, super.seriesTipoTransp, () {
+      super.seriesTipoTransp = value;
+    });
+  }
+
+  final _$columnsTipoTranspAtom =
+      Atom(name: 'FaturamentoUnControllerBase.columnsTipoTransp');
+
+  @override
+  List<DataColumn> get columnsTipoTransp {
+    _$columnsTipoTranspAtom.reportRead();
+    return super.columnsTipoTransp;
+  }
+
+  @override
+  set columnsTipoTransp(List<DataColumn> value) {
+    _$columnsTipoTranspAtom.reportWrite(value, super.columnsTipoTransp, () {
+      super.columnsTipoTransp = value;
+    });
+  }
+
+  final _$rowsTipoTranspAtom =
+      Atom(name: 'FaturamentoUnControllerBase.rowsTipoTransp');
+
+  @override
+  List<DataRow> get rowsTipoTransp {
+    _$rowsTipoTranspAtom.reportRead();
+    return super.rowsTipoTransp;
+  }
+
+  @override
+  set rowsTipoTransp(List<DataRow> value) {
+    _$rowsTipoTranspAtom.reportWrite(value, super.rowsTipoTransp, () {
+      super.rowsTipoTransp = value;
+    });
+  }
+
   final _$seriesCliAtom = Atom(name: 'FaturamentoUnControllerBase.seriesCli');
 
   @override
@@ -162,6 +210,9 @@ isLoad: ${isLoad},
 seriesUn: ${seriesUn},
 columnsUn: ${columnsUn},
 rowsUn: ${rowsUn},
+seriesTipoTransp: ${seriesTipoTransp},
+columnsTipoTransp: ${columnsTipoTransp},
+rowsTipoTransp: ${rowsTipoTransp},
 seriesCli: ${seriesCli},
 columnsCli: ${columnsCli},
 rowsCli: ${rowsCli},

@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 
 import '../../global.dart';
 import 'faturamento-cliente.dart';
+import 'faturamento-tipo-transporte.dart';
 import 'faturamento-visao-un.dart';
 
 class FaturamentoPage extends StatefulWidget {
@@ -26,6 +27,7 @@ class FaturamentoPage extends StatefulWidget {
 
 class _FaturamentoPageState extends State<FaturamentoPage> {
   DateTime _dataInicial, _dataFinal;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final controllerFaturamentoUn = GetIt.I.get<FaturamentoUnController>();
   final controllerEmpresa = GetIt.I.get<FaturamentoClienteController>();
   NumberFormat format = NumberFormat.currency(locale: "pt_BR", symbol: "R\$");
@@ -94,19 +96,46 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
     }
 
     return Scaffold(
-      endDrawer: DrawerPage(widget.pageController),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("FATURAMENTO"),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                Color.fromRGBO(39, 74, 139, 1),
-                Color.fromRGBO(110, 170, 211, 1)
-              ])),
+      //endDrawer: DrawerPage(widget.pageController),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: AppBar(
+          centerTitle: true,
+          title: ListTile(
+            title: const Text("RESULTADOS",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center),
+            subtitle: const Text("Faturamento",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                  Color.fromRGBO(39, 74, 139, 1),
+                  Color.fromRGBO(110, 170, 211, 1)
+                ])),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () async {
+                await controllerFaturamentoUn.createPdf();
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DrawerPage(widget.pageController),
+                    fullscreenDialog: true));
+              },
+            )
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -121,88 +150,110 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
 
             return Column(
               children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 4,
-                      child: DateTimePicker(
-                        labelText: "De:",
-                        selectedDate: _dataInicial,
-                        selectDate: (DateTime date) {
-                          print(date);
-                          setState(() {
-                            _dataInicial = date;
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: 15,
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: DateTimePicker(
-                        labelText: "Até:",
-                        selectedDate: _dataFinal,
-                        selectDate: (DateTime date) {
-                          print(date);
-                          setState(() {
-                            _dataFinal = date;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 13,
-                ),
                 Container(
-                  height: 60,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 60,
-                      child: RaisedButton(
-                        color: Color(COR_PRIMARY),
-                        textColor: Colors.white,
-                        child: Text(
-                          "Aplicar Filtro",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  child: ExpansionTile(
+                    title: Text("Filtros"),
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 4,
+                                  child: DateTimePicker(
+                                    labelText: "De:",
+                                    selectedDate: _dataInicial,
+                                    selectDate: (DateTime date) {
+                                      print(date);
+                                      setState(() {
+                                        _dataInicial = date;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  width: 15,
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: DateTimePicker(
+                                    labelText: "Até:",
+                                    selectedDate: _dataFinal,
+                                    selectDate: (DateTime date) {
+                                      print(date);
+                                      setState(() {
+                                        _dataFinal = date;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 13,
+                            ),
+                            Container(
+                              height: 60,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 60,
+                                  child: RaisedButton(
+                                    color: Color(COR_PRIMARY),
+                                    textColor: Colors.white,
+                                    child: Text(
+                                      "Aplicar Filtro",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    ),
+                                    onPressed: () async {
+                                      widget.filtroFaturamento.dataDe =
+                                          _dataInicial;
+                                      widget.filtroFaturamento.dataAte =
+                                          _dataFinal;
+
+                                      String retorno =
+                                          await controllerFaturamentoUn
+                                              .getFaturamento(
+                                                  widget.filtroFaturamento);
+
+                                      if (retorno != 'ok') {
+                                        Navigator.of(context).pop();
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Text("Atenção"),
+                                                content: Text(retorno),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    child: Text("OK"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  )
+                                                ],
+                                              );
+                                            });
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        onPressed: () async {
-                          widget.filtroFaturamento.dataDe = _dataInicial;
-                          widget.filtroFaturamento.dataAte = _dataFinal;
-
-                          String retorno = await controllerFaturamentoUn
-                              .getFaturamento(widget.filtroFaturamento);
-
-                          if (retorno  != 'ok') {
-                            Navigator.of(context).pop();
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Atenção"),
-                                    content: Text(retorno),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text("OK"),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      )
-                                    ],
-                                  );
-                                });
-                          }
-                        },
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -315,6 +366,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                   width: MediaQuery.of(context).size.width,
                   child: GFCarousel(
                       viewportFraction: 0.99,
+                      enableInfiniteScroll: false,
                       height: MediaQuery.of(context).size.height * 0.50,
                       pagination: true,
                       autoPlay: false,
@@ -322,6 +374,7 @@ class _FaturamentoPageState extends State<FaturamentoPage> {
                         FaturamentoVisaoMensal(widget.filtroFaturamento),
                         FaturamentoVisaoUn(widget.filtroFaturamento),
                         FaturamentoCliente(),
+                        FaturamentoVisaoTipoTransporte(widget.filtroFaturamento)
                       ]),
                 ),
               ],

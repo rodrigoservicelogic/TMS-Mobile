@@ -54,19 +54,44 @@ class _ResultadoAgregadoState extends State<ResultadoAgregado> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: DrawerPage(widget.pageController),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("AGREGADOS"),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                Color.fromRGBO(39, 74, 139, 1),
-                Color.fromRGBO(110, 170, 211, 1)
-              ])),
+      //endDrawer: DrawerPage(widget.pageController),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: AppBar(
+          centerTitle: true,
+          title: ListTile(
+            title: const Text("RESULTADOS",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center),
+            subtitle: const Text("Agregado",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                  Color.fromRGBO(39, 74, 139, 1),
+                  Color.fromRGBO(110, 170, 211, 1)
+                ])),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () async {},
+            ),
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DrawerPage(widget.pageController),
+                    fullscreenDialog: true));
+              },
+            )
+          ],
         ),
       ),
       body: Observer(
@@ -110,7 +135,9 @@ class _ResultadoAgregadoState extends State<ResultadoAgregado> {
                   height: 13,
                 ),
                 DropdownButtonFormField<Agregado>(
-                  decoration: InputDecoration(labelText: "Por Agregado", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
+                  decoration: InputDecoration(
+                      labelText: "Por Agregado",
+                      labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                   value: controller.agregadoSelected,
                   isExpanded: true,
                   onChanged: controller.changeAgregado,
@@ -132,8 +159,7 @@ class _ResultadoAgregadoState extends State<ResultadoAgregado> {
                       labelStyle: TextStyle(color: Color(COR_PRIMARY)),
                       hintText: "ABC-0000 ou ABC0D00",
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(COR_PRIMARY))
-                      )),
+                          borderSide: BorderSide(color: Color(COR_PRIMARY)))),
                   itemBuilder: (_, placa) => Padding(
                     padding: EdgeInsets.all(8),
                     child: Text(placa),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tms_mobile/models/usuario.dart';
 import 'package:tms_mobile/pages/resultado-page.dart';
 
+import 'meu-perfil/meu-perfil.dart';
 import 'modules-page.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
       children: <Widget>[
         ModuleSelectionPage(widget.usuarioLogado, pageCtrl),
         ResultadoPage(pageCtrl),
-        Container(),
+        MeuPerfilPage(pageCtrl),
         Container(),
         Container(),
       ],

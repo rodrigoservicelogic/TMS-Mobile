@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:smart_select/smart_select.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-cliente-controller.dart';
 import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/models/empresa.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:tms_mobile/widgets/dateTimePicker.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
@@ -46,19 +48,40 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: DrawerPage(widget.pageController),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("FATURAMENTO"),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                Color.fromRGBO(39, 74, 139, 1),
-                Color.fromRGBO(110, 170, 211, 1)
-              ])),
+      //endDrawer: DrawerPage(widget.pageController),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60),
+        child: AppBar(
+          centerTitle: true,
+          title: ListTile(
+            title: const Text("RESULTADOS",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center),
+            subtitle: const Text("Faturamento",
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                  Color.fromRGBO(39, 74, 139, 1),
+                  Color.fromRGBO(110, 170, 211, 1)
+                ])),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DrawerPage(widget.pageController),
+                    fullscreenDialog: true));
+              },
+            )
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -117,7 +140,9 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   DropdownButtonFormField(
                     key: _dropdownButtonUN,
                     hint: Text('Por Unidade de Negócio'),
-                    decoration: InputDecoration(labelText: "Por Unidade de Negócio", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
+                    decoration: InputDecoration(
+                        labelText: "Por Unidade de Negócio",
+                        labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                     value: controllerEmpresa.selectedUnidade,
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeUnidadeNegocio,
@@ -142,38 +167,61 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                   SizedBox(
                     height: 13,
                   ),
-                  DropdownButtonFormField(
-                    key: _dropdownButtonFrete,
-                    hint: Text('Por Tipo de Transporte'),
-                    decoration: InputDecoration(labelText: "Por Tipo de Transporte", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
-                    value: controllerEmpresa.selectedFrete,
-                    isExpanded: true,
-                    onChanged: controllerEmpresa.changeTipoFrete,
-                    icon: IconButton(
-                      icon: controllerEmpresa.selectedFrete != null
-                          ? Icon(Icons.clear)
-                          : Icon(Icons.arrow_drop_down),
-                      onPressed: controllerEmpresa.selectedFrete != null
-                          ? controllerEmpresa.clearSelectedTipoFrete
-                          : openDropdownFrete,
-                      color: controllerEmpresa.selectedFrete != null
-                          ? Colors.red
-                          : Colors.black54,
-                    ),
-                    items: controllerEmpresa.tiposFrete.map((frete) {
-                      return DropdownMenuItem(
-                        child: new Text(frete),
-                        value: frete,
-                      );
-                    }).toList(),
+                  Container(
+                    width: double.infinity,
+                    child: SmartSelect<String>.single(
+                        padding: EdgeInsets.zero,
+                        title: 'Por Tipo de Transporte',
+                        titleStyle:
+                            TextStyle(color: Color(COR_PRIMARY), fontSize: 14),
+                        placeholder: 'Selecione',
+                        placeholderStyle: TextStyle(color: Colors.black, fontSize: 14),
+                        modalType: SmartSelectModalType.bottomSheet,
+                        value: controllerEmpresa.selectedFrete,
+                        choiceConfig: SmartSelectChoiceConfig(useDivider: true),
+                        isTwoLine: true,
+                        options: SmartSelectOption.listFrom(
+                            source: controllerEmpresa.tiposFrete,
+                            value: (index, item) => item,
+                            title: (index, item) => item),
+                        onChange: controllerEmpresa.changeTipoFrete),
                   ),
+                  // DropdownButtonFormField(
+                  //   key: _dropdownButtonFrete,
+                  //   hint: Text('Por Tipo de Transporte'),
+                  //   decoration: InputDecoration(
+                  //       labelText: "Por Tipo de Transporte",
+                  //       labelStyle: TextStyle(color: Color(COR_PRIMARY))),
+                  //   value: controllerEmpresa.selectedFrete,
+                  //   isExpanded: true,
+                  //   onChanged: controllerEmpresa.changeTipoFrete,
+                  //   icon: IconButton(
+                  //     icon: controllerEmpresa.selectedFrete != null
+                  //         ? Icon(Icons.clear)
+                  //         : Icon(Icons.arrow_drop_down),
+                  //     onPressed: controllerEmpresa.selectedFrete != null
+                  //         ? controllerEmpresa.clearSelectedTipoFrete
+                  //         : openDropdownFrete,
+                  //     color: controllerEmpresa.selectedFrete != null
+                  //         ? Colors.red
+                  //         : Colors.black54,
+                  //   ),
+                  //   items: controllerEmpresa.tiposFrete.map((frete) {
+                  //     return DropdownMenuItem(
+                  //       child: new Text(frete),
+                  //       value: frete,
+                  //     );
+                  //   }).toList(),
+                  // ),
                   SizedBox(
                     height: 13,
                   ),
                   DropdownButtonFormField(
                     key: _dropdownButtonCliente,
                     hint: Text('Por Cliente'),
-                    decoration: InputDecoration(labelText: "Por Cliente", labelStyle: TextStyle(color: Color(COR_PRIMARY))),
+                    decoration: InputDecoration(
+                        labelText: "Por Cliente",
+                        labelStyle: TextStyle(color: Color(COR_PRIMARY))),
                     value: controllerEmpresa.selectedCliente,
                     isExpanded: true,
                     onChanged: controllerEmpresa.changeCliente,
@@ -197,7 +245,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                     }).toList(),
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 20,
                   ),
                   Container(
                     height: 60,

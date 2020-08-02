@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/usuario.dart';
 import 'package:tms_mobile/pages/resultado-page.dart';
 import 'package:tms_mobile/widgets/cartao-modulo.dart';
@@ -31,11 +32,11 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/bg_1.png"),
+            image: AssetImage("images/bg_azul.jpg"),
             fit: BoxFit.cover,
           ),
         ),
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Center(
               child: Column(
@@ -56,25 +57,23 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
                     usuario,
                   ),
                   SizedBox(
-                    height: 35,
+                    height: 10,
                   ),
                   CardButton(
                     icon: "images/icon_resultados.png",
                     text: "RESULTADOS",
                     onPressed: () async {
-                      await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              ResultadoPage(widget.pageCtrl)));
+                      widget.pageCtrl.jumpToPage(1);
                     },
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 15,
                   ),
-                  CardButton(
-                    icon: "images/icon_despesas_viagem.png",
-                    text: "DESPESAS\n DE VIAGEM",
-                    onPressed: () {},
-                  ),
+                  // CardButton(
+                  //   icon: "images/icon_despesas_viagem.png",
+                  //   text: "DESPESAS\n DE VIAGEM",
+                  //   onPressed: () {},
+                  // ),
                   // SizedBox(
                   //   height: 5,
                   // ),
@@ -93,6 +92,28 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
                   // ),
                 ],
               ),
+            ),
+            Spacer(),
+            InkWell(
+              child: Card(
+                color: Color(COR_PRIMARY),
+                child: Container(
+                  width: double.infinity,
+                  height: 54,
+                  padding: EdgeInsets.all(15),
+                  child: Center(
+                    child: Text(
+                      'VOLTAR',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+              },
             )
           ],
         ),

@@ -12,28 +12,25 @@ class CardButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Card(
-        elevation: 4.0,
+        // elevation: 4.0,
         color: Colors.transparent,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
             color: Color(0x25000000),
-            borderRadius: BorderRadius.circular(15.0),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 7.5),
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  width: 80,
+                  width: 50,
                   child: Image.asset(icon, fit: BoxFit.fitHeight),
                 ),
                 SizedBox(
-                  width: 15,
+                  width: 20,
                 ),
                 Text(
                   text,

@@ -12,11 +12,28 @@ class Usuario {
 
   Usuario();
 
+  String get nomeUsuario {
+    var nome = nomeApresentacao.split(' ');
+    
+    return nome[0] + " " + nome[nome.length - 1];
+  }
+
   Usuario.fromMap(Map<String, dynamic> map) {
     id = map["IdUsuario"];
     login = map["Email"];
     senha = map["Senha"];
     nomeApresentacao = map["Usuario"];
+    cargo = map["Cargo"];
+    cpf = map["Cpf"];
+    codigo = map["Codigo"];
+    desativado = map["Desativado"];
+  }
+
+  Usuario.fromPrefs(Map<String, dynamic> map) {
+    id = map["IdUsuario"];
+    login = map["Email"];
+    senha = map["Senha"];
+    nomeApresentacao = map["Nome"];
     cargo = map["Cargo"];
     cpf = map["Cpf"];
     codigo = map["Codigo"];

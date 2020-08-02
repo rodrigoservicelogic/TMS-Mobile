@@ -24,26 +24,24 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4.0,
+      //elevation: 4.0,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
           color: Colors.white,
         ),
-        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.5),
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              width: 80,
+              width: 50,
               child: _getAvatarUsuario(),
             ),
             SizedBox(
-              width: 7.5,
+              width: 20,
             ),
             Container(
               child: Column(
@@ -51,8 +49,8 @@ class ProfileCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    usuario.nomeApresentacao != null
-                        ? usuario.nomeApresentacao
+                    usuario.nomeUsuario != null
+                        ? usuario.nomeUsuario
                         : "",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -60,16 +58,16 @@ class ProfileCard extends StatelessWidget {
                       color: Colors.black54,
                     ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    usuario.cargo != null ? usuario.cargo : "",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
+                  // Text(
+                  //   usuario.cargo != null ? usuario.cargo : "",
+                  //   style: TextStyle(
+                  //     fontSize: 14,
+                  //     color: Colors.black54,
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 5,
                   ),

@@ -122,7 +122,7 @@ abstract class _FaturamentoClienteControllerBase with Store {
       }
 
       Response responseTipoFrete =
-          await _http.get(API_URL + "faturamento/tipo-frete");
+          await _http.get(API_URL + "faturamento/tipo-transporte");
 
       if (responseTipoFrete.data != null) {
         tiposFrete.add("Todos");

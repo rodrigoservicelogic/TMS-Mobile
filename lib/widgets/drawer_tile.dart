@@ -17,38 +17,21 @@ class DrawerTile extends StatelessWidget {
         onTap: () {
           Navigator.of(context).pop();
           controller.jumpToPage(page);
-          print(page);
         },
         child: Container(
           decoration: BoxDecoration(
               color: controller.page.round() == page
                   ? Colors.white
-                  : Color(COLOR_SECONDARY),
-              border: controller.page.round() == page
-                  ? Border(
-                      left: BorderSide(color: Color(COR_PRIMARY), width: 5.0))
-                  : Border.all(width: 0.0, color: Color(COLOR_SECONDARY))),
+                  : Colors.transparent,
+              // border: controller.page.round() == page
+              //     ? Border(
+              //         left: BorderSide(color: Color(COR_PRIMARY), width: 5.0))
+              //     : Border.all(width: 0.0, color: Color(COR_PRIMARY))
+          ),
           child: ListTile(
-            leading: icon != "home"
-                ? Image.asset(
-                    icon,
-                    width: 35,
-                  )
-                : ClipOval(
-                    child: Material(
-                      color: Colors.white,
-                      child: SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: Icon(
-                          Icons.home,
-                          color: Color(COR_PRIMARY),
-                        ),
-                      ),
-                    ),
-                  ),
             title: Text(
-              text,
+              text.toUpperCase(),
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: controller.page.round() == page
                       ? Color(COLOR_SECONDARY)
@@ -56,12 +39,6 @@ class DrawerTile extends StatelessWidget {
                   fontWeight: controller.page.round() == page
                       ? FontWeight.w500
                       : FontWeight.normal),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              color: controller.page.round() == page
-                  ? Color(COLOR_SECONDARY)
-                  : Colors.white,
             ),
             selected: controller.page.round() == page,
           ),

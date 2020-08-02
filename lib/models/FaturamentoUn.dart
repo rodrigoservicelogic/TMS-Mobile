@@ -1,6 +1,8 @@
 class FaturamentoUn {
   List<ListaFiliais> listaFiliais;
   List<ListaClientes> listaClientes;
+  List<ListaTipoTransporte> listaTipoTransporte;
+
   double valorTotal;
   double valorAnoAnterior;
   double perCresValor;
@@ -10,7 +12,8 @@ class FaturamentoUn {
       this.listaClientes,
       this.valorTotal,
       this.valorAnoAnterior,
-      this.perCresValor});
+      this.perCresValor,
+      this.listaTipoTransporte});
 
   FaturamentoUn.fromJson(Map<String, dynamic> json) {
     if (json['ListaFiliais'] != null) {
@@ -23,6 +26,12 @@ class FaturamentoUn {
       listaClientes = new List<ListaClientes>();
       json['ListaClientes'].forEach((v) {
         listaClientes.add(new ListaClientes.fromJson(v));
+      });
+    }
+    if (json['ListaTipoTransporte'] != null) {
+      listaTipoTransporte = new List<ListaTipoTransporte>();
+      json['ListaTipoTransporte'].forEach((v) {
+        listaTipoTransporte.add(new ListaTipoTransporte.fromJson(v));
       });
     }
     valorTotal = json['ValorTotal'];
@@ -38,6 +47,10 @@ class FaturamentoUn {
     if (this.listaClientes != null) {
       data['ListaClientes'] =
           this.listaClientes.map((v) => v.toJson()).toList();
+    }
+    if (this.listaTipoTransporte != null) {
+      data['ListaTipoTransporte'] =
+          this.listaTipoTransporte.map((v) => v.toJson()).toList();
     }
     data['ValorTotal'] = this.valorTotal;
     data['ValorAnoAnterior'] = this.valorAnoAnterior;
@@ -84,6 +97,28 @@ class ListaClientes {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['NomeCliente'] = this.nomeCliente;
+    data['ValorTotal'] = this.valorTotal;
+    data['PerCresValor'] = this.perCresValor;
+    return data;
+  }
+}
+
+class ListaTipoTransporte {
+  String tipoTransporte;
+  double valorTotal;
+  double perCresValor;
+
+  ListaTipoTransporte({this.tipoTransporte, this.valorTotal, this.perCresValor});
+
+  ListaTipoTransporte.fromJson(Map<String, dynamic> json) {
+    tipoTransporte = json['TipoTransporte'];
+    valorTotal = json['ValorTotal'];
+    perCresValor = json['PerCresValor'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['TipoTransporte'] = this.tipoTransporte;
     data['ValorTotal'] = this.valorTotal;
     data['PerCresValor'] = this.perCresValor;
     return data;

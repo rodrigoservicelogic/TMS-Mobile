@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mobx/mobx.dart';
 import 'package:tms_mobile/models/usuario.dart';
 import 'package:dio/dio.dart';
@@ -49,6 +51,8 @@ abstract class _LoginControllerBase with Store {
       if (response.data != null) {
         usuario = Usuario.fromMap(response.data);
         prefs.setInt("Usuario", this.usuario.id);
+        prefs.setString("Email", this.usuario.login);
+        prefs.setString("User", json.encode(usuario.toMap()));
       }
 
       isLoad = false;

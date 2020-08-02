@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/controller/login/login-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/login-model.dart';
@@ -18,6 +19,19 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController loginCtrl = TextEditingController();
   TextEditingController senhaCtrl = TextEditingController();
   LoginModel login = LoginModel();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _init();
+  }
+
+  Future<void> _init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    loginCtrl.text =
+        prefs.getString('Email') != null ? prefs.getString('Email') : null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,6 +170,19 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       }
                     },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: InkWell(
+                      child: Container(
+                          child: Text(
+                        'Esqueci minha senha',
+                        style: TextStyle(color: Colors.white),
+                      )),
+                      onTap: () {},
+                    ),
                   )
                 ],
               ),

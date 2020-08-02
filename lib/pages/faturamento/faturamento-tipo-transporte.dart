@@ -1,32 +1,34 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tms_mobile/controller/faturamento/faturamento-cliente-controller.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
-import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class FaturamentoCliente extends StatefulWidget {
+import '../../global.dart';
+
+class FaturamentoVisaoTipoTransporte extends StatefulWidget {
+  final ModelFiltroFaturamento filtro;
+
+  FaturamentoVisaoTipoTransporte(this.filtro);
+
   @override
-  _FaturamentoCliente createState() => _FaturamentoCliente();
+  _FaturamentoVisaoTipoTransporteState createState() => _FaturamentoVisaoTipoTransporteState();
 }
 
-class _FaturamentoCliente extends State<FaturamentoCliente> {
-  String empresaSelected;
+class _FaturamentoVisaoTipoTransporteState extends State<FaturamentoVisaoTipoTransporte> {
+  final controller = GetIt.I.get<FaturamentoUnController>();
 
-  final controllerFaturamentoUn = GetIt.I.get<FaturamentoUnController>();
-
-  String dropdownValue = '';
-  bool visaoTabela = true;
   bool visaoGrafico = false;
+  bool visaoTabela = true;
   Color corGrafico = Colors.black26;
   Color corTabela = Color(COR_PRIMARY);
 
   @override
   void initState() {
     super.initState();
-    controllerFaturamentoUn.buildTableCli();
-    controllerFaturamentoUn.buildChartsCli();
+
+    controller.buildTableTipoTransporte();
+    controller.buildChartTipoTransporte();
   }
 
   BoxDecoration myBoxDecoration() {
@@ -34,11 +36,10 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
       border: Border.all(width: 0),
     );
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
       width: double.infinity,
       child: ListView(
         children: <Widget>[
@@ -55,11 +56,12 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
                     height: 10,
                   ),
                   Text(
-                    "CLIENTE",
+                    "TIPO TRANSPORTE",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                         color: Color(0xFF606062)),
+                    overflow: TextOverflow.clip,
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(
@@ -97,22 +99,44 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
           ),
           Visibility(
             visible: visaoTabela,
-            child: SingleChildScrollView(
-              child: DataTable(
-                  columns: controllerFaturamentoUn.columnsCli,
-                  rows: controllerFaturamentoUn.rowsCli),
+            child: SizedBox(
+              height: 320,
+              child: SingleChildScrollView(
+                  child: DataTable(
+                columns: controller.columnsTipoTransp,
+                rows: controller.rowsTipoTransp,
+              )),
             ),
           ),
           Visibility(
             visible: visaoGrafico,
             child: SizedBox(
-              height: 200.0,
-              child: charts.BarChart(
-                controllerFaturamentoUn.seriesCli,
-                animationDuration: Duration(seconds: 1),
+              height: 320,
+              child: charts.PieChart(
+                controller.seriesTipoTransp,
                 animate: true,
-                vertical: false,
-                barRendererDecorator: new charts.BarLabelDecorator<String>(),
+                animationDuration: Duration(seconds: 1),
+                behaviors: [
+                  new charts.DatumLegend(
+                      position: charts.BehaviorPosition.bottom,
+                      outsideJustification: charts.OutsideJustification.start,
+                      horizontalFirst: false,
+                      desiredMaxRows: 4,
+                      cellPadding: new EdgeInsets.all(0.3),
+                      entryTextStyle: charts.TextStyleSpec(
+                          color: charts.MaterialPalette.black,
+                          fontFamily: 'Georgia',
+                          fontSize: 7))
+                ],
+                defaultRenderer: new charts.ArcRendererConfig(
+                    arcWidth: 100,
+                    arcRendererDecorators: [
+                      new charts.ArcLabelDecorator(
+                          labelPosition: charts.ArcLabelPosition.inside,
+                          insideLabelStyleSpec: charts.TextStyleSpec(
+                            fontSize: 13,
+                          ))
+                    ]),
               ),
             ),
           ),
@@ -120,12 +144,4 @@ class _FaturamentoCliente extends State<FaturamentoCliente> {
       ),
     );
   }
-}
-
-/// Sample ordinal data type.
-class Dados {
-  final String ano;
-  final int valor;
-
-  Dados(this.ano, this.valor);
 }

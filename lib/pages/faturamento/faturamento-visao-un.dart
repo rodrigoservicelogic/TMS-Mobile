@@ -54,7 +54,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                     height: 10,
                   ),
                   Text(
-                    "VISÃO POR UND. DE NEGÓCIO",
+                    "UND. DE NEGÓCIO",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,

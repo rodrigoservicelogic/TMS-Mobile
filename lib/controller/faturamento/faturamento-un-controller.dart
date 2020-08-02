@@ -1,12 +1,17 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/models/FaturamentoUn.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
 import 'package:tms_mobile/util/http_helper.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:pdf/widgets.dart' as pw;
 
 import '../../global.dart';
 part 'faturamento-un-controller.g.dart';
@@ -29,6 +34,15 @@ abstract class FaturamentoUnControllerBase with Store {
 
   @observable
   List<DataRow> rowsUn = List();
+
+  @observable
+  List<charts.Series<ListaTipoTransporte, String>> seriesTipoTransp = List();
+
+  @observable
+  List<DataColumn> columnsTipoTransp = List();
+
+  @observable
+  List<DataRow> rowsTipoTransp = List();
 
   @observable
   List<charts.Series<ListaClientes, String>> seriesCli = List();
@@ -68,6 +82,106 @@ abstract class FaturamentoUnControllerBase with Store {
       isLoad = false;
       Map response = e.response.data;
       return Future.value(response["Message"]);
+    }
+  }
+
+  void buildTableTipoTransporte() {
+    var formatoMoeda =
+        new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+    var formatoPercentual = new NumberFormat.decimalPattern("pt_BR");
+
+    columnsTipoTransp.clear();
+    rowsTipoTransp.clear();
+
+    buildTableColumnTipoTransporte();
+
+    if (this.faturamento != null) {
+      this.faturamento.listaTipoTransporte.forEach((element) {
+        rowsTipoTransp.add(DataRow(cells: <DataCell>[
+          DataCell(
+              Container(width: 90, child: Text('${element.tipoTransporte}'))),
+          DataCell(Container(
+              width: 50,
+              child: Text(
+                  '${element.valorTotal < 0 ? '-' : formatoMoeda.format(element.valorTotal)}'))),
+          DataCell(
+            Text(
+              "${element.perCresValor < 0 ? '-' : formatoPercentual.format(element.perCresValor)}",
+              textAlign: TextAlign.center,
+            ),
+          )
+        ]));
+      });
+    } else {
+      rowsTipoTransp.add(DataRow(cells: <DataCell>[]));
+    }
+  }
+
+  void buildTableColumnTipoTransporte() {
+    columnsTipoTransp.clear();
+
+    var tableHeaderStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 12,
+      color: Colors.black,
+    );
+
+    columnsTipoTransp.add(
+      DataColumn(
+        label: Text(
+          "Tipo Transporte",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
+    columnsTipoTransp.add(
+      DataColumn(
+        label: Text(
+          "R\$",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
+    columnsTipoTransp.add(
+      DataColumn(
+        label: Text(
+          "%",
+          style: tableHeaderStyle,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  void buildChartTipoTransporte() {
+    seriesTipoTransp.clear();
+
+    if(this.faturamento != null) {
+      var formatoMoeda =
+          new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+
+      seriesTipoTransp.add(charts.Series(
+        data: this.faturamento.listaTipoTransporte,
+        domainFn: (ListaTipoTransporte task, _) => task.tipoTransporte.substring(0, 9),
+        measureFn: (ListaTipoTransporte task, _) => task.perCresValor,
+        id: 'Faturamento Cli',
+        labelAccessorFn: (ListaTipoTransporte row, _) =>
+            '${formatoMoeda.format(row.valorTotal)}',
+      ));
+    } else {
+      seriesTipoTransp.add(charts.Series(
+          data: <ListaTipoTransporte>[],
+          domainFn: (ListaTipoTransporte task, _) {
+            return null;
+          },
+          id: null,
+          measureFn: (ListaTipoTransporte task, _) {
+            return null;
+          }));
     }
   }
 
@@ -246,7 +360,7 @@ abstract class FaturamentoUnControllerBase with Store {
 
       seriesCli.add(charts.Series(
         data: this.faturamento.listaClientes,
-        domainFn: (ListaClientes task, _) => task.nomeCliente.substring(0,9),
+        domainFn: (ListaClientes task, _) => task.nomeCliente.substring(0, 9),
         measureFn: (ListaClientes task, _) => task.perCresValor,
         id: 'Faturamento Cli',
         labelAccessorFn: (ListaClientes row, _) =>
@@ -263,5 +377,46 @@ abstract class FaturamentoUnControllerBase with Store {
             return null;
           }));
     }
-  }  
+  }
+
+  Future<void> createPdf() async {
+    final doc = pw.Document();
+
+    doc.addPage(
+      pw.Page(
+          build: (pw.Context context) => pw.ListView(children: [
+                pw.Center(
+                    child: pw.Text("Visão por Unidade de Negócio",
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold))),
+                pw.SizedBox(
+                    child: pw.Chart(
+                        grid: pw.CartesianGrid(
+                            xAxis: pw.FixedAxis.fromStrings(
+                                List<String>.generate(
+                                    faturamento.listaFiliais.length,
+                                    (index) => faturamento
+                                        .listaFiliais[index].nomeFilial),
+                                ticks: true,
+                                divisions: true,
+                                axisTick: true),
+                            yAxis: pw.FixedAxis(
+                              [0, 50, 100],
+                              format: (v) => 'R\$$v',
+                              divisions: true,
+                            )),
+                        datasets: [
+                      pw.BarDataSet(
+                          color: PdfColors.blue100,
+                          data: List<pw.LineChartValue>.generate(
+                              faturamento.listaFiliais.length, (i) {
+                            final num v =
+                                faturamento.listaFiliais[i].perCresValor;
+                            return pw.LineChartValue(i.toDouble(), v);
+                          }))
+                    ]))
+              ])),
+    );
+
+    await Printing.sharePdf(bytes: doc.save(), filename: 'faturamento.pdf');
+  }
 }

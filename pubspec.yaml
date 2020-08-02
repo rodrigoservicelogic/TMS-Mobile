@@ -34,6 +34,10 @@ dependencies:
   dio: ^3.0.9
   intl: "^0.16.0"
   simple_autocomplete_formfield: ^0.2.7
+  pdf: ^1.9.0
+  flutter_share: ^1.0.2+1
+  printing: ^3.5.0
+  smart_select: ^3.0.3
   mobx:
   flutter_mobx:
   get_it:
@@ -67,6 +71,12 @@ flutter:
     - images/logoServiceLogic.png
     - images/simboloCarregando.png
     - images/avatar.png
+    - images/bg_faturamento.png
+    - images/bg_frota.png
+    - images/bg_agregado.png
+    - images/bg_terceiro.jpg
+    - images/bg_dre_financeiro.jpg
+    - images/bg_azul.jpg
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
