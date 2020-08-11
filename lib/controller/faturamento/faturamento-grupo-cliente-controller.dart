@@ -81,6 +81,7 @@ abstract class _FaturamentoGrupoClienteControllerBase with Store {
       grupoCliente.forEach((element) {
         rows.add(DataRow(cells: <DataCell>[
           DataCell(Container(
+            width: 80,
               child: Text('${element.nomeGrupoCliente}'))),
           DataCell(Container(
               child: Text(

@@ -107,7 +107,7 @@ class _FaturamentoVisaoTipoTransporteState
               child: SingleChildScrollView(child: Observer(
                 builder: (context) {
                   return DataTable(
-                    columnSpacing: 20,
+                    columnSpacing: 15,
                     columns: controller.columnsTipoTransp,
                     rows: controller.rowsTipoTransp,
                   );

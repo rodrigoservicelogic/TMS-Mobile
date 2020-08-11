@@ -51,7 +51,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
             .map<FaturamentoVisaoMensalDataPoint>(
                 (json) => FaturamentoVisaoMensalDataPoint.fromJson(json))
             .toList();
-        data.sort((a, b) => a.faturamentoPeriodo.compareTo(b.faturamentoPeriodo));
+        data.sort((a, b) => a.mes.compareTo(b.mes));
 
         buildSeries(data, filtroFaturamento.dataDe, filtroFaturamento.dataAte);
         buildTable(data, filtroFaturamento.dataDe, filtroFaturamento.dataAte);
@@ -88,14 +88,14 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
         measureFn: (FaturamentoVisaoMensalDataPoint ponto, _) =>
             ponto.faturamentoPeriodo));
 
-    series.add(new charts.Series<FaturamentoVisaoMensalDataPoint, DateTime>(
-        id: "Peso (T)",
-        seriesColor: charts.Color(a: 255, r: 41, g: 76, b: 140),
-        data: data,
-        domainFn: (FaturamentoVisaoMensalDataPoint ponto, _) =>
-            DateTime(ponto.ano, ponto.mes),
-        measureFn: (FaturamentoVisaoMensalDataPoint ponto, _) =>
-            ponto.peso));
+    // series.add(new charts.Series<FaturamentoVisaoMensalDataPoint, DateTime>(
+    //     id: "Peso (T)",
+    //     seriesColor: charts.Color(a: 255, r: 41, g: 76, b: 140),
+    //     data: data,
+    //     domainFn: (FaturamentoVisaoMensalDataPoint ponto, _) =>
+    //         DateTime(ponto.ano, ponto.mes),
+    //     measureFn: (FaturamentoVisaoMensalDataPoint ponto, _) =>
+    //         ponto.peso));
   }
 
   @action
@@ -225,38 +225,6 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
           }
       ),
     );
-
-    if (dateFrom.year != dateTo.year) {
-      columns.add(
-        DataColumn(
-            label: Center(
-              child: FittedBox(
-                child: Text(
-                  "R\$",
-                  style: tableHeaderStyle,
-                ),
-              ),
-            ),
-            numeric: true,
-            onSort: (columnIndex, sortAscending) {
-              sortAscMes = !sortAscMes;
-
-              List<FaturamentoVisaoMensalDataPoint> faturamento = List();
-              faturamento = List.from(_data);
-
-              if (sortAscMes) {
-                faturamento.sort((a, b) => b.faturamentoPeriodo.compareTo(a.faturamentoPeriodo));
-              } else {
-                faturamento.sort((a, b) => a.faturamentoPeriodo.compareTo(b.faturamentoPeriodo));
-              }
-
-              _data = faturamento;
-
-              buildTable(_data, dateFrom, dateTo);
-            }),
-      );
-      years.add(dateFrom.year);
-    }
 
     columns.add(
       DataColumn(

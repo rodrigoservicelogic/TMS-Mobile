@@ -262,8 +262,7 @@ abstract class FaturamentoUnControllerBase with Store {
 
       isLoad = false;
       visible = true;
-      current = 0;
-
+      
       return Future.value('ok');
     } on DioError catch (e) {
       isLoad = false;
@@ -481,7 +480,7 @@ abstract class FaturamentoUnControllerBase with Store {
     if (faturamento != null && faturamento.listaFiliais != null) {
       faturamento.listaFiliais.forEach((element) {
         rowsUn.add(DataRow(cells: <DataCell>[
-          DataCell(Text("${element.nomeFilial.split('-')[1]}")),
+          DataCell(Text("${element.nomeFilial.contains('-') ? element.nomeFilial.split('-')[1] : element.nomeFilial}")),
           DataCell(
             Container(
               width: 80,
