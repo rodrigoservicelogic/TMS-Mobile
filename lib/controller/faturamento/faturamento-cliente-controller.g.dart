@@ -183,6 +183,22 @@ mixin _$FaturamentoClienteController
     });
   }
 
+  final _$gruposClienteAtom =
+      Atom(name: '_FaturamentoClienteControllerBase.gruposCliente');
+
+  @override
+  List<GrupoCliente> get gruposCliente {
+    _$gruposClienteAtom.reportRead();
+    return super.gruposCliente;
+  }
+
+  @override
+  set gruposCliente(List<GrupoCliente> value) {
+    _$gruposClienteAtom.reportWrite(value, super.gruposCliente, () {
+      super.gruposCliente = value;
+    });
+  }
+
   final _$selectedUnidadeAtom =
       Atom(name: '_FaturamentoClienteControllerBase.selectedUnidade');
 
@@ -229,6 +245,32 @@ mixin _$FaturamentoClienteController
     _$selectedClienteAtom.reportWrite(value, super.selectedCliente, () {
       super.selectedCliente = value;
     });
+  }
+
+  final _$selectedGrupoClienteAtom =
+      Atom(name: '_FaturamentoClienteControllerBase.selectedGrupoCliente');
+
+  @override
+  int get selectedGrupoCliente {
+    _$selectedGrupoClienteAtom.reportRead();
+    return super.selectedGrupoCliente;
+  }
+
+  @override
+  set selectedGrupoCliente(int value) {
+    _$selectedGrupoClienteAtom.reportWrite(value, super.selectedGrupoCliente,
+        () {
+      super.selectedGrupoCliente = value;
+    });
+  }
+
+  final _$changeGrupoClienteAsyncAction =
+      AsyncAction('_FaturamentoClienteControllerBase.changeGrupoCliente');
+
+  @override
+  Future<void> changeGrupoCliente(int value) {
+    return _$changeGrupoClienteAsyncAction
+        .run(() => super.changeGrupoCliente(value));
   }
 
   final _$getListaFilialAsyncAction =
@@ -333,9 +375,11 @@ isLoad: ${isLoad},
 filiais: ${filiais},
 tiposFrete: ${tiposFrete},
 clientes: ${clientes},
+gruposCliente: ${gruposCliente},
 selectedUnidade: ${selectedUnidade},
 selectedFrete: ${selectedFrete},
-selectedCliente: ${selectedCliente}
+selectedCliente: ${selectedCliente},
+selectedGrupoCliente: ${selectedGrupoCliente}
     ''';
   }
 }

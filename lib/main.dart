@@ -5,7 +5,9 @@ import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart
 
 import 'controller/agregado/agregado-controller.dart';
 import 'controller/empresa/empresa-controller.dart';
+import 'controller/faturamento-mensal-controller.dart';
 import 'controller/faturamento/faturamento-cliente-controller.dart';
+import 'controller/faturamento/faturamento-grupo-cliente-controller.dart';
 import 'controller/frota/frota-propria-controller.dart';
 import 'controller/login/login-controller.dart';
 import 'controller/terceiro/terceiro-controller.dart';
@@ -22,6 +24,8 @@ void main() {
       FaturamentoClienteController());
   getIt.registerSingleton<FaturamentoUnController>(FaturamentoUnController());
   getIt.registerSingleton<FrotaPropriaController>(FrotaPropriaController());
+  getIt.registerSingleton<FaturamentoVisaoMensalController>(FaturamentoVisaoMensalController());
+  getIt.registerSingleton<FaturamentoGrupoClienteController>(FaturamentoGrupoClienteController());
 
   runApp(MyApp());
 }

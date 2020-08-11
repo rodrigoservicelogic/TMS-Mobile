@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Usuario usuario = Usuario.fromPrefs(json.decode(prefs.getString('User')));
 
         if (usuario != null) {
-          controller.usuario = usuario;
+          controller.changeUsuario(usuario);
 
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => SelecaoEmpresa(controller.usuario)));

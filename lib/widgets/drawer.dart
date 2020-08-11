@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/global.dart';
+import 'package:tms_mobile/pages/login-page.dart';
 
 import 'drawer_tile.dart';
 
@@ -99,8 +100,9 @@ class _DrawerPageState extends State<DrawerPage> {
                               prefs.remove('User');
                               prefs.remove('Empresa');
 
-                              Navigator.of(context).pop();
-                              exit(0);
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
                             },
                           ),
                           FlatButton(

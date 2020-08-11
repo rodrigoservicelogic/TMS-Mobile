@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/global.dart';
@@ -38,6 +39,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 400,
       width: double.infinity,
       child: ListView(
         children: <Widget>[
@@ -95,49 +97,68 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
               ),
             ),
           ),
-          Visibility(
-            visible: visaoTabela,
-            child: SizedBox(
-              height: 320,
-              child: SingleChildScrollView(
-                  child: DataTable(
-                columns: controllerFaturamentoUn.columnsUn,
-                rows: controllerFaturamentoUn.rowsUn,
-              )),
-            ),
+          Observer(
+            builder: (context) {
+              return Visibility(
+                visible: visaoTabela,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: SingleChildScrollView(
+                      child: DataTable(
+                    columnSpacing: 2.5,
+                    sortAscending: controllerFaturamentoUn.sortAscUn,
+                    columns: controllerFaturamentoUn.columnsUn,
+                    rows: controllerFaturamentoUn.rowsUn,
+                  )),
+                ),
+              );
+            },
           ),
           Visibility(
             visible: visaoGrafico,
             child: SizedBox(
-              height: 320,
-              child: charts.PieChart(
+              height: 200.0,
+              child: charts.BarChart(
                 controllerFaturamentoUn.seriesUn,
-                animate: true,
                 animationDuration: Duration(seconds: 1),
-                behaviors: [
-                  new charts.DatumLegend(
-                      position: charts.BehaviorPosition.bottom,
-                      outsideJustification: charts.OutsideJustification.start,
-                      horizontalFirst: false,
-                      desiredMaxRows: 4,
-                      cellPadding: new EdgeInsets.all(0.3),
-                      entryTextStyle: charts.TextStyleSpec(
-                          color: charts.MaterialPalette.black,
-                          fontFamily: 'Georgia',
-                          fontSize: 7))
-                ],
-                defaultRenderer: new charts.ArcRendererConfig(
-                    arcWidth: 100,
-                    arcRendererDecorators: [
-                      new charts.ArcLabelDecorator(
-                          labelPosition: charts.ArcLabelPosition.inside,
-                          insideLabelStyleSpec: charts.TextStyleSpec(
-                            fontSize: 13,
-                          ))
-                    ]),
+                animate: true,
+                vertical: false,
+                barRendererDecorator: new charts.BarLabelDecorator<String>(),
               ),
             ),
           ),
+          // Visibility(
+          //   visible: visaoGrafico,
+          //   child: SizedBox(
+          //     height: 320,
+          //     child: charts.PieChart(
+          //       controllerFaturamentoUn.seriesUn,
+          //       animate: true,
+          //       animationDuration: Duration(seconds: 1),
+          //       behaviors: [
+          //         new charts.DatumLegend(
+          //             position: charts.BehaviorPosition.bottom,
+          //             outsideJustification: charts.OutsideJustification.start,
+          //             horizontalFirst: false,
+          //             desiredMaxRows: 4,
+          //             cellPadding: new EdgeInsets.all(0.3),
+          //             entryTextStyle: charts.TextStyleSpec(
+          //                 color: charts.MaterialPalette.black,
+          //                 fontFamily: 'Georgia',
+          //                 fontSize: 7))
+          //       ],
+          //       defaultRenderer: new charts.ArcRendererConfig(
+          //           arcWidth: 100,
+          //           arcRendererDecorators: [
+          //             new charts.ArcLabelDecorator(
+          //                 labelPosition: charts.ArcLabelPosition.inside,
+          //                 insideLabelStyleSpec: charts.TextStyleSpec(
+          //                   fontSize: 13,
+          //                 ))
+          //           ]),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

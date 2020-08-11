@@ -6,6 +6,7 @@ class FaturamentoUn {
   double valorTotal;
   double valorAnoAnterior;
   double perCresValor;
+  num pesoTotal;
 
   FaturamentoUn(
       {this.listaFiliais,
@@ -13,7 +14,8 @@ class FaturamentoUn {
       this.valorTotal,
       this.valorAnoAnterior,
       this.perCresValor,
-      this.listaTipoTransporte});
+      this.listaTipoTransporte,
+      this.pesoTotal});
 
   FaturamentoUn.fromJson(Map<String, dynamic> json) {
     if (json['ListaFiliais'] != null) {
@@ -37,6 +39,7 @@ class FaturamentoUn {
     valorTotal = json['ValorTotal'];
     valorAnoAnterior = json['ValorAnoAnterior'];
     perCresValor = json['PerCresValor'];
+    pesoTotal = json['PesoTotal'] / 1000;
   }
 
   Map<String, dynamic> toJson() {
@@ -55,6 +58,7 @@ class FaturamentoUn {
     data['ValorTotal'] = this.valorTotal;
     data['ValorAnoAnterior'] = this.valorAnoAnterior;
     data['PerCresValor'] = this.perCresValor;
+    data['PesoTotal'] = this.pesoTotal;
     return data;
   }
 }
@@ -63,6 +67,7 @@ class ListaFiliais {
   String nomeFilial;
   double valorTotal;
   double perCresValor;
+  double peso;
 
   ListaFiliais({this.nomeFilial, this.valorTotal, this.perCresValor});
 
@@ -70,6 +75,7 @@ class ListaFiliais {
     nomeFilial = json['NomeFilial'];
     valorTotal = json['ValorTotal'];
     perCresValor = json['PerCresValor'];
+    peso = json['PesoTotal'];
   }
 
   Map<String, dynamic> toJson() {
@@ -77,6 +83,7 @@ class ListaFiliais {
     data['NomeFilial'] = this.nomeFilial;
     data['ValorTotal'] = this.valorTotal;
     data['PerCresValor'] = this.perCresValor;
+    data['PesoTotal'] = this.peso;
     return data;
   }
 }
@@ -85,6 +92,7 @@ class ListaClientes {
   String nomeCliente;
   double valorTotal;
   double perCresValor;
+  double peso;
 
   ListaClientes({this.nomeCliente, this.valorTotal, this.perCresValor});
 
@@ -92,6 +100,7 @@ class ListaClientes {
     nomeCliente = json['NomeCliente'];
     valorTotal = json['ValorTotal'];
     perCresValor = json['PerCresValor'];
+    peso = json['PesoTotal'];
   }
 
   Map<String, dynamic> toJson() {
@@ -99,6 +108,7 @@ class ListaClientes {
     data['NomeCliente'] = this.nomeCliente;
     data['ValorTotal'] = this.valorTotal;
     data['PerCresValor'] = this.perCresValor;
+    data['PesoTotal'] = this.peso;
     return data;
   }
 }
@@ -107,6 +117,7 @@ class ListaTipoTransporte {
   String tipoTransporte;
   double valorTotal;
   double perCresValor;
+  double peso;
 
   ListaTipoTransporte({this.tipoTransporte, this.valorTotal, this.perCresValor});
 
@@ -114,6 +125,7 @@ class ListaTipoTransporte {
     tipoTransporte = json['TipoTransporte'];
     valorTotal = json['ValorTotal'];
     perCresValor = json['PerCresValor'];
+    peso = json['PesoTotal'];
   }
 
   Map<String, dynamic> toJson() {
@@ -121,6 +133,7 @@ class ListaTipoTransporte {
     data['TipoTransporte'] = this.tipoTransporte;
     data['ValorTotal'] = this.valorTotal;
     data['PerCresValor'] = this.perCresValor;
+    data['PesoTotal'] = this.peso;
     return data;
   }
 }

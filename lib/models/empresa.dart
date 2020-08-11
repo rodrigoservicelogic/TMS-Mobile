@@ -9,7 +9,7 @@ class Empresa {
   Empresa.fromJson(Map<String, dynamic> json) {
     idEmpresa = json['IdEmpresa'];
     codigo = json['Codigo'];
-    nome = json['Nome'];
+    nome = json['Nome'] == 'GO SERV TRANSPORTES EIRELI' ? 'SERVICELOGIC TRANSPORTES' : 'SL LOGISTICA';
     desativado = json['Desativado'];
   }
 

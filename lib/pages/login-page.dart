@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/controller/login/login-controller.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/models/login-model.dart';
+import 'package:tms_mobile/models/usuario.dart';
 
 import 'empresa/selecao-empresa-page.dart';
 
@@ -31,6 +32,9 @@ class _LoginPageState extends State<LoginPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     loginCtrl.text =
         prefs.getString('Email') != null ? prefs.getString('Email') : null;
+    Usuario usuario = Usuario();
+    usuario.login = loginCtrl.text;
+    controller.changeUsuario(usuario);
   }
 
   @override
@@ -40,8 +44,8 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("images/bg_1.png"), fit: BoxFit.cover)),
-        child: ListView(
+                image: AssetImage("images/bg_azul.jpg"), fit: BoxFit.cover)),
+        child: Column(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
@@ -52,9 +56,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.width - 220,
-            ),
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.width - 220,
+            // ),
+            Spacer(),
             Form(
               key: _formKey,
               child: Column(

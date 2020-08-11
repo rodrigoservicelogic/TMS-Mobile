@@ -58,12 +58,75 @@ mixin _$FaturamentoVisaoMensalController
     });
   }
 
+  final _$totalPeriodoAtom =
+      Atom(name: '_FaturamentoVisaoMensalControllerBase.totalPeriodo');
+
+  @override
+  num get totalPeriodo {
+    _$totalPeriodoAtom.reportRead();
+    return super.totalPeriodo;
+  }
+
+  @override
+  set totalPeriodo(num value) {
+    _$totalPeriodoAtom.reportWrite(value, super.totalPeriodo, () {
+      super.totalPeriodo = value;
+    });
+  }
+
+  final _$sortAscMesAtom =
+      Atom(name: '_FaturamentoVisaoMensalControllerBase.sortAscMes');
+
+  @override
+  bool get sortAscMes {
+    _$sortAscMesAtom.reportRead();
+    return super.sortAscMes;
+  }
+
+  @override
+  set sortAscMes(bool value) {
+    _$sortAscMesAtom.reportWrite(value, super.sortAscMes, () {
+      super.sortAscMes = value;
+    });
+  }
+
+  final _$_FaturamentoVisaoMensalControllerBaseActionController =
+      ActionController(name: '_FaturamentoVisaoMensalControllerBase');
+
+  @override
+  void buildTable(List<FaturamentoVisaoMensalDataPoint> data, DateTime dateFrom,
+      DateTime dateTo) {
+    final _$actionInfo = _$_FaturamentoVisaoMensalControllerBaseActionController
+        .startAction(name: '_FaturamentoVisaoMensalControllerBase.buildTable');
+    try {
+      return super.buildTable(data, dateFrom, dateTo);
+    } finally {
+      _$_FaturamentoVisaoMensalControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  List<int> buildTableColumns(DateTime dateTo, DateTime dateFrom) {
+    final _$actionInfo =
+        _$_FaturamentoVisaoMensalControllerBaseActionController.startAction(
+            name: '_FaturamentoVisaoMensalControllerBase.buildTableColumns');
+    try {
+      return super.buildTableColumns(dateTo, dateFrom);
+    } finally {
+      _$_FaturamentoVisaoMensalControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 series: ${series},
 columns: ${columns},
-rows: ${rows}
+rows: ${rows},
+totalPeriodo: ${totalPeriodo},
+sortAscMes: ${sortAscMes}
     ''';
   }
 }

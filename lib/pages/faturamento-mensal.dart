@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tms_mobile/controller/faturamento-mensal-controller.dart';
@@ -18,7 +20,17 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
   Color corNaoSelecionado = Colors.black26;
   Color corSelecionado = Color(COR_PRIMARY);
 
-  final controller = FaturamentoVisaoMensalController();
+  final controller = GetIt.I.get<FaturamentoVisaoMensalController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.filtro == null) {
+      widget.filtro.dataDe = DateTime.now();
+      widget.filtro.dataAte = DateTime.now();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,7 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
                   height: 10,
                 ),
                 Text(
-                  "MENSAL (ANO X ANO)",
+                  "MENSAL",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -96,10 +108,14 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
                   if (visaoTabela) {
                     return Container(
                       width: MediaQuery.of(context).size.width,
-                      child: DataTable(
-                        columnSpacing: 3.5,
-                        columns: controller.columns,
-                        rows: controller.rows,
+                      child: Observer(
+                        builder: (context) {
+                          return DataTable(
+                            columnSpacing: 40,
+                            columns: controller.columns,
+                            rows: controller.rows,
+                          );
+                        },
                       ),
                     );
                   } else {

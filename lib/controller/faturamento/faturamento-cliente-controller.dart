@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_mobile/models/cliente-faturamento.dart';
 import 'package:tms_mobile/models/filial-model.dart';
+import 'package:tms_mobile/models/grupoCliente.dart';
 import 'package:tms_mobile/pages/faturamento/faturamento-cliente.dart';
 import 'package:tms_mobile/util/http_helper.dart';
 
@@ -47,6 +48,9 @@ abstract class _FaturamentoClienteControllerBase with Store {
   List<ClienteFaturamento> clientes = List();
 
   @observable
+  List<GrupoCliente> gruposCliente = List();
+
+  @observable
   int selectedUnidade;
 
   @observable
@@ -54,6 +58,9 @@ abstract class _FaturamentoClienteControllerBase with Store {
 
   @observable
   String selectedCliente;
+
+  @observable
+  int selectedGrupoCliente;
 
   @action
   changeUnidadeNegocio(int value) {
@@ -86,6 +93,14 @@ abstract class _FaturamentoClienteControllerBase with Store {
   }
 
   @action
+  Future<void> changeGrupoCliente(int value) async {
+    selectedGrupoCliente = value;
+    selectedGrupoCliente = selectedGrupoCliente;
+
+    await getCliente(selectedGrupoCliente);
+  }
+
+  @action
   clearSelectedCliente() {
     selectedCliente = null;
     selectedCliente = selectedCliente;
@@ -113,7 +128,7 @@ abstract class _FaturamentoClienteControllerBase with Store {
         filial.nomeFantasia = "Todos";
 
         filiais.add(filial);
-        
+
         for (Map map in response.data) {
           filiais.add(Filial.fromJson(map));
         }
@@ -133,21 +148,21 @@ abstract class _FaturamentoClienteControllerBase with Store {
         selectedFrete = "Todos";
       }
 
-      Response responseClientes =
-          await _http.get(API_URL + "faturamento/clientes");
+      Response responseGrupoCliente =
+          await _http.get(API_URL + "faturamento/GrupoCliente");
 
-      if (responseClientes.data != null) {
-        ClienteFaturamento cliente = ClienteFaturamento();
-        cliente.codCliente = "0";
-        cliente.nomeCliente = "Todos";
+      if (responseGrupoCliente.data != null) {
+        GrupoCliente cliente = GrupoCliente();
+        cliente.idGrupoCliente = 0;
+        cliente.nome = "Todos";
 
-        clientes.add(cliente);
-        
-        for (Map map in responseClientes.data) {
-          clientes.add(ClienteFaturamento.fromJson(map));
+        gruposCliente.add(cliente);
+
+        for (Map map in responseGrupoCliente.data) {
+          gruposCliente.add(GrupoCliente.fromJson(map));
         }
 
-        selectedCliente = "0";
+        selectedGrupoCliente = 0;
       }
 
       isLoad = false;
@@ -158,6 +173,27 @@ abstract class _FaturamentoClienteControllerBase with Store {
       print(e);
 
       return "Ocorreu um erro ao obter as listas!";
+    }
+  }
+
+  Future<void> getCliente(int idGrupoCliente) async {
+    Http _http = Http();
+
+    Response responseClientes =
+        await _http.get(API_URL + "faturamento/clientes");
+
+    if (responseClientes.data != null) {
+      ClienteFaturamento cliente = ClienteFaturamento();
+      cliente.codCliente = "0";
+      cliente.nomeCliente = "Todos";
+
+      clientes.add(cliente);
+
+      for (Map map in responseClientes.data) {
+        clientes.add(ClienteFaturamento.fromJson(map));
+      }
+
+      selectedCliente = "0";
     }
   }
 }

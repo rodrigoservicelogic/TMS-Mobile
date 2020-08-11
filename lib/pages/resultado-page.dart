@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
+import 'faturamento/faturamento-page.dart';
 import 'faturamento/filtro-faturamento.dart';
 
 class ResultadoPage extends StatefulWidget {
@@ -70,7 +71,7 @@ class _ResultadoPage extends State<ResultadoPage> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
-                          FiltroFaturamento(widget.pageCtrl)));
+                          FaturamentoPage(widget.pageCtrl)));
                 },
               ),
             ),

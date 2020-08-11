@@ -113,7 +113,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
 
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
-                        prefs.setString("Empresa", empresaSelected.codigo);
+                        prefs.setInt("Empresa", empresaSelected.idEmpresa);
                         user.empresaApresentacao = empresaSelected.nome;
 
                         Navigator.of(context).push(MaterialPageRoute(

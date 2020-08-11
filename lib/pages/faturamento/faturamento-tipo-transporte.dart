@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
 import 'package:tms_mobile/models/filtrofaturamento-model.dart';
@@ -12,10 +13,12 @@ class FaturamentoVisaoTipoTransporte extends StatefulWidget {
   FaturamentoVisaoTipoTransporte(this.filtro);
 
   @override
-  _FaturamentoVisaoTipoTransporteState createState() => _FaturamentoVisaoTipoTransporteState();
+  _FaturamentoVisaoTipoTransporteState createState() =>
+      _FaturamentoVisaoTipoTransporteState();
 }
 
-class _FaturamentoVisaoTipoTransporteState extends State<FaturamentoVisaoTipoTransporte> {
+class _FaturamentoVisaoTipoTransporteState
+    extends State<FaturamentoVisaoTipoTransporte> {
   final controller = GetIt.I.get<FaturamentoUnController>();
 
   bool visaoGrafico = false;
@@ -36,7 +39,7 @@ class _FaturamentoVisaoTipoTransporteState extends State<FaturamentoVisaoTipoTra
       border: Border.all(width: 0),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -100,11 +103,15 @@ class _FaturamentoVisaoTipoTransporteState extends State<FaturamentoVisaoTipoTra
           Visibility(
             visible: visaoTabela,
             child: SizedBox(
-              height: 320,
-              child: SingleChildScrollView(
-                  child: DataTable(
-                columns: controller.columnsTipoTransp,
-                rows: controller.rowsTipoTransp,
+              height: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(child: Observer(
+                builder: (context) {
+                  return DataTable(
+                    columnSpacing: 20,
+                    columns: controller.columnsTipoTransp,
+                    rows: controller.rowsTipoTransp,
+                  );
+                },
               )),
             ),
           ),

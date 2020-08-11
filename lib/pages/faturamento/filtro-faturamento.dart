@@ -267,7 +267,7 @@ class _FiltroFaturamentoState extends State<FiltroFaturamento> {
                               MaterialPageRoute(
                                 builder: (context) => FaturamentoPage(
                                   widget.pageController,
-                                  ModelFiltroFaturamento(
+                                  filtroFaturamento: ModelFiltroFaturamento(
                                       _dataInicial, _dataFinal,
                                       idUnidadeNegocio:
                                           controllerEmpresa.selectedUnidade,

@@ -25,7 +25,7 @@ abstract class _LoginControllerBase with Store {
 
   @computed
   bool get isValid {
-    return usuario.login != null && usuario.senha != null;
+    return usuario.login != null && usuario.login != '' && usuario.senha != null && usuario.senha != '';
   }
 
   changedLogin(String value) {
@@ -35,6 +35,11 @@ abstract class _LoginControllerBase with Store {
 
   changeSenha(String value) {
     usuario.senha = value;
+    usuario = usuario;
+  }
+
+  changeUsuario(Usuario newUser) {
+    usuario = newUser;
     usuario = usuario;
   }
 
@@ -65,6 +70,7 @@ abstract class _LoginControllerBase with Store {
   Future getEmpresas(int idUsuario) async {
     try {
       isLoad = true;
+      empresas = [];
 
       Response response =
           await _http.get(API_URL + 'empresa?idUsuario=$idUsuario');

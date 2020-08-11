@@ -4,8 +4,9 @@ class ModelFiltroFaturamento{
   int idUnidadeNegocio;
   String tipoFrete;
   String codigoCliente;
+  int idGrupoCliente;
 
-  ModelFiltroFaturamento(this.dataDe, this.dataAte, {this.idUnidadeNegocio = 0, this.tipoFrete = "", this.codigoCliente = ""});
+  ModelFiltroFaturamento(this.dataDe, this.dataAte, {this.idUnidadeNegocio = 0, this.tipoFrete = "", this.codigoCliente = "", this.idGrupoCliente = 0});
 
   Map toMap(){
     Map<String, dynamic> map = {
@@ -14,6 +15,7 @@ class ModelFiltroFaturamento{
       'IdUnidadeNegocio' : this.idUnidadeNegocio,
       'TipoFrete' : this.tipoFrete,
       'CodigoCliente' : this.codigoCliente, 
+      "IdGrupoCliente": this.idGrupoCliente
     };
     
     return map;
@@ -29,6 +31,9 @@ class ModelFiltroFaturamento{
     }
     if (this.codigoCliente != null && this.codigoCliente.isNotEmpty && this.codigoCliente != "0"){
       queryParams += '&CodigoCliente=${this.codigoCliente}';
+    }
+    if(this.idGrupoCliente != null && this.idGrupoCliente > 0) {
+      queryParams += '&IdGrupoCliente=${this.idGrupoCliente}';
     }
     return queryParams;
   }
