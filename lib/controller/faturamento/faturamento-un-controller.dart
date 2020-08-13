@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -262,7 +263,7 @@ abstract class FaturamentoUnControllerBase with Store {
 
       isLoad = false;
       visible = true;
-      
+
       return Future.value('ok');
     } on DioError catch (e) {
       isLoad = false;
@@ -297,11 +298,20 @@ abstract class FaturamentoUnControllerBase with Store {
             ),
           ),
           DataCell(Container(
-              //width: 50,
-              child: Text(
-            '${element.valorTotal < 0 ? '-' : toCurrencyString(element.valorTotal.toStringAsFixed(2), thousandSeparator: ThousandSeparator.Period, shorteningPolicy: ShorteningPolicy.RoundToThousands)}',
-            textAlign: TextAlign.end,
-          ))),
+              width: 50,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: 50.0,
+                  maxWidth: 50.0,
+                ),
+                child: AutoSizeText(
+                  '${element.valorTotal < 0 ? '-' : toCurrencyString(element.valorTotal.toStringAsFixed(2), thousandSeparator: ThousandSeparator.Period, shorteningPolicy: ShorteningPolicy.RoundToThousands)}',
+                  textAlign: TextAlign.end,
+                  maxLines: 1,
+                  minFontSize: 10,
+                  maxFontSize: 14,
+                ),
+              ))),
           DataCell(
             Text(
               "${element.perCresValor < 0 ? '-' : formatoPercentual.format(element.perCresValor)}",
@@ -480,10 +490,12 @@ abstract class FaturamentoUnControllerBase with Store {
     if (faturamento != null && faturamento.listaFiliais != null) {
       faturamento.listaFiliais.forEach((element) {
         rowsUn.add(DataRow(cells: <DataCell>[
-          DataCell(Text("${element.nomeFilial.contains('-') ? element.nomeFilial.split('-')[1] : element.nomeFilial}")),
+          DataCell(Container(
+            child: Text(
+                "${element.nomeFilial.contains('-') ? element.nomeFilial.split('-')[1] : element.nomeFilial}"),
+          )),
           DataCell(
             Container(
-              width: 80,
               child: Text(
                 "${element.peso < 0 ? '-' : (element.peso / 1000).toStringAsFixed(2)}",
                 textAlign: TextAlign.end,
@@ -491,11 +503,20 @@ abstract class FaturamentoUnControllerBase with Store {
             ),
           ),
           DataCell(Container(
-              width: 70,
-              child: Text(
+            width: 50,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: 50.0,
+                maxWidth: 50.0,
+              ),
+              child: AutoSizeText(
                 '${element.valorTotal < 0 ? '-' : toCurrencyString(element.valorTotal.toStringAsFixed(2), thousandSeparator: ThousandSeparator.Period, shorteningPolicy: ShorteningPolicy.RoundToThousands)}',
                 textAlign: TextAlign.end,
-              ))),
+                maxLines: 1,
+                minFontSize: 10,
+                maxFontSize: 14,
+              ),
+            ))),
           DataCell(
             Container(
               width: 50,
@@ -637,7 +658,9 @@ abstract class FaturamentoUnControllerBase with Store {
     if (faturamento != null) {
       seriesUn.add(charts.Series(
         data: faturamento.listaFiliais,
-        domainFn: (ListaFiliais task, _) => task.nomeFilial.split('-')[1],
+        domainFn: (ListaFiliais task, _) => task.nomeFilial.contains('-')
+            ? task.nomeFilial.split('-')[1]
+            : task.nomeFilial.substring(0, 10),
         measureFn: (ListaFiliais task, _) => task.valorTotal,
         id: 'Faturamento Und',
         labelAccessorFn: (ListaFiliais row, _) =>
@@ -672,16 +695,33 @@ abstract class FaturamentoUnControllerBase with Store {
               Container(width: 120, child: Text("${element.nomeCliente}"))),
           DataCell(Container(
               width: 50,
-              child: Text(
-                '${element.valorTotal < 0 ? '-' : toCurrencyString(element.valorTotal.toStringAsFixed(2), thousandSeparator: ThousandSeparator.Period, shorteningPolicy: ShorteningPolicy.RoundToThousands)}',
-                textAlign: TextAlign.end,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: 50.0,
+                  maxWidth: 50.0,
+                ),
+                child: AutoSizeText(
+                  '${element.valorTotal < 0 ? '-' : toCurrencyString(element.valorTotal.toStringAsFixed(2), thousandSeparator: ThousandSeparator.Period, shorteningPolicy: ShorteningPolicy.RoundToThousands)}',
+                  textAlign: TextAlign.end,
+                  maxLines: 1,
+                  minFontSize: 10,
+                  maxFontSize: 14,
+                ),
               ))),
           DataCell(
             Container(
-              width: 80,
-              child: Text(
-                "${element.peso < 0 ? '-' : formatoMoeda.format((element.peso / 1000))}",
-                textAlign: TextAlign.end,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: 80.0,
+                  maxWidth: 80.0,
+                ),
+                child: AutoSizeText(
+                  "${element.peso < 0 ? '-' : formatoMoeda.format((element.peso / 1000))}",
+                  textAlign: TextAlign.end,
+                  maxLines: 1,
+                  minFontSize: 10,
+                  maxFontSize: 14,
+                ),
               ),
             ),
           ),

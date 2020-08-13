@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:tms_mobile/util/http_helper.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:tms_mobile/util/util.dart';
 part 'faturamento-mensal-controller.g.dart';
 
 class FaturamentoVisaoMensalController = _FaturamentoVisaoMensalControllerBase
@@ -99,9 +101,23 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
   }
 
   @action
+  String Function() formatValue(num value) {
+    String formataValor() {
+      return toCurrencyString(value.toStringAsFixed(2),
+          thousandSeparator: ThousandSeparator.Period,
+          shorteningPolicy: ShorteningPolicy.RoundToThousands);
+    }
+
+    final valorFormatado = formataValor;
+
+    return valorFormatado;
+  }
+
+  @action
   void buildTable(List<FaturamentoVisaoMensalDataPoint> data, DateTime dateFrom,
       DateTime dateTo) {
     rows = [];
+    Util util = Util();
     var formatoMoeda =
         new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
     var formatoValor = NumberFormat.currency(locale: "pt_BR", symbol: "");
@@ -145,10 +161,26 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       );
 
       //VALOR
+      // newRow.cells.add(
+      //   DataCell(
+      //     Text(
+      //       "${ponto.faturamentoPeriodo < 0 ? '-' : toCurrencyString(ponto.faturamentoPeriodo.toStringAsFixed(2), thousandSeparator: ThousandSeparator.Period, shorteningPolicy: ShorteningPolicy.RoundToThousands)}",
+      //     ),
+      //   ),
+      // );
       newRow.cells.add(
         DataCell(
-          Text(
-            "${ponto.faturamentoPeriodo < 0 ? '-' : toCurrencyString(ponto.faturamentoPeriodo.toStringAsFixed(2), thousandSeparator: ThousandSeparator.Period, shorteningPolicy: ShorteningPolicy.RoundToThousands)}",
+          Container(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: 50.0,
+                maxWidth: 50.0,
+              ),
+              child: AutoSizeText(
+                "${ponto.faturamentoPeriodo < 0 ? '-' : Util.formataValor(ponto.faturamentoPeriodo)}",
+                maxLines: 1,
+              ),
+            ),
           ),
         ),
       );
@@ -174,9 +206,9 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
       DataColumn(
           label: Container(
             child: Text(
-                "MÊS/ANO",
-                style: tableHeaderStyle,
-              ),
+              "MÊS/ANO",
+              style: tableHeaderStyle,
+            ),
           ),
           onSort: (columnIndex, sortAscending) {
             sortAscMes = !sortAscMes;
@@ -198,16 +230,16 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
 
     columns.add(
       DataColumn(
-        label: Center(
-          child: FittedBox(
-            child: Text(
-              "Peso (T)",
-              style: tableHeaderStyle,
+          label: Center(
+            child: FittedBox(
+              child: Text(
+                "Peso (T)",
+                style: tableHeaderStyle,
+              ),
             ),
           ),
-        ),
-        numeric: true,
-        onSort: (columnIndex, sortAscending) {
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
             sortAscMes = !sortAscMes;
 
             List<FaturamentoVisaoMensalDataPoint> faturamento = List();
@@ -222,8 +254,7 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
             _data = faturamento;
 
             buildTable(_data, dateFrom, dateTo);
-          }
-      ),
+          }),
     );
 
     columns.add(
@@ -244,9 +275,11 @@ abstract class _FaturamentoVisaoMensalControllerBase with Store {
             faturamento = List.from(_data);
 
             if (sortAscMes) {
-              faturamento.sort((a, b) => b.faturamentoPeriodo.compareTo(a.faturamentoPeriodo));
+              faturamento.sort((a, b) =>
+                  b.faturamentoPeriodo.compareTo(a.faturamentoPeriodo));
             } else {
-              faturamento.sort((a, b) => a.faturamentoPeriodo.compareTo(b.faturamentoPeriodo));
+              faturamento.sort((a, b) =>
+                  a.faturamentoPeriodo.compareTo(b.faturamentoPeriodo));
             }
 
             _data = faturamento;

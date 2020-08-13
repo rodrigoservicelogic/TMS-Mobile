@@ -69,7 +69,7 @@ abstract class _FaturamentoGrupoClienteControllerBase with Store {
     num total = 0;
 
     columns.clear();
-    rows.clear();
+    rows = [];
 
     buildTableColumn();
 

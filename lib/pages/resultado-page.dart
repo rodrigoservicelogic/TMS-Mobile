@@ -166,23 +166,6 @@ class _ResultadoPage extends State<ResultadoPage> {
               ),
             ),
             Spacer(),
-            SizedBox(
-              height: 55,
-              width: double.infinity,
-              child: RaisedButton(
-                color: Color(COR_PRIMARY),
-                textColor: Colors.white,
-                child: Text(
-                  "VOLTAR",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                onPressed: () {
-                  if (true == true) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-            ),
           ],
         ),
       ),

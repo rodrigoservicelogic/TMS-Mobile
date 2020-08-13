@@ -105,7 +105,7 @@ class _FaturamentoVisaoUnState extends State<FaturamentoVisaoUn> {
                   height: MediaQuery.of(context).size.height,
                   child: SingleChildScrollView(
                       child: DataTable(
-                    columnSpacing: 2.5,
+                    columnSpacing: 10,
                     sortAscending: controllerFaturamentoUn.sortAscUn,
                     columns: controllerFaturamentoUn.columnsUn,
                     rows: controllerFaturamentoUn.rowsUn,

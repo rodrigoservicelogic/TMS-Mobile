@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_multi_formatter/formatters/money_input_enums.dart';
+import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/global.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -130,7 +132,28 @@ class _FaturamentoVisaoMensalState extends State<FaturamentoVisaoMensal> {
                         ),
                         behaviors: [
                           charts.SeriesLegend(
-                            position: charts.BehaviorPosition.bottom,
+                              position: charts.BehaviorPosition.bottom,
+                              showMeasures: true,
+                              entryTextStyle:
+                                  charts.TextStyleSpec(fontWeight: "bold"),
+                              secondaryMeasureFormatter: (value) {
+                                return toCurrencyString(
+                                    value.toStringAsFixed(2),
+                                    thousandSeparator: ThousandSeparator.Period,
+                                    shorteningPolicy:
+                                        ShorteningPolicy.RoundToThousands);
+                              },
+                              measureFormatter: (value) {
+                                return toCurrencyString(
+                                    value.toStringAsFixed(2),
+                                    thousandSeparator: ThousandSeparator.Period,
+                                    shorteningPolicy:
+                                        ShorteningPolicy.RoundToThousands);
+                              }),
+                          charts.LinePointHighlighter(
+                            drawFollowLinesAcrossChart: true,
+                            showHorizontalFollowLine:
+                                charts.LinePointHighlighterFollowLineType.all,
                           ),
                         ],
                       ),

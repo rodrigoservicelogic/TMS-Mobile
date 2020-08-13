@@ -94,27 +94,27 @@ class _ModuleSelectionPageState extends State<ModuleSelectionPage> {
               ),
             ),
             Spacer(),
-            InkWell(
-              child: Card(
-                color: Color(COR_PRIMARY),
-                child: Container(
-                  width: double.infinity,
-                  height: 54,
-                  padding: EdgeInsets.all(15),
-                  child: Center(
-                    child: Text(
-                      'VOLTAR',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            )
+            // InkWell(
+            //   child: Card(
+            //     color: Color(COR_PRIMARY),
+            //     child: Container(
+            //       width: double.infinity,
+            //       height: 54,
+            //       padding: EdgeInsets.all(15),
+            //       child: Center(
+            //         child: Text(
+            //           'VOLTAR',
+            //           style: TextStyle(
+            //               color: Colors.white, fontWeight: FontWeight.bold),
+            //           textAlign: TextAlign.center,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // )
           ],
         ),
       ),

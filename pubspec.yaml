@@ -39,6 +39,7 @@ dependencies:
   printing: ^3.5.0
   smart_select: ^3.0.3
   flutter_multi_formatter: ^1.1.6
+  auto_size_text: ^2.1.0
   mobx:
   flutter_mobx:
   get_it:

@@ -94,6 +94,18 @@ mixin _$FaturamentoVisaoMensalController
       ActionController(name: '_FaturamentoVisaoMensalControllerBase');
 
   @override
+  String Function() formatValue(num value) {
+    final _$actionInfo = _$_FaturamentoVisaoMensalControllerBaseActionController
+        .startAction(name: '_FaturamentoVisaoMensalControllerBase.formatValue');
+    try {
+      return super.formatValue(value);
+    } finally {
+      _$_FaturamentoVisaoMensalControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void buildTable(List<FaturamentoVisaoMensalDataPoint> data, DateTime dateFrom,
       DateTime dateTo) {
     final _$actionInfo = _$_FaturamentoVisaoMensalControllerBaseActionController
