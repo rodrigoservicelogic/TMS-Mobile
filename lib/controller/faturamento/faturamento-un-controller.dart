@@ -244,6 +244,7 @@ abstract class FaturamentoUnControllerBase with Store {
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       idUsuario = prefs.getInt("Usuario");
+      //filtroFaturamento.idUnidadeNegocio = prefs.getInt('Empresa');
 
       Response response = await _http.get(API_URL +
           'faturamento/un/$idUsuario?${filtroFaturamento.asQueryParams()}');
@@ -340,7 +341,7 @@ abstract class FaturamentoUnControllerBase with Store {
     columnsTipoTransp.add(
       DataColumn(
           label: Text(
-            "Tipo Transporte",
+            "Tipo Contratação",
             style: tableHeaderStyle,
             textAlign: TextAlign.center,
           ),
@@ -480,7 +481,7 @@ abstract class FaturamentoUnControllerBase with Store {
   @action
   void buildTableUn() {
     var formatoMoeda =
-        new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+        new NumberFormat.currency(locale: "pt_BR", symbol: "");
     var formatoPercentual = new NumberFormat.decimalPattern("pt_BR");
     columnsUn.clear();
     rowsUn.clear();
@@ -497,7 +498,7 @@ abstract class FaturamentoUnControllerBase with Store {
           DataCell(
             Container(
               child: Text(
-                "${element.peso < 0 ? '-' : (element.peso / 1000).toStringAsFixed(2)}",
+                "${element.peso < 0 ? '-' : formatoMoeda.format((element.peso / 1000))}",
                 textAlign: TextAlign.end,
               ),
             ),

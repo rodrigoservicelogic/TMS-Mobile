@@ -59,7 +59,7 @@ class _FaturamentoVisaoTipoTransporteState
                     height: 10,
                   ),
                   Text(
-                    "TIPO TRANSPORTE",
+                    "TIPO CONTRATAÇÃO",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,

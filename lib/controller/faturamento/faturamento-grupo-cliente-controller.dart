@@ -64,7 +64,7 @@ abstract class _FaturamentoGrupoClienteControllerBase with Store {
   @action
   buildTable() {
     var formatoMoeda =
-        new NumberFormat.compactCurrency(locale: "pt_BR", symbol: "");
+        new NumberFormat.currency(locale: "pt_BR", symbol: "");
     var formatoPercentual = new NumberFormat.decimalPattern("pt_BR");
     num total = 0;
 
@@ -85,7 +85,7 @@ abstract class _FaturamentoGrupoClienteControllerBase with Store {
               child: Text('${element.nomeGrupoCliente}'))),
           DataCell(Container(
               child: Text(
-                  '${element.totalPeso < 0 ? '-' : (element.totalPeso / 1000).toStringAsFixed(2)}',
+                  '${element.totalPeso < 0 ? '-' : formatoMoeda.format((element.totalPeso / 1000))}',
                   textAlign: TextAlign.end,))),
           DataCell(Container(
               child: Text(

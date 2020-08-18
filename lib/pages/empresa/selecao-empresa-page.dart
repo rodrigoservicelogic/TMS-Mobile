@@ -98,7 +98,7 @@ class _SelecaoEmpresaState extends State<SelecaoEmpresa> {
                   child: SmartSelect<Empresa>.single(
                       title: 'Selecione a Empresa',
                       titleStyle: TextStyle(color: Colors.white, fontSize: 18),
-                      placeholder: 'Selecione',
+                      placeholder: '',
                       placeholderStyle: TextStyle(color: Colors.white, fontSize: 16),
                       modalType: SmartSelectModalType.bottomSheet,
                       value: empresaSelected,

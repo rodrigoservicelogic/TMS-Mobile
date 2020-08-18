@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tms_mobile/controller/faturamento/faturamento-un-controller.dart';
+import 'package:tms_mobile/controller/usuario/usuario-controller.dart';
 
 import 'controller/agregado/agregado-controller.dart';
 import 'controller/empresa/empresa-controller.dart';
@@ -26,6 +27,7 @@ void main() {
   getIt.registerSingleton<FrotaPropriaController>(FrotaPropriaController());
   getIt.registerSingleton<FaturamentoVisaoMensalController>(FaturamentoVisaoMensalController());
   getIt.registerSingleton<FaturamentoGrupoClienteController>(FaturamentoGrupoClienteController());
+  getIt.registerSingleton<UsuarioController>(UsuarioController());
 
   runApp(MyApp());
 }

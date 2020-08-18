@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:tms_mobile/controller/usuario/usuario-controller.dart';
 import 'package:tms_mobile/widgets/drawer.dart';
+
+import '../../global.dart';
 
 class MeuPerfilPage extends StatefulWidget {
   final PageController pageCtrl;
@@ -11,6 +15,19 @@ class MeuPerfilPage extends StatefulWidget {
 }
 
 class _MeuPerfilPageState extends State<MeuPerfilPage> {
+  final controller = GetIt.I.get<UsuarioController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    getUser();
+  }
+
+  Future<void> getUser() async {
+    await controller.getUsuario();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +61,43 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
           )
         ],
       ),
-      body: Container(),
+      body: SingleChildScrollView(
+          child: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          SizedBox(height: 18),
+          Text(
+            'Dados do Usuário',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
+          SizedBox(height: 18),
+          TextFormField(
+            controller: controller.nomeCtrl,
+            enabled: false,
+            decoration: InputDecoration(
+              labelText: "Nome",
+              labelStyle: TextStyle(fontSize: 16),
+              border: OutlineInputBorder(),
+            ),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(COR_PRIMARY)),
+          ),
+          SizedBox(height: 18),
+          TextFormField(
+            controller: controller.emailCtrl,
+            enabled: false,
+            decoration: InputDecoration(
+              labelText: "Email",
+              labelStyle: TextStyle(fontSize: 16),
+              border: OutlineInputBorder(),
+            ),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(COR_PRIMARY)),
+          ),
+        ],
+      )),
     );
   }
 }
